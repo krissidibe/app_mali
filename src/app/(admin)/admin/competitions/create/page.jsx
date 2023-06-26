@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import ButtonComponent from "../../../../../components/ButtonComponent";
 import InputComponent from "../../../../../components/InputComponent";
 import { XCircleIcon } from "@heroicons/react/24/solid";
@@ -34,7 +34,8 @@ function CreateCompetition() {
 
 
   const [visible, setVisible] = useState(false);
-  const [image, setImageUrl] = useState("image");
+  const imageRef = useRef(null)
+  const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [ageMax, setAgeMax] = useState("");
   const [ageMin, setAgeMin] = useState("");
@@ -51,13 +52,22 @@ function CreateCompetition() {
 
   const createData = async (e) => {
     
-   
+ 
     e.preventDefault()
-   /*  alert(content.getCurrentContent())
-    return */
+    
    const valueContent = convertToHTML(content.getCurrentContent()); 
-  const res =  await fetch(`/api/admin/competition`, {
-      body: JSON.stringify({
+   
+   const formData  = new FormData();
+
+   formData.append("image",image)
+   formData.append("title",title)
+   formData.append("ageMax",ageMax)
+   formData.append("ageMin",ageMin)
+   formData.append("valueContent",valueContent)
+   formData.append("startDateAt",startDateAt)
+   formData.append("endDateAt",endDateAt)
+   formData.append("statut",statut.code)
+   /*  body: JSON.stringify({
         image,
         title,
         ageMax,
@@ -66,30 +76,52 @@ function CreateCompetition() {
         startDateAt,
         endDateAt,
         statut,
-      }),
-      headers: {
-        "Content-type": "application/json",
-      },
+      }), */
+  
+  const res =  await fetch(`/api/admin/competition`, {
+    body:  formData,
+     
+      
       method: "POST",
     }) 
-
     const data = await res.json()
     console.log(data);
-       redirect("/admin")
+/* 
+       redirect("/admin") */
   };
 
   return (
-    <form onSubmit={(e)=>createData(e)} className="flex flex-col">
+    <form   encType="multipart/form-data" onSubmit={(e)=>createData(e)} className="flex flex-col">
       <p className="mb-2 text-lg font-bold">Phtoto de couverture</p>
-      <picture className="w-full cursor-pointer h-[300px] mb-6 bg-gray-100 flex  justify-center border items-center border-dashed do rounded-lg ">
-        <AiFillPicture className="w-12 h-12" />
-        {/*  {image == "" ? <div className="flex items-center justify-center" >
-        </div> : <img
-          src={"https://picsum.photos/300/200?random=1"}
-          alt="image"
-          className="object-cover w-full max-h-[310px] md:max-h-[410px]  rounded-lg"
-        />   } */}
+      <picture
+      onClick={()=>{
+        imageRef.current.click()
+       }}
+      className="w-full cursor-pointer h-[300px] mb-6 bg-gray-100 flex  justify-center border items-center border-dashed do rounded-lg ">
+     
+
+     {image ?  (
+          <img
+       
+          src={ URL.createObjectURL(image)} 
+             
+                  alt="image"
+                  className="object-cover w-full max-h-[310px] md:max-h-[410px]  rounded-lg"
+                />
+     ) :  <AiFillPicture className="w-12 h-12" /> }
       </picture>
+  
+      <input
+           
+           className="block w-full p-2 text-sm text-white border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+           type="file" ref={imageRef} 
+           
+           
+           onChange={(e)=>{
+
+            if(!e.target.files[0].type.startsWith("image/")) return;
+            setImage(e.target.files[0])
+           }} />
       <InputComponent
        key={1}
  

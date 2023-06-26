@@ -5,22 +5,12 @@ import React from "react";
 import { AiFillMessage } from "react-icons/ai";
 import {prisma} from '../../../../utils/prisma'
 async function Competition() {
-/*   const res = await fetch(`${process.env.BASE_URL}/api/admin/competition`, {
+  const res = await fetch(`${process.env.BASE_URL}/api/admin/competition`, {
+    cache:"no-store",
     next: { revalidate: 0 },
   });
-  const datas: any[] = await res.json(); */
-  const datas =  await prisma.competition.findMany({
-    orderBy: [
-      {
-        createdAt: "desc",
-      },
-      {
-        title: "desc",
-      },
-    ],
-
-    include: { candidatures: {include:{competition:{}}} },
-  });
+  const datas: any[] = await res.json();
+ 
 
   return (
     <div className="flex flex-col">
@@ -46,7 +36,7 @@ async function Competition() {
             <CompetitionCardAdminComponent
               key={data.id}
               data={data}
-              imageUrl={`https://picsum.photos/300/200?random=${data.id}`}
+              imageUrl={`${data.image}`}
             />
           </div>
         ))}
