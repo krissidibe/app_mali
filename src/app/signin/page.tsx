@@ -1,6 +1,5 @@
 "use client"
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import Image from "next/image"; 
 import InputComponent from "../../components/InputComponent";
 import InputSelectComponent from "../../components/InputSelectComponent";
 import ButtonComponent from "../../components/ButtonComponent";
@@ -14,8 +13,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { error } from "console";
-import { useRouter } from "next/navigation";
-const inter = Inter({ subsets: ["latin"] });
+import { useRouter } from "next/navigation"; 
 import {useModalInfoStore} from '@/store/useModalInfoStore'
 import ModalInfo from "@/components/ModalInfo";
 export default function Signin() {

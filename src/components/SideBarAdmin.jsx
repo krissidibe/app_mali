@@ -1,6 +1,6 @@
 "use client"
 import React,{useState,useCallback} from "react";
-import PropTypes from "prop-types";
+ 
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter ,usePathname} from 'next/navigation';

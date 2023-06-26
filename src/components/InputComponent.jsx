@@ -7,7 +7,7 @@ function InputComponent({ value = "" , label, className = "",readonly=false, Ico
         {label}
       </p>
       <div className="w-full relative border-[1px] border-solid border-gray-300 flex items-center bg-white h-[50px] rounded-md ">
-        <input readonly={readonly} value={value} onChange={handleChange} type={inputType}    className={`w-full h-full rounded-md p-1 ${withIcon  ? " pr-4 ml-10 " : "px-4"} outline-none `} />
+        <input readOnly={readonly} value={value} onChange={handleChange} type={inputType}    className={`w-full h-full rounded-md p-1 ${withIcon  ? " pr-4 ml-10 " : "px-4"} outline-none `} />
       { Icon != null ? <Icon className={`w-6 h-6 absolute ml-2 text-gray-500  `} /> : ""}
       </div>
     </div>
