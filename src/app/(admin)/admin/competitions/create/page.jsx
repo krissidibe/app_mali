@@ -97,7 +97,7 @@ function CreateCompetition() {
       onClick={()=>{
         imageRef.current.click()
        }}
-      className="w-full cursor-pointer h-[300px] mb-6 bg-gray-100 flex  justify-center border items-center border-dashed do rounded-lg ">
+      className="w-full cursor-pointer h-[360px] mb-6 bg-gray-100 flex  justify-center border items-center border-dashed do rounded-lg ">
      
 
      {image ?  (
@@ -106,7 +106,7 @@ function CreateCompetition() {
           src={ URL.createObjectURL(image)} 
              
                   alt="image"
-                  className="object-cover w-full max-h-[310px] md:max-h-[410px]  rounded-lg"
+                  className="object-cover w-full h-full rounded-lg"
                 />
      ) :  <AiFillPicture className="w-12 h-12" /> }
       </picture>
