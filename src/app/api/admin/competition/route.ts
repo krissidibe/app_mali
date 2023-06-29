@@ -94,16 +94,27 @@ let filename ="";
   const val = formData.get("startDateAt");
   const val2 = formData.get("endDateAt");
 
+  /* def
+bac
+license
+master1
+master2 */
   const data = await prisma.competition.create({
     data: {
       image: fileImage,
-      title: formData.get("title")?.toString(),
+      title: formData.get("title")?.toString() ?? "",
       content: formData.get("valueContent")?.toString(),
-      statut: formData.get("statut")?.toString(),
+      statut: formData.get("statut")?.toString() ?? "0",
       startDateAt: new Date(val ? val.toString() : Date.now()),
       endDateAt: new Date(val2 ? val2.toString() : Date.now()),
       ageMin: parseInt(formData.get("ageMin")?.toString() ?? "0"),
       ageMax: parseInt(formData.get("ageMax")?.toString() ?? "0"),
+
+      def: formData.get("def") === "true",
+      bac: formData.get("bac") === "true",
+      licence: formData.get("licence") === "true",
+      master1: formData.get("master1") === "true",
+      master2: formData.get("master2") === "true",
     },
   });
   return new Response(
@@ -112,31 +123,43 @@ let filename ="";
 }
 
 export async function PUT(req: NextRequest, res: NextResponse) {
-  const {
-    title,
-    statut,
-    startDateAt,
-    endDateAt,
-    valueContent,
-    image,
-    ageMax,
-    ageMin,
-    id,
-  } = await req.json();
+  const formData = await req.formData();
+
+  const val = formData.get("startDateAt");
+  const val2 = formData.get("endDateAt");
+  let fileImage = formData.get("image")?.toString();
+
+  let imageUpdate = formData.get("imageUpdate");
+
+  if (imageUpdate === "true") {
+    const file = formData.get("image") as Blob | null;
+
+    try {
+      fileImage = await storeImage(file);
+    } catch (error) {
+      fileImage = "bad";
+    }
+  }
 
   const data = await prisma.competition.update({
     where: {
-      id: id,
+      id: formData.get("id")!.toString(),
     },
     data: {
-      image: image,
-      title: title,
-      content: valueContent,
-      statut: statut.code,
-      startDateAt: new Date(startDateAt),
-      endDateAt: new Date(endDateAt),
-      ageMin: parseInt(ageMin),
-      ageMax: parseInt(ageMax),
+      image: fileImage,
+      title: formData.get("title")?.toString() ?? "",
+      content: formData.get("valueContent")?.toString(),
+      statut: formData.get("statut")?.toString() ?? "0",
+      startDateAt: new Date(val ? val.toString() : Date.now()),
+      endDateAt: new Date(val2 ? val2.toString() : Date.now()),
+      ageMin: parseInt(formData.get("ageMin")?.toString() ?? "0"),
+      ageMax: parseInt(formData.get("ageMax")?.toString() ?? "0"),
+
+      def: formData.get("def") === "true",
+      bac: formData.get("bac") === "true",
+      licence: formData.get("licence") === "true",
+      master1: formData.get("master1") === "true",
+      master2: formData.get("master2") === "true",
     },
   });
   return new Response(

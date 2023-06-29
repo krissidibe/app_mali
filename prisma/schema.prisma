@@ -67,6 +67,11 @@ model Competition {
   statut       String
   ageMin       Int?
   ageMax       Int?
+  def          Boolean?      @default(false)
+  bac          Boolean?      @default(false)
+  licence      Boolean?      @default(false)
+  master1      Boolean?      @default(false)
+  master2      Boolean?      @default(false)
   createdAt    DateTime?     @default(now()) @db.Timestamp(0)
   updatedAt    DateTime?     @db.Date
   startDateAt  DateTime      @db.Date
@@ -87,10 +92,11 @@ model Candidature {
   countryOfGraduation String
   study               String
   speciality          String
-  def                 String?
-  bac                 String?
-  licence             String?
-  master              String?
+  def                 Boolean?    @default(false)
+  bac                 Boolean?    @default(false)
+  licence             Boolean?    @default(false)
+  master1              Boolean?   @default(false)
+  master2             Boolean?    @default(false)
   endDateAt           DateTime?   @db.Date
   createdAt           DateTime?   @default(now()) @db.Timestamp(0)
   updatedAt           DateTime?   @db.Date

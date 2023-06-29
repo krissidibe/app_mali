@@ -1,9 +1,17 @@
-"use client"
-import Image from "next/image"; 
+"use client";
+import Image from "next/image";
 import InputComponent from "../../components/InputComponent";
 import InputSelectComponent from "../../components/InputSelectComponent";
 import ButtonComponent from "../../components/ButtonComponent";
 import Link from "next/link";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import {
   EnvelopeIcon,
   LockClosedIcon,
@@ -13,38 +21,33 @@ import {
 } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { error } from "console";
-import { useRouter } from "next/navigation"; 
-import {useModalInfoStore} from '@/store/useModalInfoStore'
+import { useRouter } from "next/navigation";
+import { useModalInfoStore } from "@/store/useModalInfoStore";
 import ModalInfo from "@/components/ModalInfo";
 export default function Signin() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
-  const sexeOptions = [{
-    label :"Homme",value:0,
-  },
-  {
-    label :"Femme",value:1,
-  }
-]
+  const sexeOptions = [
+    {
+      label: "Homme",
+      value: 0,
+    },
+    {
+      label: "Femme",
+      value: 1,
+    },
+  ];
   const [sexe, setSexe] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVeirfy, setPasswordVerify] = useState("");
-
-
-
 
   const modal = useModalInfoStore();
   const [modalData, setModalData] = useState("");
   const router = useRouter();
   const createUser = async () => {
-   
-
- 
-
-
- const res =   await fetch(`/api/user/author`, {
+    const res = await fetch(`/api/user/author`, {
       body: JSON.stringify({
         firstName,
         lastName,
@@ -52,26 +55,24 @@ export default function Signin() {
         number,
         sexe,
         password,
-        "type":"create"
+        type: "create",
       }),
       headers: {
         "Content-type": "application/json",
-       
       },
       method: "POST",
-    }) ;
+    });
     const data = await res.json();
     console.log(data);
     if (data.message) {
-      modal.onOpen()
-       setModalData(data.message);
-     } 
-    
+      modal.onOpen();
+      setModalData(data.message);
+    }
   };
 
   return (
     <div className="flex flex-1 w-screen h-screen bg-black ">
-        <ModalInfo title="Alert" body={modalData}  /> 
+      <ModalInfo title="Alert" body={modalData} />
       <div className="flex flex-col items-center justify-between w-full h-full p-10 overflow-y-scroll md:w-1/2 bg-gray-50">
         <div className="md:min-w-[450px] w-[353px] items-center flex space-x-2">
           <Image
@@ -126,7 +127,6 @@ export default function Signin() {
             withIcon={true}
             key={3}
             label="Email"
-            
             inputType="email"
           />
 
@@ -141,9 +141,19 @@ export default function Signin() {
               key={4}
               label="Numero de téléphone"
             />
-          
+
+       {/*      <Select onValueChange={(e) =>{  setSexe(e);}} defaultValue={"0"}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Sexe" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="0">Homme</SelectItem>
+                <SelectItem value="1">Femme</SelectItem>
+              </SelectContent>
+            </Select>
+{sexe} */}
             <InputSelectComponent
-            options={sexeOptions}
+              options={sexeOptions}
               value={sexe}
               handleChange={(e) => {
                 setSexe(e.target.value);

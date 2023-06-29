@@ -1,17 +1,23 @@
-"use client"
-import React, { useState,useRef } from "react";
+"use client";
+import React, { useState, useRef } from "react";
 import ButtonComponent from "../../../../../components/ButtonComponent";
 import InputComponent from "../../../../../components/InputComponent";
 import { XCircleIcon } from "@heroicons/react/24/solid";
-import { EditorState,ContentState, convertFromRaw,convertToRaw } from "draft-js";
+import {
+  EditorState,
+  ContentState,
+  convertFromRaw,
+  convertToRaw,
+} from "draft-js";
 import dynamic from "next/dynamic";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { AiFillPicture } from "react-icons/ai";
 import { Dropdown } from "primereact/dropdown";
-import { Calendar ,CalendarChangeEvent} from "primereact/calendar";
-import { convertToHTML } from 'draft-convert';
+import { Calendar, CalendarChangeEvent } from "primereact/calendar";
+import { convertToHTML } from "draft-convert";
 import { redirect } from "next/navigation";
- 
+import { Switch } from "@/components/ui/switch";
+
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
   {
@@ -19,30 +25,29 @@ const Editor = dynamic(
   }
 );
 
-
 function EditorComponent({ value, handleChange }) {
   return (
     <div className="bg-[#F8F9FA] min-h-[500px]  mb-6 p-2 shadow-lg">
       <Editor
-       editorState={value}    onEditorStateChange={newState => {
-handleChange(newState)
-      }}    />
+        editorState={value}
+        onEditorStateChange={(newState) => {
+          handleChange(newState);
+        }}
+      />
     </div>
   );
 }
 function CreateCompetition() {
-
-
   const [visible, setVisible] = useState(false);
-  const imageRef = useRef(null)
+  const imageRef = useRef(null);
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [ageMax, setAgeMax] = useState("");
   const [ageMin, setAgeMin] = useState("");
   const [content, setContent] = useState(EditorState.createEmpty());
-  const [statut, setStatutSelect] = useState( { name: "Brouillon", code: "0" },);
+  const [statut, setStatutSelect] = useState({ name: "Brouillon", code: "0" });
   const [startDateAt, setStartDateAt] = useState(null);
-  const [endDateAt, setEndDateAt] = useState (null); 
+  const [endDateAt, setEndDateAt] = useState(null);
   const statutData = [
     { name: "Brouillon", code: "0" },
     { name: "Ouvert", code: "1" },
@@ -50,24 +55,34 @@ function CreateCompetition() {
     { name: "Suspendu", code: "3" },
   ];
 
-  const createData = async (e) => {
-    
- 
-    e.preventDefault()
-    
-   const valueContent = convertToHTML(content.getCurrentContent()); 
-   
-   const formData  = new FormData();
+  const [def, setDef] = useState(false);
+  const [bac, setBac] = useState(false);
+  const [licence, setLicence] = useState(false);
+  const [master1, setMaster1] = useState(false);
+  const [master2, setMaster2] = useState(false);
 
-   formData.append("image",image)
-   formData.append("title",title)
-   formData.append("ageMax",ageMax)
-   formData.append("ageMin",ageMin)
-   formData.append("valueContent",valueContent)
-   formData.append("startDateAt",startDateAt)
-   formData.append("endDateAt",endDateAt)
-   formData.append("statut",statut.code)
-   /*  body: JSON.stringify({
+  const createData = async (e) => {
+    e.preventDefault();
+
+    const valueContent = convertToHTML(content.getCurrentContent());
+
+    const formData = new FormData();
+
+    formData.append("image", image);
+    formData.append("title", title);
+    formData.append("ageMax", ageMax);
+    formData.append("ageMin", ageMin);
+    formData.append("valueContent", valueContent);
+    formData.append("startDateAt", startDateAt);
+    formData.append("endDateAt", endDateAt);
+    formData.append("statut", statut.code);
+
+    formData.append("def", def);
+    formData.append("bac", bac);
+    formData.append("licence", licence);
+    formData.append("master1", master1);
+    formData.append("master2", master2);
+    /*  body: JSON.stringify({
         image,
         title,
         ageMax,
@@ -77,54 +92,53 @@ function CreateCompetition() {
         endDateAt,
         statut,
       }), */
-  
-  const res =  await fetch(`/api/admin/competition`, {
-    body:  formData,
-     
-      
+
+    const res = await fetch(`/api/admin/competition`, {
+      body: formData,
+
       method: "POST",
-    }) 
-    const data = await res.json()
+    });
+    const data = await res.json();
     console.log(data);
-/* 
+    /* 
        redirect("/admin") */
   };
 
   return (
-    <form   encType="multipart/form-data" onSubmit={(e)=>createData(e)} className="flex flex-col">
+    <form
+      encType="multipart/form-data"
+      onSubmit={(e) => createData(e)}
+      className="flex flex-col"
+    >
       <p className="mb-2 text-lg font-bold">Phtoto de couverture</p>
       <picture
-      onClick={()=>{
-        imageRef.current.click()
-       }}
-      className="w-full cursor-pointer h-[360px] mb-6 bg-gray-100 flex  justify-center border items-center border-dashed do rounded-lg ">
-     
-
-     {image ?  (
+        onClick={() => {
+          imageRef.current.click();
+        }}
+        className="w-full cursor-pointer h-[360px] mb-6 bg-gray-100 flex  justify-center border items-center border-dashed do rounded-lg "
+      >
+        {image ? (
           <img
-       
-          src={ URL.createObjectURL(image)} 
-             
-                  alt="image"
-                  className="object-cover w-full h-full rounded-lg"
-                />
-     ) :  <AiFillPicture className="w-12 h-12" /> }
+            src={URL.createObjectURL(image)}
+            alt="image"
+            className="object-cover w-full h-full rounded-lg"
+          />
+        ) : (
+          <AiFillPicture className="w-12 h-12" />
+        )}
       </picture>
-  
-      <input
-           
-           className="block w-full p-2 text-sm text-white border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-           type="file" ref={imageRef} 
-           
-           
-           onChange={(e)=>{
 
-            if(!e.target.files[0].type.startsWith("image/")) return;
-            setImage(e.target.files[0])
-           }} />
+      <input
+        className="hidden block w-full p-2 text-sm text-white border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+        type="file"
+        ref={imageRef}
+        onChange={(e) => {
+          if (!e.target.files[0].type.startsWith("image/")) return;
+          setImage(e.target.files[0]);
+        }}
+      />
       <InputComponent
-       key={1}
- 
+        key={1}
         label={"Titre"}
         value={title}
         handleChange={(e) => {
@@ -146,10 +160,9 @@ function CreateCompetition() {
             className="w-full md:w-14rem"
           />
         </div>
-      
       </div>
       <div className="flex w-full gap-4 my-2">
-      <div className="flex gap-4 ">
+        <div className="flex gap-4 ">
           <div className="flex flex-col w-full">
             <p className="text-[14px] text-gray-500 font-semibold mb-2  overflow-ellipsis">
               Date debut
@@ -158,7 +171,7 @@ function CreateCompetition() {
               <Calendar
                 value={startDateAt}
                 className="w-full"
-                onChange={(e) =>  setStartDateAt(e.value)}
+                onChange={(e) => setStartDateAt(e.value)}
               />
             </div>
           </div>
@@ -174,44 +187,69 @@ function CreateCompetition() {
               />
             </div>
           </div>
-          
         </div>
         <div className="flex gap-4 ">
-         
- 
           <InputComponent
-           key={2}
-        label={"Age minimum"}
-        value={ageMin}
-        inputType="number"
-        handleChange={(e) => {
-          setAgeMin(e.target.value);
-        }}/>
+            key={2}
+            label={"Age minimum"}
+            value={ageMin}
+            inputType="number"
+            handleChange={(e) => {
+              setAgeMin(e.target.value);
+            }}
+          />
           <InputComponent
-           key={3}
-        label={"Age maximum"}
-        value={ageMax}
-        inputType="number"
-        handleChange={(e) => {
-          setAgeMax(e.target.value);
-        }}/>
+            key={3}
+            label={"Age maximum"}
+            value={ageMax}
+            inputType="number"
+            handleChange={(e) => {
+              setAgeMax(e.target.value);
+            }}
+          />
         </div>
       </div>
- 
+     
+   
+      <div className="flex self-end flex-col w-[380px] mt-4 space-y-4 border-2 p-4">
+        
+        <h1 className="font-bold text-md">
+          Les documents a fournir pour le concours
+        </h1>
+   
+
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-md">Def</p> <Switch checked={def}
+                      onCheckedChange={(x) =>setDef(x => x=!x)}   />
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-md">Bac</p> <Switch checked={bac}
+                      onCheckedChange={(x) =>setBac(x => x=!x)} />
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-md">Licence</p> <Switch checked={licence}
+                      onCheckedChange={(x) =>setLicence(x => x=!x)} />
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-md">Master 1</p> <Switch checked={master1}
+                      onCheckedChange={(x) =>setMaster1(x => x=!x)} />
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-md">Master 2</p> <Switch checked={master2}
+                      onCheckedChange={(x) =>setMaster2(x => x=!x)} />
+        </div>
+      </div>
       <p className="text-[14px] text-gray-500 mt-8">
-        <EditorComponent
-          value={content}
-          handleChange={ (v)=>setContent(v)}
-        />
+        <EditorComponent value={content} handleChange={(v) => setContent(v)} />
       </p>
- 
+
       <div className="flex items-end justify-end w-full my-4">
         {!visible ? (
           <ButtonComponent
             key={4}
             label="Enregistré"
             className="max-w-[130px]  "
-           type="submit"
+            type="submit"
             full={true}
           />
         ) : null}
