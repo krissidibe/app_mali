@@ -37,7 +37,7 @@
     "out/types/**/*.ts",
     "src/app/(admin)/admin/competitions/page.jsx",
     "build/types/**/*.ts"
-  ],
+, "src/app/(user)/user/competitions/[competitionId]/apply/pageItem.jsx"  ],
   "exclude": [
     "node_modules"
   ]

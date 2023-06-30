@@ -1,27 +1,13 @@
-import ButtonComponent from "@/components/ButtonComponent";
-import MagnifyingGlassIcon from "@/components/ButtonComponent";
-import React from "react";
-import { AiFillMessage } from "react-icons/ai";
-import CandidatureCardComponent from "@/components/CandidatureCardComponent";
-import {prisma} from '../../../../utils/prisma'
+ 
+import React from "react"; 
+import CandidatureCardComponent from "@/components/CandidatureCardComponent"; 
+export const dynamic = "force-dynamic"
 async function Competition() {
-/*   const res = await fetch(`${process.env.BASE_URL}/api/admin/competition`, {
-    next: { revalidate: 0 },
+  const res = await fetch(`${process.env.BASE_URL}/api/admin/competition`, {
+    cache:"no-store"
   });
-  const data: any[] = await res.json(); */
-  const data = await prisma.competition.findMany({
-    orderBy: [
-      {
-        createdAt: "desc",
-      },
-      {
-        title: "desc",
-      },
-    ],
-
-    include: { candidatures: {include:{competition:{}}} },
-  });
-
+  const data: any[] = await res.json();
+ 
   return (
     <div className="flex flex-col">
       <div className="flex items-center pb-2 mb-8 border-b-2 ">

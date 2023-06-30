@@ -25,7 +25,7 @@ export default async function CompetitionListSearch({
           <CompetitionCardComponent
             key={data.id}
             data={data}
-            imageUrl={`https://picsum.photos/300/200?random=${data.id}`}
+            imageUrl={`${process.env.BASE_URL}${data.image}`}
           />
         </Link>
       ))} 

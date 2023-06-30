@@ -103,7 +103,7 @@ function UserProfile({ data }) {
     setNumberNina(data.nina ?? "");
     setBirthDate(new Date(data.birthDate));
     setIsLoading((x) => (x = false));
-    setSexe(data.sexe ?? "");
+    setSexe(data.sexe);
   };
 
   useEffect(() => {
@@ -221,12 +221,12 @@ function UserProfile({ data }) {
                   />
                 </div>
               </div>
-
+ 
               <InputSelectComponent
                 options={sexeOptions}
                 value={sexe}
                 handleChange={(e) => {
-                  setSexe(e.target.value);
+                  setSexe(parseInt(e.target.value));
                 }}
                 Icon={InformationCircleIcon}
                 withIcon={true}

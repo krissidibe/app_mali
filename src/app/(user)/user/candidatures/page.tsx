@@ -2,20 +2,15 @@ import React from 'react'
 import DataUserCandidatureComponent from '../../../../components/DataUserCandidatureComponent'
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
  import {prisma} from '@/utils/prisma'
+import { authOptions } from '@/app/api/authOption';
+import { getServerSession } from 'next-auth';
 async function Candidatures() {
  
-/* 
- 
-  const res = await fetch(`${process.env.BASE_URL}/api/user/candidature?id=test@test.com`,{next:{revalidate:0}})
-  const data: any = await res.json();  */
-
-  const data = await prisma.user.findUnique({
-    where: {
-      email:"test@test.com",
-    },
-
-    include: { candidatures: { include: { competition: {} } } },
-  });
+  const session = await getServerSession(authOptions)
+  const res = await fetch(`${process.env.BASE_URL}/api/user/candidature?email=${session?.user?.email}`,{cache:"no-store"})  
+  
+  const data: any = await res.json();  
+  
   return (
     <div className="flex flex-col" >
         <div className="flex items-center pb-2 mb-0 border-b-2 ">
@@ -29,7 +24,7 @@ async function Candidatures() {
         </div>
       </div>
 
-      {JSON.stringify(  data)}
+ 
  
  
    

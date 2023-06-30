@@ -6,10 +6,16 @@ import ModalInfo from "@/components/ModalInfo";
 import { useModalInfoStore } from "@/store/useModalInfoStore";
 import { getServerSession } from "next-auth";
 import { useSearchParams } from "next/navigation";
-import React, { FormEvent, useCallback, useEffect, useState } from "react";
+import React, {
+  FormEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useSession } from "next-auth/react";
 import dayjs from "dayjs";
-export default function ApplyItem(data: any, competitionId: string) {
+export default function ApplyItem(data, competitionId) {
   const { data: session, status } = useSession();
   const [lastName, setLastName] = useState(data.data.data.lastName);
   const [firstName, setFirstName] = useState(data.data.data.firstName);
@@ -41,8 +47,9 @@ export default function ApplyItem(data: any, competitionId: string) {
 
   const modal = useModalInfoStore();
   const [modalData, setModalData] = useState("");
-  const dataAttach: any[] = JSON.parse(`${router.get("fileAttach")}`);
-
+  const dataAttach= JSON.parse(`${router.get("fileAttach")}`);
+  const defRef = useRef(null);
+  const [defFile, setDefFile] = useState("");
   const getUser = async () => {};
   useEffect(() => {
     if (status == "loading") {
@@ -55,11 +62,27 @@ export default function ApplyItem(data: any, competitionId: string) {
     return () => {};
   }, []);
 
-  const createApply = async (e: FormEvent) => {
+  const createApply = async (e) => {
     e.preventDefault();
 
-    const res = await fetch(`/api/user/candidature`, {
-      body: JSON.stringify({
+    const formData = new FormData();
+
+    formData.append("sexe", sexe);
+    formData.append("nina", nina);
+    formData.append("certificate", certificate);
+    formData.append("diplome", diplome);
+    formData.append("diplomeNumber", diplomeNumber);
+    formData.append("placeOfGraduation", placeOfGraduation);
+    formData.append("countryOfGraduation", countryOfGraduation);
+    formData.append("study", study);
+    formData.append("speciality", speciality);
+    
+    formData.append("uid", session?.user?.email);
+    formData.append("competitionId", data.data.competitionId);
+    
+    formData.append("defFile", defFile);
+    /* 
+    body: JSON.stringify({
         sexe,
         nina,
         certificate,
@@ -71,11 +94,11 @@ export default function ApplyItem(data: any, competitionId: string) {
         speciality,
         uid: session?.user?.email,
         competitionId: data.data.competitionId,
-      }),
-      headers: {
-        "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
+      }), */
+    const res = await fetch(`/api/user/candidature`, {
+  
+       
+      body :formData,
       method: "POST",
     });
     const dataNew = await res.json();
@@ -90,6 +113,7 @@ export default function ApplyItem(data: any, competitionId: string) {
   return (
     <form
       onSubmit={createApply}
+      encType="multipart/form-data"
       className="flex flex-col w-full h-full p-6 overflow-y-scroll bg-gray-100 rounded-lg shadow-xl md:max-w-7xl "
     >
       <ModalInfo title="Alert" body={modalData} />
@@ -98,7 +122,6 @@ export default function ApplyItem(data: any, competitionId: string) {
         <span> Informations a renseigné </span>
       </h1>
 
-      
       <div className="mt-2 mb-4 border-b border-solid  max-w-[320px]"></div>
 
       <p className="text-[14px] text-gray-500 mb-4">
@@ -194,7 +217,23 @@ export default function ApplyItem(data: any, competitionId: string) {
             />
           </div>
           <div className="flex flex-col space-x-0 space-y-2 md:flex-row md:space-y-0 md:w-full md:space-x-4 ">
-            <InputComponent key={13} label="Def" />
+            <div className={`w-full`}>
+              <p className="text-[14px] text-gray-500 font-semibold mb-2  overflow-ellipsis">
+                {"Def"}
+              </p>
+              <div className="w-full relative border-[1px] p-2 border-solid border-gray-300 flex items-center bg-white h-[50px] rounded-md ">
+                <input
+                 
+                  type="file"
+                  onChange={(e) => {
+                   
+                    setDefFile(e.target.files[0]);
+                  }}
+                  className={`w-full h-full rounded-md  outline-none `}
+                />
+              </div>
+            </div>
+            {/*  <InputComponent key={13} label="Def" /> */}
             <InputComponent key={14} label="Bac" />
           </div>
           <div className="flex flex-col space-x-0 space-y-2 md:flex-row md:space-y-0 md:w-full md:space-x-4 ">

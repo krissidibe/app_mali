@@ -10,20 +10,15 @@ import {
 } from "@heroicons/react/24/solid";
 //import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import {prisma} from '@/utils/prisma'
+import { authOptions } from "@/app/api/authOption";
+export const dynamic = "force-dynamic"
 async function Home() {
-/*   const session = await getServerSession(authOptions)
-  const res = await fetch(`${process.env.BASE_URL}/api/user/candidature?id=${session?.user.email}`,{next:{revalidate:0}}) */
-/*   const res = await fetch(`${process.env.BASE_URL}/api/user/candidature?id=test@test.com`,{next:{revalidate:0}})
+   const session = await getServerSession(authOptions)
+  const res = await fetch(`${process.env.BASE_URL}/api/user/candidature?email=${session?.user?.email}`,{cache:"no-store"})  
   
   const data: any = await res.json();  
-  */
-  const data = await prisma.user.findUnique({
-    where: {
-      email:"test@test.com",
-    },
-
-    include: { candidatures: { include: { competition: {} } } },
-  });
+  
+ 
   return (
     <div className="flex flex-col">
       <div className="flex pb-10 space-x-4 ">

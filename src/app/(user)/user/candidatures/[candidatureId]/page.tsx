@@ -3,6 +3,7 @@
 import React from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import parse from "html-react-parser";
+import Link from "next/link";
 
 function page() {
   const searchParams = useSearchParams();
@@ -18,6 +19,16 @@ function page() {
     { name: "Suspendu", code: "3", color: "text-red-500" },
   ];
 
+  const sexeOptions = [
+    {
+      label: "Homme",
+      value: 0,
+    },
+    {
+      label: "Femme",
+      value: 1,
+    },
+  ];
   return (
     <div className="flex flex-col h-full">
       <p className="pb-2 mb-10 font-semibold border-b-2">
@@ -27,7 +38,7 @@ function page() {
         <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-gray-100 shadow-md scrollbar-hide md:w-1/2">
           <picture>
             <img
-              src={`https://picsum.photos/300/200?random=22`}
+              src={`${process.env.BASE_URL}${result.competition.image}`}
               alt="image"
               className="object-cover w-full max-h-[310px] md:max-h-[410px]  rounded-lg"
             />
@@ -64,7 +75,11 @@ function page() {
         <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-gray-100 shadow-md md:w-1/2 scrollbar-hide">
           <h1 className="my-4 font-bold ">Information personnelle</h1>
 
-          <div className="w-32 h-32 mb-4 bg-white rounded-full"></div>
+          <img
+            src={`${process.env.BASE_URL}${user.image}`}
+            className="w-32 h-32 mb-4 bg-white rounded-full"
+          />
+
           <div className="flex flex-col pb-4 space-y-4 border-b-2">
             <div className="flex justify-between space-x-4">
               <ItemUser label={"Nom"} value={user.firstName} />
@@ -75,7 +90,10 @@ function page() {
                 label={"Date de naissance"}
                 value={new Date(user.birthDate).toLocaleDateString("fr-Fr")}
               />
-              <ItemUser label={"Sexe"} value={user.sexe} />
+              <ItemUser
+                label={"Sexe"}
+                value={sexeOptions[user.sexe ?? 0].label}
+              />
             </div>
 
             <div className="flex justify-between space-x-4">
@@ -84,6 +102,23 @@ function page() {
             </div>
           </div>
           <h1 className="my-4 font-bold ">Les pieces jointes</h1>
+         <div className="flex space-x-4">
+         <Link className="w-[120px] h-[150px]  " href={`${process.env.BASE_URL}${result.def}`}>
+            <div className="w-[120px] h-[150px] flex items-center justify-center border-2">
+              <p className="font-bold">Def</p>
+            </div>
+          </Link>
+          <Link className="w-[120px] h-[150px]  " href={`${process.env.BASE_URL}${result.def}`}>
+            <div className="w-[120px] h-[150px] flex items-center justify-center border-2">
+              <p className="font-bold">Bac</p>
+            </div>
+          </Link>
+          <Link className="w-[120px] h-[150px]  " href={`${process.env.BASE_URL}${result.def}`}>
+            <div className="w-[120px] h-[150px] flex items-center justify-center border-2">
+              <p className="font-bold">Licence</p>
+            </div>
+          </Link>
+         </div>
         </div>
       </div>
     </div>

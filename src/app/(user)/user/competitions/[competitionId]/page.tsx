@@ -21,11 +21,11 @@ async function ShowCompetition({
   const data: any = await res.json();
 
   const fileAttach = {
-    def: data.data.def,
-    bac: data.data.bac,
-    licence: data.data.licence,
-    master1: data.data.master1,
-    master2: data.data.master2,
+    def: data.data?.def,
+    bac: data.data?.bac,
+    licence: data.data?.licence,
+    master1: data.data?.master1,
+    master2: data.data?.master2,
   };
   const statutData = [
     { name: "Brouillon", code: "0", color: "text-black" },

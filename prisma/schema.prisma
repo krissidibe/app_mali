@@ -94,11 +94,11 @@ model Candidature {
   countryOfGraduation String
   study               String
   speciality          String
-  def                 Boolean?    @default(false)
-  bac                 Boolean?    @default(false)
-  licence             Boolean?    @default(false)
-  master1              Boolean?   @default(false)
-  master2             Boolean?    @default(false)
+  def                 String?    @default("")
+  bac                 String?    @default("")
+  licence             String?    @default("")
+  master1              String?   @default("")
+  master2             String?    @default("")
   endDateAt           DateTime?   @db.Date
   createdAt           DateTime?   @default(now()) @db.Timestamp(0)
   updatedAt           DateTime?   @db.Date

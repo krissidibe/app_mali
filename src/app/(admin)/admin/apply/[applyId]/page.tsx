@@ -6,6 +6,7 @@ import parse from "html-react-parser";
 import ButtonComponent from "@/components/ButtonComponent";
 import { useModalInfoStore } from "@/store/useModalInfoStore";
 import ModalInfo from "@/components/ModalInfo";
+import Link from "next/link";
 
 function page() {
   const searchParams = useSearchParams();
@@ -99,6 +100,23 @@ function page() {
             </div>
           </div>
           <h1 className="my-4 font-bold ">Les pieces jointes</h1>
+          <div className="flex space-x-4">
+         <Link passHref className="w-[120px] h-[150px]  " href={`${process.env.BASE_URL}${result.def}`}>
+            <div className="w-[120px] h-[150px] flex items-center justify-center border-2">
+              <p className="font-bold">Def</p>
+            </div>
+          </Link>
+          <Link passHref className="w-[120px] h-[150px]  " href={`${process.env.BASE_URL}${result.def}`}>
+            <div className="w-[120px] h-[150px] flex items-center justify-center border-2">
+              <p className="font-bold">Bac</p>
+            </div>
+          </Link>
+          <Link passHref className="w-[120px] h-[150px]  " href={`${process.env.BASE_URL}${result.def}`}>
+            <div className="w-[120px] h-[150px] flex items-center justify-center border-2">
+              <p className="font-bold">Licence</p>
+            </div>
+          </Link>
+         </div>
         </div>
         <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-gray-100 shadow-md md:w-1/2 scrollbar-hide">
           <h1 className="my-4 font-bold ">Information de la candidature</h1>

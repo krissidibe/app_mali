@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../utils/prisma";
 import bcrypt from "bcryptjs";
+import storeImage from "@/utils/addImageHelper";
 
 export async function GET(req: NextRequest,res:NextResponse) {
   const { searchParams } = new URL(req.url);
@@ -10,7 +11,7 @@ export async function GET(req: NextRequest,res:NextResponse) {
  
     const data = await prisma.user.findUnique({
       where: {
-        email: searchParams.get("id")?.toString(),
+        email: searchParams.get("email")?.toString(),
       },
 
       include: { candidatures: { include: { competition: {} } } },
@@ -25,7 +26,7 @@ export async function GET(req: NextRequest,res:NextResponse) {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const {
+/*   const {
     sexe,
     nina,
     certificate,
@@ -40,11 +41,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
     
   } = await req.json();
 
-
+ */
+  const formData = await req.formData();
    
   const competition = await prisma.competition.findFirst({
     where: {
-      id: competitionId,
+      id: formData.get("competitionId")?.toString()  ,
     },
     select:{
       id:true,
@@ -60,7 +62,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   const user = await prisma.user.findFirst({
     where: {
-      email: uid,
+      email: formData.get("uid")?.toString() ,
     },
   });
 if(!user){
@@ -74,7 +76,7 @@ if(!user){
   const candidatureCheck = await prisma.candidature.findFirst({
     where: {
       authorId: user?.id,
-      competitionId: competitionId,
+      competitionId: formData.get("competitionId")?.toString(),
     },
   });
   if (candidatureCheck) {
@@ -92,6 +94,20 @@ if(!user){
 
 
  
+  const defFile = formData.get("defFile") as Blob | null;
+
+ 
+
+
+  let defFileName = "";
+
+  try {
+    defFileName = await storeImage(defFile);
+  } catch (error) {
+    defFileName =   "non renseigné";
+  }
+
+  
  
 
   const data = await prisma.candidature.create({
@@ -104,14 +120,15 @@ if(!user){
       sexe: user?.sexe ?? "",
       nina: user?.nina ?? "",
       certificat: user?.certificate ?? "",
-      diplome: diplome,
-      diplomeNumber: diplomeNumber,
-      placeOfGraduation: placeOfGraduation,
-      countryOfGraduation: countryOfGraduation,
-      study: study,
-      speciality: speciality,
+      diplome: formData.get("diplome")?.toString() ?? "",
+      diplomeNumber: formData.get("diplomeNumber")?.toString() ?? "",
+      placeOfGraduation: formData.get("placeOfGraduation")?.toString() ?? "",
+      countryOfGraduation: formData.get("countryOfGraduation")?.toString() ?? "",
+      study: formData.get("study")?.toString() ?? "",
+      speciality: formData.get("speciality")?.toString() ?? "",
       authorId: user?.id,
-      competitionId: competitionId,
+      competitionId: formData.get("competitionId")?.toString() ?? "" ,
+      def: defFileName,
     },
   }); 
   return new Response(

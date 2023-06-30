@@ -19,17 +19,20 @@ async function getCompetition() {
     // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data')
   }
- 
+  
   return res.json()
-
+ 
  
 
  
 }
  async function Competition() {
 
- const datas:any[] = await  getCompetition()
-
+ const res = await fetch(`${process.env.BASE_URL}/api/admin/competition`, {
+  cache:"no-store"
+  });
+  const datas = await res.json(); 
+ 
   return (
     <div className="flex flex-col">
       <div className="flex items-center pb-2 mb-8 border-b-2 ">

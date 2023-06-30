@@ -154,6 +154,7 @@ export default function DataUserCandidatureComponent({datas}) {
               email:datas.email,
               number:datas.number,
               nina:datas.nina,
+              image:datas.image,
              
             }
         //    alert(JSON.stringify(user));
