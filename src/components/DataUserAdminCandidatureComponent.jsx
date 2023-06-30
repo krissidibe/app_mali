@@ -147,6 +147,7 @@ export default function DataUserAdminCandidatureComponent({datas}) {
               email:row.author.email,
               number:row.author.number,
               nina:row.author.nina,
+              image:row.author.image,
              
             }
           

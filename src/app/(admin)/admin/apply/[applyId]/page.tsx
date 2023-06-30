@@ -57,6 +57,10 @@ function page() {
     }
   };
 
+
+ 
+
+
   return (
     <div className="flex flex-col h-full">
        <ModalInfo title="Alert" body={modalData}  /> 
@@ -67,7 +71,15 @@ function page() {
         <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-gray-100 shadow-md md:w-1/2 scrollbar-hide">
           <h1 className="my-4 font-bold ">Information personnelle</h1>
 
-          <div className="w-32 h-32 mb-4 bg-white rounded-full"></div>
+
+
+         
+          <img
+            src={`${process.env.BASE_URL}${user.image}`}
+            
+            className="w-32 h-32 mb-4 bg-white rounded-full"
+          />
+         
           <div className="flex flex-col pb-4 space-y-4 border-b-2">
             <div className="flex justify-between space-x-4">
               <ItemUser label={"Nom"} value={user.firstName} />

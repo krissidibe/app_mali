@@ -48,6 +48,8 @@ model User {
   number        String
   birthDate     DateTime?     @db.Date
   nina          String?       @default("")
+  address          String?       @default("")
+  certificate          String?       @default("")
   sexe          String
   password      String
   createdAt     DateTime?     @default(now()) @db.Timestamp(0)

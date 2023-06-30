@@ -3,7 +3,7 @@ import DataUserAdminCandidatureComponent from "../../../../../components/DataUse
 import XLSX from "xlsx";
 import ExcelJS from "exceljs";
 import ExportExcel from "./ExportExcel";
-
+export const dynamic = "force-dynamic"
 async function page({
   params,
 }: {
@@ -13,7 +13,7 @@ async function page({
 }) {
   const res = await fetch(
     `${process.env.BASE_URL}/api/admin/competition?id=${params.candidatureId}`,
-    { next: { revalidate: 1 } }
+    { cache:"no-store" }
   );
   const datas: any[] = await res.json();
  

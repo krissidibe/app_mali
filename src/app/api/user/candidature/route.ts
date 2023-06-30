@@ -41,11 +41,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
   } = await req.json();
 
 
-
+   
   const competition = await prisma.competition.findFirst({
     where: {
       id: competitionId,
     },
+    select:{
+      id:true,
+
+    }
   });
 
   if (!competition) {
@@ -54,13 +58,25 @@ export async function POST(req: NextRequest, res: NextResponse) {
     );
   }
 
+  const user = await prisma.user.findFirst({
+    where: {
+      email: uid,
+    },
+  });
+if(!user){
+  return new Response(
+    JSON.stringify({ data: "", message: `Utilisateur non trouvé` })
+  );
+ 
+}
+ 
+
   const candidatureCheck = await prisma.candidature.findFirst({
     where: {
-      authorId: uid,
+      authorId: user?.id,
       competitionId: competitionId,
     },
   });
-
   if (candidatureCheck) {
     return new Response(
       JSON.stringify({
@@ -70,11 +86,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
     );
   }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      id: uid,
-    },
-  });
+
+
+
+
+
+ 
+ 
 
   const data = await prisma.candidature.create({
     data: {
@@ -82,21 +100,22 @@ export async function POST(req: NextRequest, res: NextResponse) {
       statut: "0",
       firstName: user?.firstName ?? "",
       lastName: user?.lastName ?? "",
-      birthDate: new Date(Date.now()),
+      birthDate: user?.birthDate ?? "",
       sexe: user?.sexe ?? "",
-      nina: "nina",
-      certificat: "certificat",
-      diplome: "diplome",
-      diplomeNumber: "diplomeNumber",
-      placeOfGraduation: "placeOfGraduation",
-      countryOfGraduation: "countryOfGraduation",
-      study: "study",
-      speciality: "speciality",
-      authorId: uid,
+      nina: user?.nina ?? "",
+      certificat: user?.certificate ?? "",
+      diplome: diplome,
+      diplomeNumber: diplomeNumber,
+      placeOfGraduation: placeOfGraduation,
+      countryOfGraduation: countryOfGraduation,
+      study: study,
+      speciality: speciality,
+      authorId: user?.id,
       competitionId: competitionId,
     },
-  });
+  }); 
   return new Response(
     JSON.stringify({ data: data.id, message: "La candidature est créer" })
   );
+  
 }

@@ -23,8 +23,8 @@ export async function GET(req: NextRequest) {
     });
 
     //  console.log(searchParams.get("name"));
+    return new Response(JSON.stringify("datasPrisma"));
     return NextResponse.json(datasPrisma)
-    return new Response(JSON.stringify(datasPrisma));
   }
 
   const datasPrisma = await prisma.candidature.findMany({
@@ -128,6 +128,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
 
   const val = formData.get("startDateAt");
   const val2 = formData.get("endDateAt");
+  
   let fileImage = formData.get("image")?.toString();
 
   let imageUpdate = formData.get("imageUpdate");

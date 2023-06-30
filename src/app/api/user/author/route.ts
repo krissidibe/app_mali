@@ -8,6 +8,7 @@ import path, { join } from "path";
 import { stat, mkdir, writeFile } from "fs/promises";
 import * as dateFn from "date-fns";
 import { getSession } from "next-auth/react";
+import storeImage from "@/utils/addImageHelper";
 
 /* export const config = {
   api: {
@@ -135,77 +136,44 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
 
   const file = formData.get("file") as Blob | null;
 
-  if (!file) {
-    return NextResponse.json(
-      { error: "File blob is required." },
-      { status: 400 }
-    );
-  }
+ 
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  //const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
-  const relativeUploadDir = `/uploads/`;
-  const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
-/*   try {
-    await stat(uploadDir);
-  } catch (e: any) {
-    if (e.code === "ENOENT") {
-    //  await mkdir(uploadDir, { recursive: true });
-    } else {
-      console.error(
-        "Error while trying to create directory when uploading a file\n",
-        e
-      );
-      return NextResponse.json(
-        { error: "Something went wrong." },
-        { status: 500 }
-      );
-    }
-  } */
+  let fileImage = "";
 
   try {
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    const filename = `${file.name.replace(
-      /\.[^/.]+$/,
-      ""
-    )}-${uniqueSuffix}${path.extname(file.name)}`;
-    await writeFile(`${uploadDir}/${filename}`, buffer);
-
-    const val = formData.get("birthDate");
-    const dataUpdate = await prisma.user.update({
-      where: {
-        email: formData.get("email")?.toString(),
-      },
-      data: {
-        firstName: formData.get("firstName")?.toString(),
-        lastName: formData.get("lastName")?.toString(),
-        sexe: formData.get("sexe")?.toString(),
-        birthDate: new Date(val ? val.toString() : Date.now()),
-        nina: formData.get("numberNina")?.toString(),
-        number: formData.get("number")?.toString(),
-        image: `${relativeUploadDir}/${filename}`,
-      },
-    });
-    return new Response(
-      JSON.stringify({
-        user: dataUpdate,
-        message: `Votre profile est modifier  ${val}`,
-      })
-    );
-
-    return NextResponse.json({
-      user: "dataUpdate",
-      message: `Votre compte est modifier  `,
-      fileUrl: `${relativeUploadDir}/${filename}`,
-    });
-  } catch (e) {
-    console.error("Error while trying to upload a file\n", e);
-    return NextResponse.json(
-      { error: "Something went wrong." },
-      { status: 500 }
-    );
+    fileImage = await storeImage(file);
+  } catch (error) {
+    fileImage = formData.get("file")?.toString() ?? "";
   }
+
+  
+ 
+  
+ 
+  const val = formData.get("birthDate");
+  const dataNew = await prisma.user.update({
+    where: {
+      email: formData.get("email")?.toString(),
+    },
+    data: {
+      firstName: formData.get("firstName")?.toString(),
+      lastName: formData.get("lastName")?.toString(),
+      sexe: formData.get("sexe")?.toString(),
+      birthDate: new Date(val ? val.toString() : Date.now()),
+      nina: formData.get("numberNina")?.toString(),
+      number: formData.get("number")?.toString(),
+      address: formData.get("address")?.toString(),
+      certificate: formData.get("certificate")?.toString(),
+      image: fileImage,
+    },
+  });
+  return new Response(
+    JSON.stringify({
+      user: dataNew,
+      message: `Votre profile est modifier`,
+    })
+  ); 
 
   // saveFile(formData.get("file"))
   return new Response(

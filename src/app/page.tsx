@@ -23,6 +23,13 @@ function page() {
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (session?.status === "authenticated") {
+     router.push("/user");
+   }  
+ });
+
   const login2User = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -98,7 +105,7 @@ function page() {
         </div>
 
         <form
-          // onSubmit={login2User}
+          onSubmit={login2User}
           className="md:min-w-[380px] max-w-[353px]  justify-center space-y-5 "
         >
           <p className="text-[24px]">Connectez-vous à votre compte</p>
@@ -124,7 +131,7 @@ function page() {
           />
            <div className="flex w-full space-x-4 ">
             <ButtonComponent key={1} label="S'inscrire" href={"/signin"} />
-            <ButtonComponent key={2} type="submit" label="Se connecter"   full={true} href={"/signin"} />
+            <ButtonComponent key={2} type="submit" label="Se connecter"   full={true}   />
 
       {/*       <ButtonComponent
               key={4}
