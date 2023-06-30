@@ -115,7 +115,7 @@ function CreateCompetition() {
         onClick={() => {
           imageRef.current.click();
         }}
-        className="w-full cursor-pointer h-[360px] mb-6 bg-gray-100 flex  justify-center border items-center border-dashed do rounded-lg "
+        className="w-[870px] cursor-pointer h-[400px] mb-6 bg-gray-100 flex  justify-center border items-center border-dashed do rounded-lg "
       >
         {image ? (
           <img

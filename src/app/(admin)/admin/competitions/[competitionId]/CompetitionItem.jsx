@@ -142,7 +142,7 @@ function CompetitionItem({ params, data }) {
         onClick={() => {
           imageRef.current.click();
         }}
-        className="w-full cursor-pointer h-[360px] mb-6 bg-gray-100 flex  justify-center border items-center border-dashed do rounded-lg "
+        className="w-[870px] cursor-pointer h-[400px] mb-6 bg-gray-100 flex  justify-center border items-center border-dashed do rounded-lg "
       >
         {image != data.image ? (
           <img
@@ -152,7 +152,7 @@ function CompetitionItem({ params, data }) {
           />
         ) : (
           <img
-            src={`http://localhost:3000${image}`}
+            src={image}
             alt="image"
             className="object-cover w-full h-full rounded-lg"
           />

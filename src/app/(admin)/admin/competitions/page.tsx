@@ -4,13 +4,31 @@ import MagnifyingGlassIcon from "@/components/ButtonComponent";
 import React from "react";
 import { AiFillMessage } from "react-icons/ai";
 import {prisma} from '../../../../utils/prisma'
-async function Competition() {
+
+async function getCompetition() {
+
+  //const res = await fetch('https://api.example.com/...')
   const res = await fetch(`${process.env.BASE_URL}/api/admin/competition`, {
-    cache:"no-store",
-    next: { revalidate: 0 },
+ cache:"no-store"
   });
-  const datas: any[] = await res.json();
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
  
+  // Recommendation: handle errors
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+ 
+  return res.json()
+
+ 
+
+ 
+}
+ async function Competition() {
+
+ const datas:any[] = await  getCompetition()
 
   return (
     <div className="flex flex-col">
@@ -30,16 +48,17 @@ async function Competition() {
       </div>
 
       <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
-        {datas.map((data) => (
+    {JSON.stringify(datas)}
+    
+      {/*   {datas.map((data) => (
           <div key={data.id}>
-            {/*            @ts-ignore   */}
             <CompetitionCardAdminComponent
               key={data.id}
               data={data}
               imageUrl={`${data.image}`}
             />
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

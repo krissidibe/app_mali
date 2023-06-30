@@ -23,6 +23,7 @@ export async function GET(req: NextRequest) {
     });
 
     //  console.log(searchParams.get("name"));
+    return NextResponse.json(datasPrisma)
     return new Response(JSON.stringify(datasPrisma));
   }
 
