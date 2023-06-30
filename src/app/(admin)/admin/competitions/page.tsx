@@ -4,7 +4,7 @@ import MagnifyingGlassIcon from "@/components/ButtonComponent";
 import React from "react";
 import { AiFillMessage } from "react-icons/ai";
 import {prisma} from '../../../../utils/prisma'
-
+export const dynamic = 'force-dynamic'
 async function getCompetition() {
 
   //const res = await fetch('https://api.example.com/...')
@@ -48,17 +48,17 @@ async function getCompetition() {
       </div>
 
       <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
-    {JSON.stringify(datas)}
+   
     
-      {/*   {datas.map((data) => (
+     {datas.map((data) => (
           <div key={data.id}>
             <CompetitionCardAdminComponent
               key={data.id}
               data={data}
-              imageUrl={`${data.image}`}
+              imageUrl={`${process.env.BASE_URL}${data.image}`}
             />
           </div>
-        ))} */}
+        ))} 
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ function greet():string { //the function returns a string
   return "Hello World" 
 } 
 
-export default async function storeImage(fileBlob:Blob | null,fileDirectoryName?:string): Promise<string>{
+export default async function storeImage(fileBlob:Blob | null): Promise<string>{
    
     let filename ="";
     const file = fileBlob;
@@ -18,7 +18,7 @@ export default async function storeImage(fileBlob:Blob | null,fileDirectoryName?
   }
   const buffer = Buffer.from(await file.arrayBuffer());
         //const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
-        const relativeUploadDir = `/${fileDirectoryName ?? "uploads" }/`;
+        const relativeUploadDir = `/${"files" }/`;
         const uploadDir = join(process.cwd(), "public", relativeUploadDir);
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
           filename = `${file.name.replace(
@@ -26,7 +26,7 @@ export default async function storeImage(fileBlob:Blob | null,fileDirectoryName?
           ""
         )}-${uniqueSuffix}${path.extname(file.name)}`;
         await writeFile(`${uploadDir}/${filename}`, buffer);
-        return `/${fileDirectoryName ?? "uploads" }/${filename}`;
+        return `/${"files"}/${filename}`;
         
 
      

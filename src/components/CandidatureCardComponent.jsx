@@ -25,7 +25,8 @@ const router = useRouter();
       <div className="w-full rounded-t-lg h-1/2 bg-slate-600 ">
         
      <picture>
-     <img src={`${process.env.BASE_URL}${data.image}`} alt="image" className="object-cover w-full h-full rounded-t-lg" />
+      
+     <img  src={imageUrl} alt="image" className="object-cover w-full h-full rounded-t-lg" />
      </picture>
       </div>
        

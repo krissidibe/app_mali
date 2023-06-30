@@ -133,7 +133,7 @@ function CreateCompetition() {
         type="file"
         ref={imageRef}
         onChange={(e) => {
-          if (!e.target.files[0].type.startsWith("image/")) return;
+         // if (!e.target.files[0].type.startsWith("image/")) return;
           setImage(e.target.files[0]);
         }}
       />

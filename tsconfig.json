@@ -34,8 +34,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "out/types/**/*.ts"
-, "src/app/(admin)/admin/competitions/page.jsx"  ],
+    "out/types/**/*.ts",
+    "src/app/(admin)/admin/competitions/page.jsx",
+    "build/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
