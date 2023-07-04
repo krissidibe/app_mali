@@ -77,7 +77,8 @@ async function ShowCompetition({
             key={4}
             label="Postuler"
             className="md:w-[120px]"
-            href={`/user/competitions/${data.data?.id}/apply/?id=${data.data?.id}&def=${data.data.def}&bac=${data.data.bac}&licence=${data.data.licence}&master1=${data.data.master1}&master2=${data.data.master2}`}
+            href={`/user/competitions/${data.data?.id}/apply`}
+            //href={`/user/competitions/${data.data?.id}/apply/?id=${data.data?.id}&def=${data.data.def}&bac=${data.data.bac}&licence=${data.data.licence}&master1=${data.data.master1}&master2=${data.data.master2}`}
             full={true}
           />
         ) : (

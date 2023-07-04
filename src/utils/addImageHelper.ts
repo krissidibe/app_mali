@@ -14,7 +14,7 @@ export default async function storeImage(fileBlob:Blob | null): Promise<string>{
     const file = fileBlob;
 
   if (!file) {
-    return  "File blob is required." ;
+    return  "File not" ;
   }
   const buffer = Buffer.from(await file.arrayBuffer());
         //const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;

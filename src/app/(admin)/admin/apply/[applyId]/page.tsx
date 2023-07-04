@@ -69,7 +69,7 @@ function page() {
         Les information sur la candidature
       </p>
       <div className="flex flex-1 h-full gap-6 ">
-        <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-gray-100 shadow-md md:w-1/2 scrollbar-hide">
+        <div className="w-full h-full p-4 overflow-y-scroll text-sm shadow-md md:w-1/2 scrollbar-hide">
           <h1 className="my-4 font-bold ">Information personnelle</h1>
 
 

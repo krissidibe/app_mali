@@ -20,12 +20,7 @@ const SideBarUser = ({ show = true, handleClick = () => {
   const [canClose, setCanClose] = useState(true);
   const session = useSession();
   const router = useRouter();
-  useEffect(() => {
-    
-    if (session?.status != "authenticated") {
-    //  router.push("/");
-    }
-  });
+ 
 
   const toogleClose = () => {
     setCanClose((x) => (x = !x));
@@ -89,7 +84,7 @@ const SideBarUser = ({ show = true, handleClick = () => {
       <NavItem
         key={5}
         name="Deconnexion"
-        href="/"
+        
         handleClick={() => signOut()}
         Icon={ArrowLeftIcon}
         className="mb-20"

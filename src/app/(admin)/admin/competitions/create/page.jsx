@@ -40,7 +40,7 @@ function EditorComponent({ value, handleChange }) {
 function CreateCompetition() {
   const [visible, setVisible] = useState(false);
   const imageRef = useRef(null);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [ageMax, setAgeMax] = useState("");
   const [ageMin, setAgeMin] = useState("");
@@ -133,7 +133,7 @@ function CreateCompetition() {
         type="file"
         ref={imageRef}
         onChange={(e) => {
-         // if (!e.target.files[0].type.startsWith("image/")) return;
+          if (!e.target.files[0].type.startsWith("image/")) return;
           setImage(e.target.files[0]);
         }}
       />

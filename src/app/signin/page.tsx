@@ -19,11 +19,21 @@ import {
   PhoneIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/solid";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useState } from "react";
 import { error } from "console";
 import { useRouter } from "next/navigation";
 import { useModalInfoStore } from "@/store/useModalInfoStore";
 import ModalInfo from "@/components/ModalInfo";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 export default function Signin() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -73,8 +83,8 @@ export default function Signin() {
   return (
     <div className="flex flex-1 w-screen h-screen bg-black ">
       <ModalInfo title="Alert" body={modalData} />
-      <div className="flex flex-col items-center justify-between w-full h-full p-10 overflow-y-scroll md:w-1/2 bg-gray-50">
-        <div className="md:min-w-[450px] w-[353px] items-center flex space-x-2">
+      <div className="flex flex-col items-center w-full h-full p-10 overflow-y-scroll md:w-1/2 bg-gray-50">
+        <div className="md:min-w-[450px] mt-10 mb-10 justify-center w-[353px] items-center flex flex-col space-y-2">
           <Image
             src="/images/logo.png"
             alt="me"
@@ -84,120 +94,134 @@ export default function Signin() {
           />
           <p>DNAJ</p>
         </div>
-        <Link
-          href="/"
-          className="text-[14px] md:min-w-[450px] w-[353px] mt-6 mr-4"
-        >
-          {"<-"} Retour
-        </Link>
-        <div className="md:min-w-[380px] max-w-[353px] flex-1 mt-2  justify-center space-y-2 ">
-          <p className="text-[24px]">Inscription</p>
-          <p className="text-[11px] text-gray-500 max-w-[520px] text-left border-t-2 pt-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
-            tincidunt neque. Pellentesque vitae commodo justo. Integer tempor
-            Pellentesque vitae Integer tempor
-          </p>
-          <div className="h-4"></div>
-          <InputComponent
-            value={lastName}
-            handleChange={(e) => {
-              setLastName(e.target.value);
-            }}
-            Icon={UserIcon}
-            withIcon={true}
-            key={1}
-            label="Nom"
-          />
-          <InputComponent
-            value={firstName}
-            handleChange={(e) => {
-              setFirstName(e.target.value);
-            }}
-            Icon={UserIcon}
-            withIcon={true}
-            key={2}
-            label="Prénom"
-          />
-          <InputComponent
-            value={email}
-            handleChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            Icon={EnvelopeIcon}
-            withIcon={true}
-            key={3}
-            label="Email"
-            inputType="email"
-          />
+   
+        <Card className="max-w-[400px] my-10 md:max-w-[500px]">
+        <CardTitle className="px-4 mt-4 text-sm cursor-pointer" onClick={()=>{
+              router.back()
+            }}>Retour</CardTitle>
+          <CardHeader>
+            <div className="flex items-center mb-4 space-x-4">
+              
+         
+         
+              <CardTitle>Inscription</CardTitle>
+            </div>
+            <CardDescription>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
+              tincidunt neque. Pellentesque vitae commodo justo. Integer tempor
+              Pellentesque vitae Integer tempor
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form>
+              <div className="grid items-center w-full gap-4">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    value={lastName}
+                    handleChange={(e) => {
+                      setLastName(e.target.value);
+                    }}
+                    Icon={UserIcon}
+                    withIcon={true}
+                    key={1}
+                    label="Nom"
+                  />
+                  <InputComponent
+                    value={firstName}
+                    handleChange={(e) => {
+                      setFirstName(e.target.value);
+                    }}
+                    Icon={UserIcon}
+                    withIcon={true}
+                    key={2}
+                    label="Prénom"
+                  />
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    value={email}
+                    handleChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                    Icon={EnvelopeIcon}
+                    withIcon={true}
+                    key={3}
+                    label="Email"
+                    inputType="email"
+                  />
+                  <InputComponent
+                    value={number}
+                    handleChange={(e) => {
+                      setNumber(e.target.value);
+                    }}
+                    Icon={PhoneIcon}
+                    withIcon={true}
+                    key={4}
+                    label="Numero de téléphone"
+                  />
+                </div>
 
-          <div className="flex flex-col w-full space-y-2 md:space-x-4 md:space-y-0 md:flex-row">
-            <InputComponent
-              value={number}
-              handleChange={(e) => {
-                setNumber(e.target.value);
-              }}
-              Icon={PhoneIcon}
-              withIcon={true}
-              key={4}
-              label="Numero de téléphone"
-            />
-
-       {/*      <Select onValueChange={(e) =>{  setSexe(e);}} defaultValue={"0"}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Sexe" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="0">Homme</SelectItem>
-                <SelectItem value="1">Femme</SelectItem>
-              </SelectContent>
-            </Select>
-{sexe} */}
-            <InputSelectComponent
-              options={sexeOptions}
-              value={sexe}
-              handleChange={(e) => {
-                setSexe(e.target.value);
-              }}
-              Icon={InformationCircleIcon}
-              withIcon={true}
-              key={5}
-              label="Sexe"
-              className="w-2/3"
-            />
-          </div>
-          <InputComponent
-            value={password}
-            handleChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            Icon={LockClosedIcon}
-            withIcon={true}
-            key={6}
-            label="Mot de passe"
-            inputType="password"
-          />
-          <InputComponent
-            value={passwordVeirfy}
-            handleChange={(e) => {
-              setPasswordVerify(e.target.value);
-            }}
-            Icon={LockClosedIcon}
-            withIcon={true}
-            key={7}
-            inputType="password"
-            label="Confirmer le mot de passe"
-          />
-          <div className="flex w-full mt-8 space-x-4">
-            <div className="w-full"></div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    value={number}
+                    handleChange={(e) => {
+                      setNumber(e.target.value);
+                    }}
+                    Icon={PhoneIcon}
+                    withIcon={true}
+                    key={4}
+                    label="Date de Naissance"
+                  />
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="name">Sexe</Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sexe" />
+                        <SelectContent position="popper">
+                          <SelectItem value="Homme">Homme</SelectItem>
+                          <SelectItem value="Femme">Femme</SelectItem>
+                        </SelectContent>
+                      </SelectTrigger>
+                    </Select>
+                  </div>
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    value={password}
+                    handleChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    Icon={LockClosedIcon}
+                    withIcon={true}
+                    key={6}
+                    label="Mot de passe"
+                    inputType="password"
+                  />
+                  <InputComponent
+                    value={passwordVeirfy}
+                    handleChange={(e) => {
+                      setPasswordVerify(e.target.value);
+                    }}
+                    Icon={LockClosedIcon}
+                    withIcon={true}
+                    key={7}
+                    inputType="password"
+                    label="Confirmer le mot de passe"
+                  />
+                </div>
+              </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex justify-end">
             <ButtonComponent
               handleClick={createUser}
               key={8}
               label="Créer le compte"
               full={true}
-              className="w-1/2 mt-4"
+              className="self-end w-full mt-4 md:w-[200px]"
             />
-          </div>
-        </div>
+          </CardFooter>
+        </Card>
       </div>
 
       <div className="flex flex-col items-center justify-between hidden w-1/2 h-full md:block bg-red-50">

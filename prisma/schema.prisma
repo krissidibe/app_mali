@@ -49,7 +49,7 @@ model User {
   birthDate     DateTime?     @db.Date
   nina          String?       @default("")
   address          String?       @default("")
-  certificate          String?       @default("")
+  ninaFile          String?       @default("")
   sexe          String
   password      String
   createdAt     DateTime?     @default(now()) @db.Timestamp(0)
@@ -83,17 +83,34 @@ model Competition {
 
 model Candidature {
   id                  String      @id @default(cuid())
+
+email         String?        
+  
+  image        String?        @default("")
+  
+  number        String?
+  
+  address          String?       @default("")
+
+
   title               String
   content             String?     @db.LongText
   statut              String
   nina                String
-  certificat          String
+  certificat          String?
   diplome             String
   diplomeNumber       String
   placeOfGraduation   String
   countryOfGraduation String
   study               String
   speciality          String
+  certificate         String?
+  ninaFile            String?
+  birthDateFile       String?
+  cassierFile         String?
+  certificatVie       String?
+  certificatVisite    String?
+  diplomeFile         String?
   def                 String?    @default("")
   bac                 String?    @default("")
   licence             String?    @default("")

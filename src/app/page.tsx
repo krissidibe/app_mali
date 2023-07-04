@@ -9,8 +9,25 @@ import { signIn, useSession } from "next-auth/react";
 import { FormEvent, useEffect, useState } from "react";
 import { useModalInfoStore } from "../store/useModalInfoStore";
 import ModalInfo from "@/components/ModalInfo";
-
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 function page() {
   const [email, setEmail] = useState("");
 
@@ -26,20 +43,24 @@ function page() {
 
   useEffect(() => {
     if (session?.status === "authenticated") {
-     router.push("/user");
-   }  
- });
+      router.push("/user");
+    }
+  });
 
   const login2User = async (e: FormEvent) => {
     e.preventDefault();
 
     signIn("credentials", { ...data, redirect: false }).then((callback) => {
+
+    
+
       if (callback?.error) {
         toast.error(callback.error);
       }
 
       if (callback?.ok && !callback?.error) {
         toast.success("Logged in successfully!");
+          router.push("/user");
       }
     });
   };
@@ -92,8 +113,8 @@ function page() {
   return (
     <div className="flex flex-1 w-screen h-screen bg-white ">
       <ModalInfo title="Alert" body={modalData} />
-      <div className="flex flex-col items-center justify-between w-full h-full p-10 md:w-1/2 overscroll-y-auto bg-gray-50">
-        <div className="md:min-w-[450px] w-[353px] items-center flex space-x-2">
+      <div className="flex flex-col items-center justify-between w-full h-full p-10 md:w-1/2 overscroll-y-auto ">
+        <div className="md:min-w-[450px] mt-10 mb-10 justify-center w-[353px] items-center flex flex-col space-y-2">
           <Image
             src="/images/logo.png"
             alt="me"
@@ -104,45 +125,62 @@ function page() {
           <p>DNAJ</p>
         </div>
 
-        <form
-          onSubmit={login2User}
-          className="md:min-w-[380px] max-w-[353px]  justify-center space-y-5 "
-        >
-          <p className="text-[24px]">Connectez-vous à votre compte</p>
-          <InputComponent
-            key={1}
-            label="Email"
-            inputType="email"
-            Icon={EnvelopeIcon}
-            withIcon={true}
-            
-            value={data.email}
-            handleChange={e => setData({ ...data, email: e.target.value })}
-          />
-           <InputComponent
-            key={2}
-            label="Mot de passe"
-            obscureInput={true}
-            Icon={LockClosedIcon}
-            withIcon={true}
-            value={data.password}
-            inputType="password"
-            handleChange={(e) => setData({...data,password:e.target.value})}
-          />
-           <div className="flex w-full space-x-4 ">
-            <ButtonComponent key={1} label="S'inscrire" href={"/signin"} />
-            <ButtonComponent key={2} type="submit" label="Se connecter"   full={true}   />
+        <Card className="w-[380px] mt-10">
+          <CardHeader>
+            <CardTitle>Connectez-vous à votre compte</CardTitle>
+            <CardDescription>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit
+              animi minima autem{" "}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={login2User}>
+              <div className="grid items-center w-full gap-4">
+                <InputComponent
+                  key={1}
+                  label="Email"
+                  inputType="email"
+                  Icon={EnvelopeIcon}
+                  withIcon={true}
+                  value={data.email}
+                  handleChange={(e) =>
+                    setData({ ...data, email: e.target.value })
+                  }
+                />
+                <InputComponent
+                  key={2}
+                  label="Mot de passe"
+                  obscureInput={true}
+                  Icon={LockClosedIcon}
+                  withIcon={true}
+                  value={data.password}
+                  inputType="password"
+                  handleChange={(e) =>
+                    setData({ ...data, password: e.target.value })
+                  }
+                />
+                <div className="flex flex-col space-y-1.5">
+                  <ButtonComponent
+                    key={1}
+                    label="S'inscrire"
+                    href={"/signin"}
+                  />
+                  <ButtonComponent
+                    key={2}
+                    type="submit"
+                    label="Se connecter"
+                    full={true}
+                  />
+                </div>
+              </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Label>Mot de passe oublier ?</Label>
+          </CardFooter>
+        </Card>
 
-      {/*       <ButtonComponent
-              key={4}
-              type="submit"
-              label="Se connecter"
-              //  href={"/user"}
-             
-            /> */}
-          </div>
-        </form>
-        <p className="text-[11px] text-gray-500 max-w-[520px] text-center mt-10 mb-[100px]">
+        <p className="text-[12px] flex-1 text-gray-500 max-w-[400px] text-center mt-10 mb-[100px]">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
           tincidunt neque. Pellentesque vitae commodo justo. Integer tempor
           dignissim tortor, eu elementum arcu dictum non. at tincidunt neque.

@@ -67,6 +67,9 @@
     --ring: 217.2 32.6% 17.5%;
   }
 }
+.filepond--credits {
+  display: none;
+}
  
 @layer base {
   * {

@@ -135,16 +135,25 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
   const formData = await req.formData();
 
   const file = formData.get("file") as Blob | null;
+  const ninaFile = formData.get("ninaFile") as Blob | null;
 
  
 
 
   let fileImage = "";
+  let ninaFileName = "";
 
   try {
     fileImage = await storeImage(file);
   } catch (error) {
     fileImage = formData.get("file")?.toString() ?? "";
+  }
+
+  
+  try {
+    ninaFileName = await storeImage(ninaFile);
+  } catch (error) {
+    ninaFileName = formData.get("ninaFile")?.toString() ?? "";
   }
 
   
@@ -164,7 +173,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
       nina: formData.get("numberNina")?.toString(),
       number: formData.get("number")?.toString(),
       address: formData.get("address")?.toString(),
-      certificate: formData.get("certificate")?.toString(),
+      ninaFile: ninaFileName,
       image: fileImage,
     },
   });

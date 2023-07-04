@@ -1,11 +1,14 @@
 import { Inter } from "next/font/google";
 //import React,{useState} from "react";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; // theme
-import "primereact/resources/primereact.css"; 
+import "primereact/resources/primereact.css";
 import MenuComponent from "../../../components/MenuComponent";
 import SideBarUser from "../../../components/SideBarUser";
 import ModalInfo from "../../../components/ModalInfo";
+import { authOptions } from "@/app/api/authOption";
+import { getServerSession } from "next-auth";
+
 /* const inter = Inter({ subsets: ["latin"] });
  */
 export const metadata = {
@@ -18,35 +21,37 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-
+  const session = await getServerSession(authOptions);
   //const [showMenu, setshowMenu] = useState(false);
   return (
     <html lang="en">
       <body className="flex flex-1 w-full h-screen">
-    <ModalInfo title="Alert" body="kris" /> 
-        
-          <div className="hidden md:block">
-            <SideBarUser />
-          </div>
-          <div className="flex flex-col flex-1">
-            <div className="w-full h-[70px] p-4 bg-gray-50 flex shadow-md  items-center justify-end">
-              <MenuComponent />
-              <div className="flex items-center">
-                <p className="mr-4 text-sm">Aboubacar Sidibé</p>
-                <picture className="self-center w-12 h-12 bg-white rounded-full shadow-md md:self-start">
-                  <img
-                    src={"https://picsum.photos/300/200?random=10"}
-                    alt="image"
-                    className="object-cover w-full h-full rounded-lg rounded-t-lg white"
-                  />
-                </picture>
-              </div>
+        <ModalInfo title="Alert" body="kris" />
+
+        <div className="hidden md:block">
+          <SideBarUser />
+        </div>
+        <div className="flex flex-col flex-1">
+          <div className="w-full h-[70px] p-4 bg-gray-50 flex shadow-md  items-center justify-end">
+            <MenuComponent />
+            <div className="flex items-center justify-center">
+              <p className="mr-4 text-sm">
+              
+                {session?.user?.email}{" "}
+              </p>
+
+              <Avatar>
+                <AvatarImage
+                  src={`${process.env.BASE_URL}${session?.user?.image}`}
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
             </div>
-            <div className="h-full p-4 overflow-y-scroll md:p-10 ">
-              {children}
-            </div>
           </div>
-       
+          <div className="h-full p-4 overflow-y-scroll md:p-10 ">
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );

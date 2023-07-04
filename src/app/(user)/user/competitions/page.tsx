@@ -5,7 +5,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
  
 import SearchComponent from "./SearchComponent";
-
+export const dynamic = "force-dynamic"
 
 type Competition = {
   id: string;
@@ -15,23 +15,11 @@ type Competition = {
 
 async function Competitions() {
  // const [search, setSearch] = useState("")
-/*  const res = await fetch(`${process.env.BASE_URL}/api/user/competition`,{next:{revalidate:1}})
- const datas: Competition[] = await res.json(); */
- const datas = await prisma.competition.findMany({
-  where: {
-    statut: {
-      in: ["1", "2"],
-    },
-  },
-  orderBy: [
-    {
-      createdAt: "desc",
-    },
-    {
-      title: "desc",
-    },
-  ],
-});
+ const res = await fetch(`${process.env.BASE_URL}/api/user/competition`,{
+  cache:"no-store"
+ })
+ const datas: any[] = await res.json();
+ 
   return (
     <div className="flex flex-col">
      <SearchComponent/>
