@@ -34,7 +34,7 @@ const router = useRouter();
         <span className={`self-end text-[12px] px-4 pt-2 mb-2  ${statutData[data.statut].color} `}>{statutData[data.statut].name}</span>
     </div>
       <p className="text-[13px] transition-all duration-700   text-gray-500 flex-1 px-4 mb-3  line-clamp-3  ">
-       {parse(data.content)}
+       {parse(data.content.toString().substring(0,250))}
       </p>
       <span className="self-end text-[13px] px-4 text-gray-500 font-semibold border-t-2 pl-10 pt-1 mr-0"><span className="font-normal" >Date de fin</span> :  {new Date(data.endDateAt).toLocaleDateString("fr-FR")}</span>
       <span className="self-start text-[12px] px-4 py-1 text-blue-500 flex items-center mb-4">Voir plus  <ArrowRightCircleIcon className="w-6 ml-2"/> </span>

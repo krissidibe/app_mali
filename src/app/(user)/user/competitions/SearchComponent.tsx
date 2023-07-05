@@ -9,8 +9,8 @@ import CompetitionList from "./CompetitionList";
 function SearchComponent() {
     const [search, setSearch] = useState("")
   return (
-    <div className="flex items-center pb-2 mb-8 border-b-2 ">
-      <p className="flex-1">Liste des concours</p>{" "}
+    <div className="flex flex-col pb-2 mb-8 border-b-2 md:items-center md:flex-row ">
+      <p className="flex-1 ">Liste des concours</p>{" "}
       <div className="flex px-4 bg-gray-100 rounded-md md:w-[310px]">
         <input
             value={search}
@@ -18,9 +18,11 @@ function SearchComponent() {
           className="w-full p-1 px-3   h-[45px] bg-gray-100  outline-none"
           placeholder="Rechercher"
         />
-        <Link className="flex items-center justify-center cursor-pointer" href={`/user/competitions/search/${search}`}>
-          <MagnifyingGlassIcon className="w-6 text-black " />
-        </Link>
+       {
+        search.length >=3 &&  <Link className="flex items-center justify-center cursor-pointer" href={`/user/competitions/search/${search}`}>
+        <MagnifyingGlassIcon className="w-6 text-black " />
+      </Link>
+       }
       </div>
     </div>
   );

@@ -30,6 +30,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import InputComponent from "@/components/InputComponent";
+import BackComponent from "@/components/BackComponent";
 function CandidatureItem({ data }: any) {
   const searchParams = useSearchParams();
 
@@ -55,11 +56,29 @@ function CandidatureItem({ data }: any) {
   ];
   return (
     <div className="flex flex-col h-full">
+       <BackComponent className="mt-2 mb-4" />
       <p className="pb-2 mb-10 font-semibold border-b-2">
         Les information sur la candidature
       </p>
       <div className="flex flex-col gap-6 md:flex-row ">
-        <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-white border-[1px] border-gray-200 rounded-md scrollbar-hide md:max-w-[600px]">
+     
+     <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-white border-[1px] border-gray-200 rounded-md scrollbar-hide md:max-w-[600px]">
+     <div className="flex justify-between pb-4 mb-4 border-b-2">
+    <p className="font-semibold text-md ">L'etat de votre candidature est : </p>
+      <p className="text-sm font-semibold ">En cours</p>
+    </div>
+     <div className="w-full h-full p-4 my-4  text-sm bg-white border-[1px] border-gray-200 rounded-md scrollbar-hide md:max-w-[600px]">
+  <div className="flex justify-between">
+    <p className="font-semibold text-md ">Message de l'administrateur </p>
+  <RiAlertLine className="w-6 h-6 text-orange-500" />
+  </div>
+      <div className="p-4 my-4 border-t-2">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo harum deleniti amet optio! Obcaecati reprehenderit dignissimos excepturi quae natus. Quisquam sunt dolore ratione quibusdam quia veniam, soluta esse quos aspernatur?
+        
+        
+      </div>
+     </div>
+     <div className="w-full h-full p-4  text-sm bg-white border-[1px] border-gray-200 rounded-md scrollbar-hide md:max-w-[600px]">
           <picture>
             <img
               src={`${process.env.BASE_URL}${result.image}`}
@@ -88,9 +107,10 @@ function CandidatureItem({ data }: any) {
             </span>
           </div>
           <p className="text-[14px] text-gray-500 mb-20">
-            {parse(result.content.toString().substring(0,500)+"..." || "")}
+            {parse(result.content.toString().substring(0,400)+"..." || "")}
           </p>
         </div>
+     </div>
         <div className="w-full h-full overflow-y-scroll scrollbar-hide">
           <Card className="flex-1">
             <CardHeader>
@@ -279,31 +299,31 @@ function CandidatureItem({ data }: any) {
                 tempor Pellentesque vitae Integer tempor
               </CardDescription>
               <div className="grid gap-6 mt-4 md:grid-cols-2">
-              {user.def != "non renseigné" && fileFunction(
+              {user.def.toString().includes("files/")     && fileFunction(
                   "Def",
                   "",
                   user.def
                 )}
               
-              {user.bac != "non renseigné" && fileFunction(
+              {user.bac.toString().includes("files/")  && fileFunction(
                   "Bac",
                   "",
                   user.bac
                 )}
               
-              {user.licence != "non renseigné" && fileFunction(
+              {user.licence.toString().includes("files/")  && fileFunction(
                   "Licence",
                   "",
                   user.licence
                 )}
               
-              {user.master1 != "non renseigné" && fileFunction(
+              {user.master1.toString().includes("files/")  && fileFunction(
                   "Master1",
                   "",
                   user.master1
                 )}
               
-              {user.master2 != "non renseigné" && fileFunction(
+              {user.master2.toString().includes("files/")  && fileFunction(
                   "Master2",
                   "",
                   user.master2

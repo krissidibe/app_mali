@@ -47,6 +47,7 @@ model User {
   lastName      String
   number        String
   birthDate     DateTime?     @db.Date
+  placeBirthDate     String?       @default("")
   nina          String?       @default("")
   address          String?       @default("")
   ninaFile          String?       @default("")
@@ -92,7 +93,7 @@ email         String?
   
   address          String?       @default("")
 
-
+   message          String?       @default("")
   title               String
   content             String?     @db.LongText
   statut              String
@@ -106,6 +107,7 @@ email         String?
   speciality          String
   certificate         String?
   ninaFile            String?
+  requestLetter            String?
   birthDateFile       String?
   cassierFile         String?
   certificatVie       String?
@@ -122,6 +124,7 @@ email         String?
   authorId            String
   competitionId       String
   birthDate           DateTime    @db.Date
+  placeBirthDate     String?       @default("")
   firstName           String
   lastName            String
   sexe                String

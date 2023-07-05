@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Toast } from "primereact/toast";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AlertModalResponse from "@/components/Modals/AlertModalResponse";
 import Link from "next/link";
 import { FaDownload } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -31,7 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-
+import dayjs from "dayjs";
 import {
   EnvelopeIcon,
   LockClosedIcon,
@@ -97,6 +98,7 @@ function UserProfile({ data }) {
     formData.append("number", number);
     formData.append("sexe", sexe);
     formData.append("birthDate", birthDate);
+    formData.append("placeBirthDate", placeBirthDate);
     formData.append("numberNina", numberNina);
     formData.append("address", address);
     formData.append("ninaFile", ninaFile);
@@ -113,6 +115,7 @@ function UserProfile({ data }) {
     console.log(dataNew);
 
     if (dataNew.user) {
+      showDialogClick.current.click();
       setShowModal((x) => (x = true));
       setMessage(dataNew.message);
       useRouter.refresh();
@@ -124,12 +127,14 @@ function UserProfile({ data }) {
   const [birthDate, setBirthDate] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [placeBirthDate, setPlaceBirthDate] = useState("");
+  
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [sexe, setSexe] = useState("");
   const [ninaFile, setNinaFile] = useState("");
   const [address, setAddress] = useState("");
-
+const showDialogClick = useRef(null)
   const [numberNina, setNumberNina] = useState("");
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -144,9 +149,10 @@ function UserProfile({ data }) {
     setAddress(data.address ?? "");
     setNinaFile(data.ninaFile ?? "");
     setNumberNina(data.nina ?? "");
-    setBirthDate(new Date(data.birthDate));
+    setSexe(data.sexe ?? "");
+    setPlaceBirthDate(data.placeBirthDate ?? "");
+    setBirthDate( dayjs(new Date(data.birthDate)).format("YYYY-MM-DD")   );
     setIsLoading((x) => (x = false));
-    setSexe(data.sexe);
   };
 
   useEffect(() => {
@@ -163,14 +169,19 @@ function UserProfile({ data }) {
 
   return (
     <div className="inset-0 ">
-      {showModal && (
+  {/*     {showModal && (
         <ModalComponent
           rightButtonLabel="Retour"
           rightButtonAction={() => setShowModal((x) => (x = false))}
           content={message}
           title={"Message"}
         />
-      )}
+      )} */}
+
+<AlertModalResponse title="Alert" refModal={showDialogClick} message={message} handleClick={()=>{router.back()}}  />
+ 
+
+
 
       <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-10 md:flex-row">
         <form
@@ -274,19 +285,35 @@ function UserProfile({ data }) {
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
-                  <InputComponent
-                    value={number}
+                
+                <InputComponent
+                    value={birthDate}
                     handleChange={(e) => {
-                      setNumber(e.target.value);
+                      setBirthDate(e.target.value);
                     }}
                     Icon={PhoneIcon}
                     withIcon={true}
                     key={4}
+                    inputType="date"
                     label="Date de Naissance"
                   />
+                   <InputComponent
+                    value={placeBirthDate}
+                    handleChange={(e) => {
+                      setPlaceBirthDate(e.target.value);
+                    }}
+                    Icon={PhoneIcon}
+                    withIcon={true}
+                    key={4}
+                    inputType=""
+                    label="Lieu de Naissance"
+                  />
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Sexe</Label>
-                    <Select>
+                  <Label htmlFor="name">Sexe</Label>
+                    <Select
+                      defaultValue={data.sexe}
+                      onValueChange={(e) => setSexe(e)}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Sexe" />
                         <SelectContent position="popper">
@@ -295,18 +322,8 @@ function UserProfile({ data }) {
                         </SelectContent>
                       </SelectTrigger>
                     </Select>
+                    
                   </div>
-                </div>
-
-                <div className="grid gap-6 md:grid-cols-2">
-                  <InputComponent
-                    value={number}
-                    handleChange={(e) => {
-                      setNumber(e.target.value);
-                    }}
-                    key={1}
-                    label="Numero du téléphone"
-                  />
                   <InputComponent
                     key={1}
                     label="Adresse complete"
@@ -316,6 +333,8 @@ function UserProfile({ data }) {
                     }}
                   />
                 </div>
+
+                
 
                 <div className="grid gap-6 md:grid-cols-2">
                   <InputComponent

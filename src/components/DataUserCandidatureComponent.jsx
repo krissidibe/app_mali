@@ -41,11 +41,11 @@ const columns = [
     
     sortable: true,
   },
-  {
+/*   {
     name: "Description",
     selector: (row) => row.competition.content,
     format: (row) => parse(row.competition.content.substring(0,70)  || ""),
-  },
+  }, */
   {
     name: "Statut",
     selector: (row) => row.statut,
@@ -59,13 +59,7 @@ const mobileColumns = [
     selector: (row) => row.competition.title,
     format: (row) => row.competition.title.toUpperCase(),
   },
-  {
-    name: "Date Fin",
-    selector: (row) => row.competition.endDateAt,
-    format: (row) => new Date(row.competition.endDateAt).toLocaleDateString("fr-FR"),
-    
-    sortable: true,
-  },
+ 
   
   {
     name: "Statut",
@@ -129,8 +123,9 @@ export default function DataUserCandidatureComponent({datas}) {
   /*   <div className="hidden md:block" >   <DataUserCandidatureComponent isMobileScreen={false} /></div>
   <div className="md:hidden" >   <DataUserCandidatureComponent isMobileScreen={true} /></div> */
   return (
-    <div>
-      <div className="hidden md:block">
+    <div className="w-screen md:w-full md:p-4 ">
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam voluptatibus ea, nostrum id laudantium, illum placeat harum quos ad fugiat vitae reprehenderit ut, laborum autem voluptate aut omnis repellendus dignissimos?</p>
+      <div className="hidden w-full md:max-w-full md:block">
         {" "}
         <DataTable
           pagination
@@ -141,7 +136,7 @@ export default function DataUserCandidatureComponent({datas}) {
           fixedHeader={true}
           noHeader={false}
           highlightOnHover
-          className="border-2 rounded"
+          className="p-0 m-0 border-2 rounded"
           columns={columns}
           data={datas.candidatures}
           onRowClicked={  row => {
@@ -171,7 +166,7 @@ export default function DataUserCandidatureComponent({datas}) {
           }}
         />
       </div>
-      <div className="md:hidden">
+      <div className="w-full md:hidden">
         {" "}
         <DataTable
           pagination
@@ -182,9 +177,34 @@ export default function DataUserCandidatureComponent({datas}) {
           fixedHeader={true}
           noHeader={false}
           highlightOnHover
-          className="border-2 rounded"
+          className="p-0 m-0 border-2 rounded"
           columns={mobileColumns}
           data={datas.candidatures}
+          onRowClicked={  row => {
+            
+            const user = {
+              firstName:datas.firstName,
+              lastName:datas.lastName,
+              birthDate:datas.birthDate,
+              sexe:datas.sexe,
+              email:datas.email,
+              number:datas.number,
+              nina:datas.nina,
+              image:datas.image,
+             
+            }
+        //    alert(JSON.stringify(user));
+        //  return
+     /*        router.replace(`/user/candidatures/${row.id}`,{
+              query: { data: row },
+            }) */
+            router.push(`/user/candidatures/${row.id}?data=${JSON.stringify(row)}&user=${JSON.stringify(user)}`,
+              {
+                query: { data: row },
+              }
+              
+             )
+          }}
         />
       </div>
     </div>

@@ -20,14 +20,15 @@ export default async function CompetitionListSearch({
 
  
     {datas.map((data) => (
-        <Link key={data.id} href={`/user/competitions/${data.id}`}>
-      {/*  @ts-ignore  */}
+       
           <CompetitionCardComponent
             key={data.id}
             data={data}
             imageUrl={`${process.env.BASE_URL}${data.image}`}
           />
-        </Link>
+          
+     
+        
       ))} 
     </div>
   );

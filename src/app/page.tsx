@@ -111,7 +111,7 @@ function page() {
     }
   };
   return (
-    <div className="flex flex-1 w-screen h-screen bg-white ">
+    <div className="flex flex-1 w-screen h-screen overflow-y-scroll bg-white">
       <ModalInfo title="Alert" body={modalData} />
       <div className="flex flex-col items-center justify-between w-full h-full p-10 md:w-1/2 overscroll-y-auto ">
         <div className="md:min-w-[450px] mt-10 mb-10 justify-center w-[353px] items-center flex flex-col space-y-2">
@@ -125,7 +125,7 @@ function page() {
           <p>DNAJ</p>
         </div>
 
-        <Card className="w-[380px] mt-10">
+        <Card className="md:w-[400px] w-full mt-10">
           <CardHeader>
             <CardTitle>Connectez-vous à votre compte</CardTitle>
             <CardDescription>
@@ -160,16 +160,17 @@ function page() {
                   }
                 />
                 <div className="flex flex-col space-y-1.5">
-                  <ButtonComponent
-                    key={1}
-                    label="S'inscrire"
-                    href={"/signin"}
-                  />
+                 
                   <ButtonComponent
                     key={2}
                     type="submit"
-                    label="Se connecter"
+                    label="SE CONNECTER"
                     full={true}
+                  />
+                   <ButtonComponent
+                    key={1}
+                    label="S'INSCRIRE"
+                    href={"/signin"}
                   />
                 </div>
               </div>
@@ -180,7 +181,7 @@ function page() {
           </CardFooter>
         </Card>
 
-        <p className="text-[12px] flex-1 text-gray-500 max-w-[400px] text-center mt-10 mb-[100px]">
+        <p className="text-[12px] pb-8 text-gray-500 max-w-[400px] text-center mt-10 mb-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
           tincidunt neque. Pellentesque vitae commodo justo. Integer tempor
           dignissim tortor, eu elementum arcu dictum non. at tincidunt neque.

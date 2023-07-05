@@ -1,9 +1,10 @@
 import React from 'react'
 import DataUserCandidatureComponent from '../../../../components/DataUserCandidatureComponent'
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
- import {prisma} from '@/utils/prisma'
+ 
 import { authOptions } from '@/app/api/authOption';
 import { getServerSession } from 'next-auth';
+export const dynamic = "force-dynamic";
 async function Candidatures() {
  
   const session = await getServerSession(authOptions)
@@ -15,13 +16,13 @@ async function Candidatures() {
     <div className="flex flex-col" >
         <div className="flex items-center pb-2 mb-0 border-b-2 ">
         <p className="flex-1">Liste des Candidatures</p>{" "}
-        <div className="flex px-4 bg-gray-100 rounded-md md:max-w-[310px] max-w-[200px] ">
+       {/*  <div className="flex px-4 bg-gray-100 rounded-md md:max-w-[310px] max-w-[200px] ">
           <input
             className="w-full p-1 px-3   h-[45px] bg-gray-100  outline-none"
             placeholder="Rechercher"
           />
           <MagnifyingGlassIcon className="w-6 text-black " /> 
-        </div>
+        </div> */}
       </div>
 
  

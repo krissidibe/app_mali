@@ -35,8 +35,18 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const { email, firstName, lastName, number, sexe, password, type } =
-    await req.json();
+  const {
+    email,
+    firstName,
+    lastName,
+    number,
+    sexe,
+    birthDate,
+    placeBirthDate,
+    adress,
+    password,
+    type,
+  } = await req.json();
 
   if (type == "create") {
     try {
@@ -58,6 +68,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
           email,
           number,
           sexe,
+          birthDate: new Date(birthDate),
+          placeBirthDate,
+          address: adress,
           password: passwordCryp,
         },
       });
@@ -71,12 +84,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
   }
   if (type == "user") {
- 
-   
     try {
       const user = await prisma.user.findUnique({
         where: {
-          email:email,
+          email: email,
         },
       });
       if (user == null)
@@ -137,9 +148,6 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
   const file = formData.get("file") as Blob | null;
   const ninaFile = formData.get("ninaFile") as Blob | null;
 
- 
-
-
   let fileImage = "";
   let ninaFileName = "";
 
@@ -149,17 +157,12 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
     fileImage = formData.get("file")?.toString() ?? "";
   }
 
-  
   try {
     ninaFileName = await storeImage(ninaFile);
   } catch (error) {
     ninaFileName = formData.get("ninaFile")?.toString() ?? "";
   }
 
-  
- 
-  
- 
   const val = formData.get("birthDate");
   const dataNew = await prisma.user.update({
     where: {
@@ -170,6 +173,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
       lastName: formData.get("lastName")?.toString(),
       sexe: formData.get("sexe")?.toString(),
       birthDate: new Date(val ? val.toString() : Date.now()),
+      placeBirthDate: formData.get("placeBirthDate")?.toString() ?? "",
       nina: formData.get("numberNina")?.toString(),
       number: formData.get("number")?.toString(),
       address: formData.get("address")?.toString(),
@@ -182,7 +186,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
       user: dataNew,
       message: `Votre profile est modifier`,
     })
-  ); 
+  );
 
   // saveFile(formData.get("file"))
   return new Response(

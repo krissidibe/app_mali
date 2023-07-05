@@ -5,11 +5,13 @@ import InputComponent from "@/components/InputComponent";
 import ModalInfo from "@/components/ModalInfo";
 import { useModalInfoStore } from "@/store/useModalInfoStore";
 import { getServerSession } from "next-auth";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams,useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { FaDownload } from "react-icons/fa";
 import { RiAlertLine, RiDeleteBin6Line } from "react-icons/ri";
+import { BiArrowBack} from "react-icons/bi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AlertModalResponse from "@/components/Modals/AlertModalResponse";
 
 import React, {
   FormEvent,
@@ -45,6 +47,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import  BackComponent from "@/components/BackComponent";
 import { useSession } from "next-auth/react";
 import dayjs from "dayjs";
 export default function ApplyItem(data, competitionId,fileAttach) {
@@ -53,19 +56,21 @@ export default function ApplyItem(data, competitionId,fileAttach) {
   const [firstName, setFirstName] = useState(data.data.data.firstName);
 
   const [image, setImage] = useState(data.data.data.image);
-  const [birthDate, setBirthDate] = useState(null);
+  const [birthDatePlace, setBirthDatePlace] = useState(data.data.data.placeBirthDate);
 
   const [email, setEmail] = useState(data.data.data.email);
   const [number, setNumber] = useState(data.data.data.number);
   const [address, setAddress] = useState(data.data.data.address);
 
   const [numberNina, setNumberNina] = useState(data.data.data.numberNina);
-
+  const showDialogClick = useRef(null)
   const [date, setDate] = useState(
-    dayjs(data.data.birthDate).format("DD/MM/YYYY")
+    
+    dayjs(data.data.data.birthDate).format("DD/MM/YYYY")
   );
 
   const router = useSearchParams();
+  const routerPaht = useRouter();
 
   const sexeOptions = [
     {
@@ -172,7 +177,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
 
     setModalData((x) => (x = dataNew.message));
     if (dataNew) {
-      modal.onOpen();
+      showDialogClick.current.click()
     }
   };
   const defCheck = data.data.fileAttach.def;
@@ -183,9 +188,14 @@ export default function ApplyItem(data, competitionId,fileAttach) {
  
 
   return (
+    <>
+     
+<AlertModalResponse title="Alert" refModal={showDialogClick} message={modalData} handleClick={()=>{modalData == "La candidature est créer" ||  modalData == "Vous avez déja postuler"  ? routerPaht.back() : null}}  />
+ <BackComponent className="mt-4" />
     <div className="flex flex-col md:flex-row md:space-x-10">
-      
-      <Card className="flex-1 my-10 md:max-w-[500px]">
+     
+
+      <Card className="flex-1 mb-10 mt-6 md:max-w-[500px]">
         <CardHeader>
           <CardTitle className="mb-2">Mes informations</CardTitle>
           <CardDescription>
@@ -206,13 +216,13 @@ export default function ApplyItem(data, competitionId,fileAttach) {
             <div className="grid items-center w-full gap-4">
               <div className="grid gap-6 md:grid-cols-2">
                 <InputComponent
-                  value={lastName}
+                  value={firstName}
                   readonly={true}
                   key={1}
                   label="Nom"
                 />
                 <InputComponent
-                  value={firstName}
+                  value={lastName}
                   readonly={true}
                   key={2}
                   label="Prénom"
@@ -245,24 +255,30 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   label="Date de naissance"
                 />
                 <InputComponent
-                  value={sexe}
+                  value={birthDatePlace}
+                  inputType="text"
+                  readonly={true}
+                  key={3}
+                  label="Lieu de naissance"
+                />
+                <InputComponent
+                  value={data.data.data.sexe}
                   inputType="text"
                   readonly={true}
                   key={4}
                   label="Sexe"
                 />
+                <InputComponent
+                  value={data.data.data.address}
+                  inputType="text"
+                  readonly={true}
+                  key={4}
+                  label="Adresse physique"
+                />
               </div>
               <div className="grid gap-6 md:grid-cols-2">
                 <InputComponent value={nina} key={5} label="Numéro nina" />
-                <InputComponent
-                  key={1}
-                  label="Adresse complete"
-                  value={address}
-                  readonly={true}
-                />
-              </div>
-
-              <div className="grid gap-6 md:grid-cols-2">
+            
                 {ninaFile.length > 10 ? (
                   <div>
                     <Label>Carte nina ou fiche individuelle</Label>
@@ -314,6 +330,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
         encType="multipart/form-data"
         className="flex-1 my-10 "
       >
+
         <Card>
           <CardHeader className="mb-4">
             <CardTitle>Les informations a renseigné pour le concours</CardTitle>
@@ -324,7 +341,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ModalInfo title="Alert" body={modalData} />
+           
             <div className="grid items-center w-full gap-4">
               <div className="grid gap-6 md:grid-cols-2">
                 <InputComponent
@@ -531,5 +548,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
         </Card>
       </form>
     </div>
+    
+    </>
   );
 }

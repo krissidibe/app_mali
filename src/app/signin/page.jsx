@@ -1,9 +1,11 @@
 "use client";
 import Image from "next/image";
 import InputComponent from "../../components/InputComponent";
+import InputDateComponent from "../../components/InputDateComponent";
 import InputSelectComponent from "../../components/InputSelectComponent";
 import ButtonComponent from "../../components/ButtonComponent";
 import Link from "next/link";
+import dayjs from "dayjs";
 import {
   Select,
   SelectContent,
@@ -27,18 +29,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState } from "react";
-import { error } from "console";
+import { useRef, useState } from "react";
+
 import { useRouter } from "next/navigation";
 import { useModalInfoStore } from "@/store/useModalInfoStore";
 import ModalInfo from "@/components/ModalInfo";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import AlertModalResponse from "@/components/Modals/AlertModalResponse";
 export default function Signin() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
+  const [placeBirthDate, setPlaceBirthDate] = useState("");
+  const [adress, setAdress] = useState("");
+  const [date, setDate] = useState(new Date(Date.now()));
+
+  const showDialogClick = useRef(null);
   const sexeOptions = [
     {
       label: "Homme",
@@ -49,7 +57,7 @@ export default function Signin() {
       value: 1,
     },
   ];
-  const [sexe, setSexe] = useState("");
+  const [sexe, setSexe] = useState("Homme");
   const [password, setPassword] = useState("");
   const [passwordVeirfy, setPasswordVerify] = useState("");
 
@@ -57,6 +65,9 @@ export default function Signin() {
   const [modalData, setModalData] = useState("");
   const router = useRouter();
   const createUser = async () => {
+    //dayjs(date).format("DD/MM/YYYY")
+    let birthDate = date;
+
     const res = await fetch(`/api/user/author`, {
       body: JSON.stringify({
         firstName,
@@ -64,6 +75,9 @@ export default function Signin() {
         email,
         number,
         sexe,
+        birthDate,
+        placeBirthDate,
+        adress,
         password,
         type: "create",
       }),
@@ -75,15 +89,23 @@ export default function Signin() {
     const data = await res.json();
     console.log(data);
     if (data.message) {
-      modal.onOpen();
+      /*  modal.onOpen(); */
       setModalData(data.message);
+      showDialogClick.current.click();
     }
   };
 
   return (
     <div className="flex flex-1 w-screen h-screen bg-black ">
-      <ModalInfo title="Alert" body={modalData} />
       <div className="flex flex-col items-center w-full h-full p-10 overflow-y-scroll md:w-1/2 bg-gray-50">
+        <AlertModalResponse
+          title="Alert"
+          refModal={showDialogClick}
+          message={modalData}
+          handleClick={() => {
+            router.back();
+          }}
+        />
         <div className="md:min-w-[450px] mt-10 mb-10 justify-center w-[353px] items-center flex flex-col space-y-2">
           <Image
             src="/images/logo.png"
@@ -94,16 +116,18 @@ export default function Signin() {
           />
           <p>DNAJ</p>
         </div>
-   
-        <Card className="max-w-[400px] my-10 md:max-w-[500px]">
-        <CardTitle className="px-4 mt-4 text-sm cursor-pointer" onClick={()=>{
-              router.back()
-            }}>Retour</CardTitle>
+
+        <Card className="max-w-[400px]  md:max-w-[500px]">
+          <CardTitle
+            className="px-4 mt-4 text-sm cursor-pointer"
+            onClick={() => {
+              router.back();
+            }}
+          >
+            Retour
+          </CardTitle>
           <CardHeader>
             <div className="flex items-center mb-4 space-x-4">
-              
-         
-         
               <CardTitle>Inscription</CardTitle>
             </div>
             <CardDescription>
@@ -163,18 +187,34 @@ export default function Signin() {
 
                 <div className="grid gap-6 md:grid-cols-2">
                   <InputComponent
-                    value={number}
+                    value={date}
                     handleChange={(e) => {
-                      setNumber(e.target.value);
+                      setDate(e.target.value);
                     }}
                     Icon={PhoneIcon}
                     withIcon={true}
                     key={4}
+                    inputType="date"
                     label="Date de Naissance"
                   />
+                  <InputComponent
+                    value={placeBirthDate}
+                    handleChange={(e) => {
+                      setPlaceBirthDate(e.target.value);
+                    }}
+                    Icon={PhoneIcon}
+                    withIcon={true}
+                    key={4}
+                    inputType=""
+                    label="Lieu de Naissance"
+                  />
+
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="name">Sexe</Label>
-                    <Select>
+                    <Select
+                      defaultValue={sexe}
+                      onValueChange={(e) => setSexe(e)}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Sexe" />
                         <SelectContent position="popper">
@@ -184,6 +224,16 @@ export default function Signin() {
                       </SelectTrigger>
                     </Select>
                   </div>
+                  <InputComponent
+                    value={adress}
+                    handleChange={(e) => {
+                      setAdress(e.target.value);
+                    }}
+                    Icon={PhoneIcon}
+                    withIcon={true}
+                    key={4}
+                    label="Adresse physique"
+                  />
                 </div>
                 <div className="grid gap-6 md:grid-cols-2">
                   <InputComponent
