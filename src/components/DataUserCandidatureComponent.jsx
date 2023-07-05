@@ -29,7 +29,7 @@ const statutOptions = [
 
 const columns = [
   {
-    name: "Nom",
+    name: "Intitulé du concours",
    selector: (row) => row.competition.title,
     format: (row) => row.competition.title.toUpperCase(),
    
@@ -55,7 +55,7 @@ const columns = [
 ];
 const mobileColumns = [
   {
-    name: "Nom",
+    name: "Intitulé du concours",
     selector: (row) => row.competition.title,
     format: (row) => row.competition.title.toUpperCase(),
   },
@@ -157,7 +157,7 @@ export default function DataUserCandidatureComponent({datas}) {
      /*        router.replace(`/user/candidatures/${row.id}`,{
               query: { data: row },
             }) */
-            router.push(`/user/candidatures/${row.id}?data=${JSON.stringify(row)}&user=${JSON.stringify(user)}`,
+            router.push(`/user/candidatures/${row.id}?data=${JSON.stringify(row)}`,
               {
                 query: { data: row },
               }
@@ -198,7 +198,7 @@ export default function DataUserCandidatureComponent({datas}) {
      /*        router.replace(`/user/candidatures/${row.id}`,{
               query: { data: row },
             }) */
-            router.push(`/user/candidatures/${row.id}?data=${JSON.stringify(row)}&user=${JSON.stringify(user)}`,
+            router.push(`/user/candidatures/${row.id}?data=${JSON.stringify(row)}`,
               {
                 query: { data: row },
               }

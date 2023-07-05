@@ -4,6 +4,7 @@ import ButtonComponent from "../../../../../components/ButtonComponent";
 import InputComponent from "../../../../../components/InputComponent";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { Switch } from "@/components/ui/switch";
+import dayjs from "dayjs";
 import {
   EditorState,
   ContentState,
@@ -18,6 +19,7 @@ import { Calendar, CalendarChangeEvent } from "primereact/calendar";
 import { convertFromHTML, convertToHTML } from "draft-convert";
 import { redirect, useRouter } from "next/navigation";
 
+import AlertModalResponse from "@/components/Modals/AlertModalResponse";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
   {
@@ -40,12 +42,13 @@ function EditorComponent({ value, handleChange }) {
 function CompetitionItem({ params, data }) {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState("");
   const imageRef = useRef(null);
   const [image, setImage] = useState(data.image);
   const [title, setTitle] = useState(data.title);
   const [ageMax, setAgeMax] = useState(data.ageMax);
   const [ageMin, setAgeMin] = useState(data.ageMin);
-
+  const showDialogClick = useRef(null)
   const [content, setContent] = useState(
     EditorState.createWithContent(convertFromHTML(data.content))
   );
@@ -64,8 +67,8 @@ function CompetitionItem({ params, data }) {
   const [master2, setMaster2] = useState(data.master2);
   
   const [statut, setStatutSelect] = useState(statutData[data.statut]);
-  const [startDateAt, setStartDateAt] = useState(data.startDateAt);
-  const [endDateAt, setEndDateAt] = useState(data.endDateAt);
+  const [startDateAt, setStartDateAt] = useState( dayjs(new Date(data.startDateAt)).format("YYYY-MM-DD")  );
+  const [endDateAt, setEndDateAt] = useState(dayjs(new Date(data.endDateAt)).format("YYYY-MM-DD"));
 
   const updateData = async (e) => {
     e.preventDefault();
@@ -106,7 +109,10 @@ function CompetitionItem({ params, data }) {
 
     const dataNew = await res.json();
     if (dataNew.user) {
-      alert("le concours est modifier");
+      
+
+      showDialogClick.current.click()
+      setMessage("Le concours est modifier")
     }
   };
 
@@ -129,14 +135,23 @@ function CompetitionItem({ params, data }) {
     const data = await res.json();
 
     if (data.user) {
-      alert("le concours est supprimer");
-      router.replace("/admin/competitions");
-    }
+
+      showDialogClick.current.click()
+      setMessage("le concours est supprimer")
+      
+       
+  }
   };
 
   /* http://localhost:3000${image} */
   return (
     <form onSubmit={(e) => updateData(e)} className="flex flex-col">
+               
+<AlertModalResponse title="Alert" refModal={showDialogClick} message={message} handleClick={()=>{ 
+  
+  router.refresh()
+ router.push("/admin/competitions")
+}}  />
       <p className="mb-2 text-lg font-bold">Phtoto de couverture</p>
       <picture
         onClick={() => {
@@ -194,30 +209,29 @@ function CompetitionItem({ params, data }) {
       </div>
       <div className="flex w-full gap-4 my-2">
         <div className="flex gap-4 ">
-          <div className="flex flex-col w-full">
-            <p className="text-[14px] text-gray-500 font-semibold mb-2  overflow-ellipsis">
-              Date debut
-            </p>
-            <div className="flex w-full card justify-content-center">
-              <Calendar
-                value={startDateAt}
-                className="w-full"
-                onChange={(e) => setStartDateAt(e.value)}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col w-full">
-            <p className="text-[14px] text-gray-500 font-semibold mb-2  overflow-ellipsis">
-              Date fin
-            </p>
-            <div className="flex w-full card justify-content-center">
-              <Calendar
-                value={endDateAt}
-                className="w-full"
-                onChange={(e) => setEndDateAt(e.value)}
-              />
-            </div>
-          </div>
+          
+        <InputComponent
+                    value={startDateAt}
+                    handleChange={(e) => {
+                      setStartDateAt(e.target.value);
+                    }}
+                   
+                    withIcon={true}
+                    key={4}
+                    inputType="date"
+                    label="Date debut"
+                  />
+          <InputComponent
+                    value={endDateAt}
+                    handleChange={(e) => {
+                      setEndDateAt(e.target.value);
+                    }}
+                   
+                    withIcon={true}
+                    key={4}
+                    inputType="date"
+                    label="Date fin"
+                  />
         </div>
         <div className="flex gap-4 ">
           <InputComponent

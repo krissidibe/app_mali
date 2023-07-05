@@ -7,6 +7,7 @@ import {prisma} from '@/utils/prisma'
  
 import { authOptions } from "@/app/api/authOption";
 import ApplyItem from "./pageItem";
+import BackComponent from "@/components/BackComponent";
 //import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export const dynamic = "force-dynamic";
 async function Home({
@@ -38,10 +39,19 @@ async function Home({
 
   return (
     <div className="flex flex-col">
-         
-    
+          <BackComponent className="mt-4" />
+  <p className="my-4 font-bold">Intutilé du concours : {file.data.title}   </p>
+
+  {
+  
+  new Date(file.data.endDateAt) > new Date(Date.now()) && 
+  file.data.statut == "1" ?  <ApplyItem data={{data:user,competitionId:params.competitionId,fileAttach:fileAttach}} />   : <div>
+    Non disponible
+  </div>
+
+  }
        
-    <ApplyItem data={{data:user,competitionId:params.competitionId,fileAttach:fileAttach}} />  
+   
       
     </div>
   );

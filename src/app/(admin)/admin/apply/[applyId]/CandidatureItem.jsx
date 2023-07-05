@@ -1,26 +1,24 @@
 "use client";
 
+import React, { useState, useRef } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import parse from "html-react-parser";
+import ButtonComponent from "@/components/ButtonComponent";
+import { useModalInfoStore } from "@/store/useModalInfoStore";
+import ModalInfo from "@/components/ModalInfo";
+import dayjs from "dayjs";
 import Link from "next/link";
-
-import { Label } from "@/components/ui/label";
+import { RiAlertLine } from "react-icons/ri";
+import { Label } from "@radix-ui/react-label";
 import { FaDownload } from "react-icons/fa";
-import { RiAlertLine, RiDeleteBin6Line } from "react-icons/ri";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-import React from "react";
+import InputComponent from "@/components/InputComponent";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Card,
   CardContent,
@@ -29,22 +27,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import InputComponent from "@/components/InputComponent";
-import BackComponent from "@/components/BackComponent";
-import dayjs from "dayjs";
-function CandidatureItem({ data }: any) {
+
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import AlertModalResponse from "@/components/Modals/AlertModalResponse";
+import { useRouter } from "next/navigation";
+
+function CandidatureItem({datas}) {
   const searchParams = useSearchParams();
+  const data = datas;
+  const dataUser = datas;
 
-  const result = data.competition;
-  const user = data;
-
-  const statutData = [
-    { name: "Brouillon", code: "0", color: "text-black" },
-    { name: "Ouvert", code: "1", color: "text-green-500" },
-    { name: "Fermé", code: "2", color: "text-orange-500" },
-    { name: "Suspendu", code: "3", color: "text-red-500" },
-  ];
-
+  const result = datas;
+  const user = datas;
+const router = useRouter()
   const statutOptions = [
     {
       label: "En cours de validation",
@@ -54,84 +49,58 @@ function CandidatureItem({ data }: any) {
     {
       label: "Valider",
       value: 1,
-      color: "bg-green-500"
+      color: "bg-green-500",
     },
     {
       label: "refuser",
       value: 3,
-      color: "bg-red-500"
+      color: "bg-red-500",
     },
   ];
 
-  const sexeOptions = [
-    {
-      label: "Homme",
-      value: 0,
-    },
-    {
-      label: "Femme",
-      value: 1,
-    },
-  ];
+  const modal = useModalInfoStore();
+  const [modalData, setModalData] = useState("");
+  const [statut, setStatut] = useState(data.statut);
+  const [messageAdmin, setMessageAdmin] = useState(data.message);
+  const showDialogClick = useRef(null)
+  const updateApply = async (value) => {
+    const res = await fetch(`/api/admin/candidature`, {
+      body: JSON.stringify({
+        id: result.id,
+        statut: value,
+        message: messageAdmin,
+      }),
+      headers: {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      method: "PATCH",
+    });
+    const data = await res.json();
+    console.log(data);
+
+    setModalData((x) => (x = data.message));
+    if (data) {
+      showDialogClick.current.click();
+    //  modal.onOpen();
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
-       <BackComponent className="mt-2 mb-4" />
+     
+      <AlertModalResponse title="Alert" refModal={showDialogClick} message={"La candidature est modifier"} handleClick={()=>{
+        router.refresh()
+        router.back()
+      }}  />
+ 
+
       <p className="pb-2 mb-10 font-semibold border-b-2">
         Les information sur la candidature
       </p>
-      <div className="flex flex-col gap-6 md:flex-row ">
-     
-     <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-white border-[1px] border-gray-200 rounded-md scrollbar-hide md:max-w-[600px]">
-     <div className="flex justify-between pb-4 mb-4 border-b-2">
-    <p className="font-semibold text-md ">L'etat de votre candidature est : </p>
-      <p className={`text-sm font-semibold text-white p-2 rounded ${statutOptions[data.statut].color}`}> {statutOptions[data.statut].label } </p>
-    </div>
-     <div className="w-full h-full p-4 my-4  text-sm bg-white border-[1px] border-gray-200 rounded-md scrollbar-hide md:max-w-[600px]">
-  <div className="flex justify-between">
-    <p className="font-semibold text-md ">Message de l'administrateur </p>
-  <RiAlertLine className="w-6 h-6 text-orange-500" />
-  </div>
-      <div className="p-4 my-4 border-t-2">
-      {data.message}
-        
-        
-      </div>
-     </div>
-     <div className="w-full h-full p-4  text-sm bg-white border-[1px] border-gray-200 rounded-md scrollbar-hide md:max-w-[600px]">
-          <picture>
-            <img
-              src={`${process.env.BASE_URL}${result.image}`}
-              alt="image"
-              className="object-cover w-full max-h-[310px] md:max-h-[410px]  rounded-lg"
-            />
-          </picture>
-
-          <h1 className="my-4 font-bold ">{result.title}</h1>
-          <div className="flex flex-col items-center p-4 mb-4 rounded-lg md:items-end bg-slate-100">
-            <span
-              className={`text-[14px]  text-gray-500  ${
-                statutData[result.statut].color
-              }  `}
-            >
-              Etat du concours : {statutData[result.statut].name}
-            </span>
-            <span className="text-[14px]  text-gray-500   ">
-              Date : du{" "}
-              {new Date(result.startDateAt).toLocaleDateString("fr-FR")} au{" "}
-              {new Date(result.endDateAt).toLocaleDateString("fr-FR")}
-            </span>
-            <span className="text-[14px]  text-gray-500  ">
-              L'age est comprise entre : {result.ageMin} ans et {result.ageMax}{" "}
-              ans
-            </span>
-          </div>
-          <p className="text-[14px] text-gray-500 mb-20">
-            {parse(result.content.toString().substring(0,400)+"..." || "")}
-          </p>
-        </div>
-     </div>
-        <div className="w-full h-full overflow-y-scroll scrollbar-hide">
-          <Card className="flex-1">
+      <div className="flex flex-1 h-full gap-6">
+        <div className="w-1/2">
+          <Card className="mb-10 ">
             <CardHeader>
               <CardTitle className="mb-2">Mes informations</CardTitle>
               <CardDescription>
@@ -152,13 +121,13 @@ function CandidatureItem({ data }: any) {
                 <div className="grid items-center w-full gap-4">
                   <div className="grid gap-6 md:grid-cols-2">
                     <InputComponent
-                      value={user.lastName}
+                      value={user.firstName}
                       readonly={true}
                       key={1}
                       label="Nom"
                     />
                     <InputComponent
-                      value={user.firstName}
+                      value={user.lastName}
                       readonly={true}
                       key={2}
                       label="Prénom"
@@ -184,17 +153,17 @@ function CandidatureItem({ data }: any) {
 
                   <div className="grid gap-6 md:grid-cols-2">
                     <InputComponent
-                      value={     dayjs(user.birthDate).format("DD/MM/YYYY")  }
+                      value={dayjs(user.birthDate).format("DD/MM/YYYY")}
                       inputType="text"
                       readonly={true}
                       key={3}
                       label="Date de naissance"
                     />
                     <InputComponent
-                      value={user.placeBirthDate}
+                      value={result.placeBirthDate}
                       inputType="text"
                       readonly={true}
-                      key={4}
+                      key={3}
                       label="Lieu de naissance"
                     />
                     <InputComponent
@@ -204,34 +173,20 @@ function CandidatureItem({ data }: any) {
                       key={4}
                       label="Sexe"
                     />
-                 
+                    <InputComponent
+                      value={user.address}
+                      inputType="text"
+                      readonly={true}
+                      key={4}
+                      label="Adresse physique"
+                    />
+                  </div>
+                  <div className="grid gap-6 md:grid-cols-2">
                     <InputComponent
                       value={user.nina}
                       key={5}
                       label="Numéro nina"
                     />
-                    <InputComponent
-                      key={1}
-                      label="Adresse complete"
-                      value={user.address}
-                      readonly={true}
-                    />
-                 
-                    <div>
-                      <Label>Carte nina ou fiche individuelle</Label>
-                      <div className="flex items-center space-x-4">
-                        <div className="flex items-center flex-1 cursor-pointer justify-end p-4 h-[38px] border-[1px] rounded-sm">
-                          <a
-                            target="_blank"
-                            href={`${process.env.BASE_URL}${user.ninaFile}`}
-                            className="flex items-center justify-between flex-1 space-x-2"
-                          >
-                            <p className="text-sm">Télécharger </p>
-                            <FaDownload className="h-12 mr-4" />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -246,32 +201,33 @@ function CandidatureItem({ data }: any) {
               </CardDescription>
               <div className="grid gap-6 mt-4 md:grid-cols-2">
                 <InputComponent
-                  value={user.diplome}
+                  value={result.diplome}
                   key={7}
                   label="Diplôme de nationalité"
                 />
-                <InputComponent value={user.study} key={8} label="Filiere" />
+                <InputComponent value={result.study} key={8} label="Filiere" />
                 <InputComponent
-                  value={user.speciality}
+                  value={result.speciality}
                   key={9}
                   label="Spécialité"
                 />
                 <InputComponent
-                  value={user.placeOfGraduation}
+                  value={result.placeOfGraduation}
                   key={10}
                   label="Lieu d’optention du diplôme"
                 />
                 <InputComponent
-                  value={user.countryOfGraduation}
+                  value={result.countryOfGraduation}
                   key={11}
                   label="Pays d’optention du diplôme"
                 />
                 <InputComponent
-                  value={user.diplomeNumber}
+                  value={result.diplomeNumber}
                   key={12}
                   label="Numero du diplôme"
                 />
               </div>
+
               <CardTitle className="mt-4 mb-2 text-blue-500">
                 Les pieces jointes
               </CardTitle>
@@ -284,36 +240,36 @@ function CandidatureItem({ data }: any) {
                 {fileFunction(
                   "Une copie d'acte de naissance",
                   "ou  jugement supplétif en tenant lieu",
-                  user.birthDateFile
+                  result.birthDateFile
                 )}
                 {fileFunction(
                   "Un extrait du casier judiciare",
                   "Datant d'au moins de trois(3) mois",
-                  user.cassierFile
+                  result.cassierFile
                 )}
                 {fileFunction(
                   "Un certificat de bonne vie et moeurs",
                   "Un certificat de bonne vie et moeurs valide",
-                  user.certificatVie
+                  result.certificatVie
                 )}
                 {fileFunction(
                   "Un certificat de nationalité malienne",
                   "Un certificat valide",
-                  user.certificate
+                  result.certificate
                 )}
                 {fileFunction(
                   "Un certificat de visite et contre visite",
                   "Délivré par une  autorité médicale agréée",
-                  user.certificatVisite
+                  result.certificatVisite
                 )}
                 {fileFunction(
                   "Une copie certifiée conforme du diplome riquis",
                   "et son équivalence pour les diplomes étrangers",
-                  user.diplomeFile
+                  result.diplomeFile
                 )}
               </div>
 
-              <CardTitle className="mt-4 mb-10 text-green-500">
+              <CardTitle className="mt-4 mb-2 text-green-500">
                 Les Diplômes
               </CardTitle>
               <CardDescription>
@@ -321,48 +277,79 @@ function CandidatureItem({ data }: any) {
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
               </CardDescription>
-              <div className="grid gap-6 mt-4 md:grid-cols-2">
-              {user.def.toString().includes("files/")     && fileFunction(
-                  "Def",
-                  "",
-                  user.def
-                )}
-              
-              {user.bac.toString().includes("files/")  && fileFunction(
-                  "Bac",
-                  "",
-                  user.bac
-                )}
-              
-              {user.licence.toString().includes("files/")  && fileFunction(
-                  "Licence",
-                  "",
-                  user.licence
-                )}
-              
-              {user.master1.toString().includes("files/")  && fileFunction(
-                  "Master1",
-                  "",
-                  user.master1
-                )}
-              
-              {user.master2.toString().includes("files/")  && fileFunction(
-                  "Master2",
-                  "",
-                  user.master2
-                )}
-              
-                
-                
+              <div className="grid gap-6 pb-20 mt-4 md:grid-cols-2">
+                {result.def.toString().includes("files/") &&
+                  fileFunction("Def", "", result.def)}
+
+                {result.bac.toString().includes("files/") &&
+                  fileFunction("Bac", "", result.bac)}
+
+                {result.licence.toString().includes("files/") &&
+                  fileFunction("Licence", "", result.licence)}
+
+                {result.master1.toString().includes("files/") &&
+                  fileFunction("Master1", "", result.master1)}
+
+                {result.master2.toString().includes("files/") &&
+                  fileFunction("Master2", "", result.master2)}
               </div>
             </CardContent>
           </Card>
         </div>
+
+        <Card className="flex-1 mb-10 ">
+          <CardHeader>
+            <CardTitle className="mb-2">
+              Information de la candidature
+            </CardTitle>
+            <CardDescription>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
+              tincidunt neque. Pellentesque vitae commodo justo. Integer tempor
+              Pellentesque vitae Integer tempor
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex justify-between my-4">
+              <div>Etat de la candidature : </div>
+
+              <div className="flex flex-col space-y-1.5">
+  
+                    <Select
+                      defaultValue={statut}
+                       onValueChange={(e) => setStatut(e)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sexe" />
+                        <SelectContent position="popper">
+                          <SelectItem value="0">En cours de validation</SelectItem>
+                          <SelectItem value="1">Valider</SelectItem>
+                          <SelectItem value="2">refuser</SelectItem>
+                        </SelectContent>
+                      </SelectTrigger>
+                    </Select>
+                    
+                  </div>
+              
+            </div>
+
+            <div>Note : </div>
+            <textarea value={messageAdmin} onChange={(e)=> setMessageAdmin(e.target.value)}  className="w-full p-4 my-4 border-2 h-[300px] outline-none h-1/2"></textarea>
+            <div className="flex flex-col space-y-4">
+              <ButtonComponent
+                handleClick={() => updateApply(statut)}
+                className=""
+                full={true}
+                label={"Modifier la candidature"}
+              />
+             
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
 
-  function ItemUser({ label, value }: any) {
+  function ItemUser({ label, value }) {
     return (
       <div className="flex justify-between w-full p-4 bg-white rounded-md">
         <p className="flex-1 font-bold text-md">{label}</p>
@@ -374,12 +361,12 @@ function CandidatureItem({ data }: any) {
 
 export default CandidatureItem;
 
-function fileFunction(label: String, subLabel: String ="", result: any) {
+function fileFunction(label, subLabel = "", result) {
   return (
     <div>
       <div className="flex flex-col">
         <Label className="mb-2">{label}</Label>
-      {/*  { <span className="text-[13px] text-gray-400">{subLabel}</span>} */}
+        {/*  { <span className="text-[13px] text-gray-400">{subLabel}</span>} */}
       </div>
       <div className="flex items-center space-x-4">
         <div className="flex items-center flex-1 cursor-pointer justify-end p-4 h-[38px] border-[1px] rounded-sm">

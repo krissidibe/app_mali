@@ -15,9 +15,10 @@ import { AiFillPicture } from "react-icons/ai";
 import { Dropdown } from "primereact/dropdown";
 import { Calendar, CalendarChangeEvent } from "primereact/calendar";
 import { convertToHTML } from "draft-convert";
-import { redirect } from "next/navigation";
+ 
 import { Switch } from "@/components/ui/switch";
-
+import { redirect, useRouter } from "next/navigation";
+import AlertModalResponse from "@/components/Modals/AlertModalResponse";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
   {
@@ -54,13 +55,14 @@ function CreateCompetition() {
     { name: "Fermé", code: "2" },
     { name: "Suspendu", code: "3" },
   ];
-
+  const router = useRouter();
   const [def, setDef] = useState(false);
   const [bac, setBac] = useState(false);
   const [licence, setLicence] = useState(false);
   const [master1, setMaster1] = useState(false);
   const [master2, setMaster2] = useState(false);
-
+  const showDialogClick = useRef(null)
+  const [message, setMessage] = useState("");
   const createData = async (e) => {
     e.preventDefault();
 
@@ -99,7 +101,13 @@ function CreateCompetition() {
       method: "POST",
     });
     const data = await res.json();
-    console.log(data);
+    
+    if (res.status == 200) {
+      
+
+      showDialogClick.current.click()
+      setMessage("Le concours est creer")
+    }
     /* 
        redirect("/admin") */
   };
@@ -110,6 +118,11 @@ function CreateCompetition() {
       onSubmit={(e) => createData(e)}
       className="flex flex-col"
     >
+      <AlertModalResponse title="Alert" refModal={showDialogClick} message={message} handleClick={()=>{ 
+ router.refresh()
+ router.push("/admin/competitions")
+
+       }}  />
       <p className="mb-2 text-lg font-bold">Phtoto de couverture</p>
       <picture
         onClick={() => {
@@ -163,30 +176,29 @@ function CreateCompetition() {
       </div>
       <div className="flex w-full gap-4 my-2">
         <div className="flex gap-4 ">
-          <div className="flex flex-col w-full">
-            <p className="text-[14px] text-gray-500 font-semibold mb-2  overflow-ellipsis">
-              Date debut
-            </p>
-            <div className="flex w-full card justify-content-center">
-              <Calendar
-                value={startDateAt}
-                className="w-full"
-                onChange={(e) => setStartDateAt(e.value)}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col w-full">
-            <p className="text-[14px] text-gray-500 font-semibold mb-2  overflow-ellipsis">
-              Date fin
-            </p>
-            <div className="flex w-full card justify-content-center">
-              <Calendar
-                value={endDateAt}
-                className="w-full"
-                onChange={(e) => setEndDateAt(e.value)}
-              />
-            </div>
-          </div>
+        
+        <InputComponent
+                    value={startDateAt}
+                    handleChange={(e) => {
+                      setStartDateAt(e.target.value);
+                    }}
+                   
+                    withIcon={true}
+                    key={4}
+                    inputType="date"
+                    label="Date debut"
+                  />
+          <InputComponent
+                    value={endDateAt}
+                    handleChange={(e) => {
+                      setEndDateAt(e.target.value);
+                    }}
+                   
+                    withIcon={true}
+                    key={4}
+                    inputType="date"
+                    label="Date fin"
+                  />
         </div>
         <div className="flex gap-4 ">
           <InputComponent

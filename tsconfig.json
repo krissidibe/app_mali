@@ -37,7 +37,7 @@
     "out/types/**/*.ts",
     "src/app/(admin)/admin/competitions/page.jsx",
     "build/types/**/*.ts"
-, "src/app/(user)/user/competitions/[competitionId]/apply/pageItem.jsx", "src/app/signin/page.jsx", "src/components/InputDateComponent.jsx"  ],
+, "src/app/(user)/user/competitions/[competitionId]/apply/pageItem.jsx", "src/app/signin/page.jsx", "src/components/InputDateComponent.jsx", "src/app/(admin)/admin/apply/[applyId]/CandidatureItem.jsx"  ],
   "exclude": [
     "node_modules"
   ]

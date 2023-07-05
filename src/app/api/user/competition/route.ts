@@ -5,7 +5,30 @@ import bcrypt from "bcryptjs";
 export async function GET(req: NextRequest, res: NextResponse) {
   const { searchParams } = new URL(req.url);
 
-console.log(searchParams.get("id"));
+ 
+
+if (searchParams.get("count") != null) {
+let statutNum =  searchParams.get("count");
+  const datasPrisma = await prisma.competition.findMany({
+    where: {
+      statut: {
+        in: [statutNum ?? ""],
+      },
+    },
+    orderBy: [
+      {
+        createdAt: "desc",
+      },
+      {
+        title: "desc",
+      },
+    ],
+  });
+
+  //  console.log(searchParams.get("name"));
+  return new Response(JSON.stringify(datasPrisma));
+}
+
 
   if (searchParams.get("id") == null) {
     const datasPrisma = await prisma.competition.findMany({

@@ -4,7 +4,7 @@ import Export from "react-data-table-component";
 import DataUserAdminCandidatureComponent from "../../../../../components/DataUserAdminCandidatureComponent";
 import XLSX from "xlsx";
 import ExcelJS from "exceljs";
-
+import dayjs from "dayjs";
 function ExportExcel({datas} ) {
    
   const exportFile = () => {
@@ -18,27 +18,57 @@ function ExportExcel({datas} ) {
         width: 40,
       }, */
       {
-        header: "Nom",
+        header: "NOM",
         key: "lastName",
         width: 40,
       },
       {
-        header: "Prenom",
+        header: "PRENOM",
         key: "firstName",
         width: 40,
       },
       {
-        header: "Téléphone",
+        header: "CONTACT",
         key: "number",
         width: 40,
       },
       {
-        header: "Genre",
+        header: "SEXE",
         key: "sexe",
         width: 40,
       },
       {
-        header: "Statut",
+        header: "DATE DE NAISSANCE",
+        key: "birthDate",
+        width: 50,
+      },
+      {
+        header: "LIEU DE NAISSANCE",
+        key: "placeBirthDate",
+        width: 50,
+      },
+      {
+        header: "Diplome",
+        key: "diplome",
+        width: 50,
+      },
+      {
+        header: "FILIERE",
+        key: "study",
+        width: 50,
+      },
+      {
+        header: "DATE DEPOT",
+        key: "createdAt",
+        width: 50,
+      },
+      {
+        header: "N° ENREGISTREMENT",
+        key: "id",
+        width: 50,
+      },
+      {
+        header: "STATUT",
         key: "statut",
         width: 40,
       },
@@ -71,12 +101,19 @@ function ExportExcel({datas} ) {
 
     datas.map((item) => {
       sheet.addRow({
-        id: item.id,
-        lastName: item.author.lastName,
-        firstName: item.author.firstName,
-        number: item.author.number,
-        sexe: sexeOptions[item.author.sexe].label,
+     
+        lastName: item.lastName,
+        firstName: item.firstName,
+        sexe: item.sexe,
+        birthDate:  dayjs(item.birthDate).format("DD/MM/YYYY") ,
+        placeBirthDate: item.placeBirthDate,
+        diplome: item.diplome,
+        study: item.study,
+        id: dayjs(item.createdAt).format("DD/MM/YYYY") ,
+        createdAt: dayjs(item.createdAt).format("DD/MM/YYYY") ,
         statut: statutOptions[item.statut].label,
+        id: item.id,
+        number: item.author.number,
       });
     });
     workbook.xlsx.writeBuffer().then(data=>{

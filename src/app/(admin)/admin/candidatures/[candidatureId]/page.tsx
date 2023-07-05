@@ -12,7 +12,7 @@ async function page({
   };
 }) {
   const res = await fetch(
-    `${process.env.BASE_URL}/api/admin/competition?id=${params.candidatureId}`,
+    `${process.env.BASE_URL}/api/admin/competition?id=${params.candidatureId}&candidature=true`,
     { cache:"no-store" }
   );
   const datas: any[] = await res.json();
@@ -21,7 +21,8 @@ async function page({
     <div className="flex flex-col flex-1 w-full ">
       <ExportExcel datas={datas}  />
 
-      <DataUserAdminCandidatureComponent datas={datas} />
+ 
+    <DataUserAdminCandidatureComponent datas={datas} /> 
     </div>
   );
 }

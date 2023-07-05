@@ -27,17 +27,30 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(datasPrisma)
   }
 
+
+  if (searchParams.get("id") != null && searchParams.get("candidature") == null) {
+    const datasPrisma = await prisma.competition.findFirst({
+ where:{
+  id : searchParams.get("id")?.toString() ?? ""
+ }
+
+  
+    });
+
+    //  console.log(searchParams.get("name"));
+    return new Response(JSON.stringify(datasPrisma));
+    return NextResponse.json(datasPrisma)
+  }
+
   const datasPrisma = await prisma.candidature.findMany({
     where: {
       competitionId: searchParams.get("id")?.toString(),
     },
     orderBy: [
       {
-        createdAt: "desc",
+        lastName: "desc",
       },
-      {
-        title: "desc",
-      },
+     
     ],
     include: { author: { include: { candidatures: {} } } },
   });

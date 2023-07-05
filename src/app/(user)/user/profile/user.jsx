@@ -245,18 +245,21 @@ const showDialogClick = useRef(null)
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
+                  
                   <InputComponent
-                    value={firstName}
-                    handleChange={(e) => {
-                      setFirstName(e.target.value);
-                    }}
+                      value={lastName}
+                      handleChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
                     key={1}
                     label="Nom"
                   />
                   <InputComponent
-                    value={lastName}
+                 
+
+                    value={firstName}
                     handleChange={(e) => {
-                      setLastName(e.target.value);
+                      setFirstName(e.target.value);
                     }}
                     key={1}
                     label="Prénom"

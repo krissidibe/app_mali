@@ -229,6 +229,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       firstName: user?.firstName ?? "",
       lastName: user?.lastName ?? "",
       birthDate: user?.birthDate ?? "",
+      placeBirthDate: user?.placeBirthDate ?? "",
       sexe: user?.sexe ?? "",
       nina: user?.nina ?? "",
       ninaFile: user?.ninaFile ?? "",

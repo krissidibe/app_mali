@@ -189,13 +189,13 @@ export default function ApplyItem(data, competitionId,fileAttach) {
 
   return (
     <>
-     
-<AlertModalResponse title="Alert" refModal={showDialogClick} message={modalData} handleClick={()=>{modalData == "La candidature est créer" ||  modalData == "Vous avez déja postuler"  ? routerPaht.back() : null}}  />
- <BackComponent className="mt-4" />
+    
+<AlertModalResponse title="Alert" refModal={showDialogClick} message={modalData} handleClick={()=>{modalData == "La candidature est créer" ||  modalData == "Vous avez déja postuler"  ?() => { routerPaht.refresh(); routerPaht.back() } : null}}  />
+ 
     <div className="flex flex-col md:flex-row md:space-x-10">
      
 
-      <Card className="flex-1 mb-10 mt-6 md:max-w-[500px]">
+      <Card className="flex-1 mb-10  md:max-w-[500px]">
         <CardHeader>
           <CardTitle className="mb-2">Mes informations</CardTitle>
           <CardDescription>
@@ -216,13 +216,13 @@ export default function ApplyItem(data, competitionId,fileAttach) {
             <div className="grid items-center w-full gap-4">
               <div className="grid gap-6 md:grid-cols-2">
                 <InputComponent
-                  value={firstName}
+                  value={lastName}
                   readonly={true}
                   key={1}
                   label="Nom"
                 />
                 <InputComponent
-                  value={lastName}
+                  value={firstName}
                   readonly={true}
                   key={2}
                   label="Prénom"
@@ -328,7 +328,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
       <form
         onSubmit={createApply}
         encType="multipart/form-data"
-        className="flex-1 my-10 "
+        className="flex-1 mb-10 "
       >
 
         <Card>
@@ -489,7 +489,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setDefFile(e.target.files[0]);
                   }}
-                  key={11}
+                  key={101}
                   inputType="file"
                   label="DEF"
                 />)  }
@@ -498,7 +498,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setBacFile(e.target.files[0]);
                   }}
-                  key={11}
+                  key={102}
                   inputType="file"
                   label="Bac"
                 />)  }
@@ -507,7 +507,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setLicenceFile(e.target.files[0]);
                   }}
-                  key={11}
+                  key={103}
                   inputType="file"
                   label="Licence"
                 />)  }
@@ -516,7 +516,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setMaster1File(e.target.files[0]);
                   }}
-                  key={11}
+                  key={104}
                   inputType="file"
                   label="Master 1"
                 />)  }
@@ -525,7 +525,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setMaster2File(e.target.files[0]);
                   }}
-                  key={11}
+                  key={105}
                   inputType="file"
                   label="Master 2"
                 />)  }

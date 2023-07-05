@@ -53,31 +53,44 @@ async function Home() {
   const res = await fetch(`${process.env.BASE_URL}/api/user/candidature?email=${session?.user?.email}`,{cache:"no-store"})  
   
   const data: any = await res.json();  
+  const competitionOpen =  await fetch(`${process.env.BASE_URL}/api/user/competition?count=${1}`,{cache:"no-store"})  
+  
+  const competitionOpenData: any[] = await competitionOpen.json();  
+  const competitionClose =  await fetch(`${process.env.BASE_URL}/api/user/competition?count=${2}`,{cache:"no-store"})  
+  
+  const competitionCloseData: any[] = await competitionClose.json();  
   
  
   return (
     <div className="flex flex-col">
-      <div className="flex pb-10 space-x-4 ">
+      <div className="flex pb-10 space-x-4 overflow-y-scroll ">
  
         <CardMiniComponent
           key={1}
-          number={"21"}
+          number={competitionOpenData.length}
           label={"Concours ouverts"}
           Icon={BookOpenIcon}
         />
         <CardMiniComponent
           key={2}
-          number={"21"}
-          label={"Concours ouverts"}
+          number={competitionCloseData.length}
+          label={"Concours fermées"}
+          Icon={AcademicCapIcon}
+        />
+        <CardMiniComponent
+          key={3}
+          number={data.candidatures.length}
+          label={"Mes Candidatures"}
           Icon={AcademicCapIcon}
         />
       </div>
 
       <div className="pb-2 border-b-2">
+        
         <p>Liste des candicatures</p>
       </div>
 
-    
+   
        
      <DataUserCandidatureComponent datas={data}  /> 
       

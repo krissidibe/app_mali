@@ -1,9 +1,7 @@
 import React from "react";
 import { prisma } from "../../../../../../utils/prisma";
 import CompetitionCardComponent from "@/components/CompetitionCardComponent";
-import Link from "next/link";
-import { Competition } from '@prisma/client'
-
+ 
 export default async function CompetitionListSearch({
   params,
 }: {

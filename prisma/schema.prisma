@@ -93,7 +93,7 @@ email         String?
   
   address          String?       @default("")
 
-   message          String?       @default("")
+   message          String?       @db.LongText
   title               String
   content             String?     @db.LongText
   statut              String
