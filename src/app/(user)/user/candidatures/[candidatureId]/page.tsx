@@ -2,7 +2,7 @@ import React from "react";
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/authOption";
+import { authOptions } from "@/lib/authOption";
 import CandidatureItem from "./CandidatureItem";
 export const dynamic = "force-dynamic";
 async function page({

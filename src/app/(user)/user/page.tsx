@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/solid";
 //import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import {prisma} from '@/utils/prisma'
-import { authOptions } from "@/app/api/authOption";
+import { authOptions } from "@/lib/authOption";
 import {
   ColumnDef,
   ColumnFiltersState,

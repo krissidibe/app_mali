@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
  
 import {prisma} from '@/utils/prisma'
  
-import { authOptions } from "@/app/api/authOption";
+import { authOptions } from "@/lib/authOption";
 import ApplyItem from "./pageItem";
 import BackComponent from "@/components/BackComponent";
 //import { authOptions } from "@/app/api/auth/[...nextauth]/route";

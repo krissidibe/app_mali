@@ -7,7 +7,7 @@ import { prisma } from "../../../../../utils/prisma";
 import { notFound } from "next/navigation";
 import parse from "html-react-parser";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/authOption";
+import { authOptions } from "@/lib/authOption";
 export const dynamic = "force-dynamic";
 async function ShowCompetition({
   params,

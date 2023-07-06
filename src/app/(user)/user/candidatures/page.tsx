@@ -2,7 +2,7 @@ import React from 'react'
 import DataUserCandidatureComponent from '../../../../components/DataUserCandidatureComponent'
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
  
-import { authOptions } from '@/app/api/authOption';
+import { authOptions } from '@/lib/authOption';
 import { getServerSession } from 'next-auth';
 export const dynamic = "force-dynamic";
 async function Candidatures() {

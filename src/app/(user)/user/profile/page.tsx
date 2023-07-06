@@ -11,7 +11,7 @@ import {
   AcademicCapIcon,
   ArrowLeftIcon,
 } from "@heroicons/react/24/solid";
-import { authOptions } from "@/app/api/authOption";
+import { authOptions } from "@/lib/authOption";
 //import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export const dynamic = "force-dynamic";
 async function Home() {

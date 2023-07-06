@@ -89,6 +89,7 @@ const SideBarUser = ({ show = true, handleClick = () => {
         Icon={ArrowLeftIcon}
         className="mb-20"
       />
+   {/*    <button   onClick={() => signOut()}>Deconnexion </button> */}
     </div>
   );
 };

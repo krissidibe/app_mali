@@ -157,7 +157,7 @@ export default function DataUserCandidatureComponent({datas}) {
      /*        router.replace(`/user/candidatures/${row.id}`,{
               query: { data: row },
             }) */
-            router.push(`/user/candidatures/${row.id}?data=${JSON.stringify(row)}`,
+            router.push(`/user/candidatures/${row.id}`,
               {
                 query: { data: row },
               }
@@ -198,7 +198,7 @@ export default function DataUserCandidatureComponent({datas}) {
      /*        router.replace(`/user/candidatures/${row.id}`,{
               query: { data: row },
             }) */
-            router.push(`/user/candidatures/${row.id}?data=${JSON.stringify(row)}`,
+            router.push(`/user/candidatures/${row.id}`,
               {
                 query: { data: row },
               }

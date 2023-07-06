@@ -6,8 +6,9 @@ import "primereact/resources/primereact.css";
 import MenuComponent from "../../../components/MenuComponent";
 import SideBarUser from "../../../components/SideBarUser";
 import ModalInfo from "../../../components/ModalInfo";
-import { authOptions } from "@/app/api/authOption";
+import { authOptions } from "@/lib/authOption";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 /* const inter = Inter({ subsets: ["latin"] });
  */
@@ -22,6 +23,9 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
+   if(session?.user.role != "USER"){
+    redirect("/")
+  }  
   //const [showMenu, setshowMenu] = useState(false);
   return (
     <html lang="en">
@@ -36,7 +40,7 @@ export default async function AdminLayout({
             <MenuComponent />
             <div className="flex items-center justify-center">
               <p className="mr-4 text-sm">
-              
+           
                 {session?.user?.email}{" "}
               </p>
 
