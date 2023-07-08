@@ -121,6 +121,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   let certificatVieName = "";
   let certificatVisiteName = "";
   let diplomeFileName = "";
+  let ninaFileName = "";
 
   const certificate = formData.get("certificate") as Blob | null;
   const birthDateFile = formData.get("birthDateFile") as Blob | null;
@@ -128,6 +129,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const certificatVie = formData.get("certificatVie") as Blob | null;
   const certificatVisite = formData.get("certificatVisite") as Blob | null;
   const diplomeFile = formData.get("diplomeFile") as Blob | null;
+  const ninaFile = formData.get("ninaFile") as Blob | null;
 
   if (
     certificate?.toString() == "" ||
@@ -135,7 +137,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     cassierFile?.toString() == "" ||
     certificatVie?.toString() == "" ||
     certificatVisite?.toString() == "" ||
-    diplomeFile?.toString() == ""
+    diplomeFile?.toString() == "" ||
+    ninaFile?.toString() == ""
   ) {
     return new Response(
       JSON.stringify({
@@ -152,6 +155,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     certificatVieName = await storeImage(certificatVie);
     certificatVisiteName = await storeImage(certificatVisite);
     diplomeFileName = await storeImage(diplomeFile);
+    ninaFileName = await storeImage(ninaFile);
   } catch (error) {
     return new Response(
       JSON.stringify({
@@ -244,12 +248,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
       placeBirthDate: user?.placeBirthDate ?? "",
       sexe: user?.sexe ?? "",
       nina: user?.nina ?? "",
-      ninaFile: user?.ninaFile ?? "",
       diplome: formData.get("diplome")?.toString() ?? "",
       diplomeNumber: formData.get("diplomeNumber")?.toString() ?? "",
       placeOfGraduation: formData.get("placeOfGraduation")?.toString() ?? "",
       countryOfGraduation:
-        formData.get("countryOfGraduation")?.toString() ?? "",
+      formData.get("countryOfGraduation")?.toString() ?? "",
       study: formData.get("study")?.toString() ?? "",
       speciality: formData.get("speciality")?.toString() ?? "",
       authorId: user?.id,
@@ -261,7 +264,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
       certificatVie: certificatVieName,
       certificatVisite: certificatVisiteName,
       diplomeFile: diplomeFileName,
-
+      ninaFile: ninaFileName,
+      
       def: defFileName,
       bac: bacFileName,
       licence: licenceFileName,

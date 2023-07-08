@@ -84,7 +84,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
   ];
   const [sexe, setSexe] = useState(sexeOptions[0].label);
   const [nina, setNina] = useState(data.data.data.nina ?? "");
-  const [ninaFile, setNinaFile] = useState(data.data.data.ninaFile ?? "");
+  const [ninaFile, setNinaFile] = useState("");
 
   const [certificate, setCertificate] = useState("");
   const [birthDateFile, setBirthDateFile] = useState("");
@@ -92,6 +92,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
   const [certificatVie, setCertificatVie] = useState("");
   const [certificatVisite, setCertificatVisite] = useState("");
   const [diplomeFile, setDiplomeFile] = useState("");
+ 
 
   const [diplome, setDiplome] = useState("");
   const [diplomeNumber, setDiplomeNumber] = useState("");
@@ -147,6 +148,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
     formData.append("certificatVie", certificatVie);
     formData.append("certificatVisite", certificatVisite);
     formData.append("diplomeFile", diplomeFile);
+    formData.append("ninaFile", ninaFile);
 
     //Diplome 
     formData.append("defFile", defFile);
@@ -470,6 +472,16 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   key={11}
                   inputType="file"
                   label="Une copie certifiée conforme du diplome riquis et son équivalence"
+                  subLabel="pour les diplomes étrangers"
+                />
+                <InputComponent
+                  checkFileIcon={ninaFile != ""}
+                  handleChange={(e) => {
+                    setNinaFile(e.target.files[0]);
+                  }}
+                  key={11}
+                  inputType="file"
+                  label="Carte nina ou fiche individuelle"
                   subLabel="pour les diplomes étrangers"
                 />
               </div>

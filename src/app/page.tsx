@@ -200,8 +200,8 @@ function page() {
               src="/images/logo2.png"
               alt="me"
               className="absolute top-0 left-10 top-10"
-              width="230"
-              height="230"
+              width="290"
+              height="290"
             />
         
         <Image
