@@ -137,6 +137,7 @@ const MyDocument = ({ data }) => (
           {InfoInputFile("Un certificat de nationalité malienne", data?.certificate)}
           {InfoInputFile("Un certificat de visite et contre visite", data?.certificatVisite)}
           {InfoInputFile("Une copie certifiée conforme du diplome riquis", data?.diplomeFile)}
+          {InfoInputFile("Carte nina ou fiche individuelle", data?.ninaFile)}
          
          
 

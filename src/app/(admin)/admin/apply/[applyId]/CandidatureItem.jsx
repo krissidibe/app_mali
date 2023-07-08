@@ -279,6 +279,11 @@ function CandidatureItem({ datas }) {
                   "et son équivalence pour les diplomes étrangers",
                   result.diplomeFile
                 )}
+                 {fileFunction(
+                  "Carte nina ou fiche individuelle",
+                  "",
+                  result.ninaFile
+                )}
               </div>
 
               <CardTitle className="mt-4 mb-2 text-green-500">

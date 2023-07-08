@@ -211,20 +211,20 @@ function CandidatureItem({ data }: any) {
                       key={4}
                       label="Sexe"
                     />
-                 
-                    <InputComponent
-                      value={user.nina}
-                      key={5}
-                      label="Numéro nina"
-                    />
-                    <InputComponent
+                  <InputComponent
                       key={1}
                       label="Adresse complete"
                       value={user.address}
                       readonly={true}
                     />
+                    <InputComponent
+                      value={user.nina}
+                      key={5}
+                      label="Numéro nina"
+                    />
+                   
                  
-                    <div>
+                  {/*   <div>
                       <Label>Carte nina ou fiche individuelle</Label>
                       <div className="flex items-center space-x-4">
                         <div className="flex items-center flex-1 cursor-pointer justify-end p-4 h-[38px] border-[1px] rounded-sm">
@@ -238,7 +238,7 @@ function CandidatureItem({ data }: any) {
                           </a>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -317,6 +317,11 @@ function CandidatureItem({ data }: any) {
                   "Une copie certifiée conforme du diplome riquis",
                   "et son équivalence pour les diplomes étrangers",
                   user.diplomeFile
+                )}
+                {fileFunction(
+                  "Carte nina ou fiche individuelle",
+                  "",
+                  user.ninaFile
                 )}
               </div>
 

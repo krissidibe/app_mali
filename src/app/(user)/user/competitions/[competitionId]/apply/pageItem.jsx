@@ -256,35 +256,35 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   value={date}
                   inputType="text"
                   readonly={true}
-                  key={3}
+                  key={5}
                   label="Date de naissance"
                 />
                 <InputComponent
                   value={birthDatePlace}
                   inputType="text"
                   readonly={true}
-                  key={3}
+                  key={6}
                   label="Lieu de naissance"
                 />
                 <InputComponent
                   value={data.data.data.sexe}
                   inputType="text"
                   readonly={true}
-                  key={4}
+                  key={7}
                   label="Sexe"
                 />
                 <InputComponent
                   value={data.data.data.address}
                   inputType="text"
                   readonly={true}
-                  key={4}
+                  key={8}
                   label="Adresse physique"
                 />
               </div>
               <div className="grid gap-6 md:grid-cols-2">
-                <InputComponent value={nina} key={5} label="Numéro nina" />
-            
-                {ninaFile.length > 10 ? (
+                <InputComponent value={nina} key={9} label="Numéro nina" />
+         {/*    
+                {ninaFile.length > 10  ? (
                   <div>
                     <Label>Carte nina ou fiche individuelle</Label>
                     <div className="flex items-center space-x-4">
@@ -315,7 +315,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                       </div>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           </div>
@@ -352,13 +352,13 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                 <InputComponent
                   value={diplome}
                   handleChange={(e) => setDiplome((x) => (x = e.target.value))}
-                  key={7}
+                  key={10}
                   label="Diplôme de nationalité"
                 />
                 <InputComponent
                   value={study}
                   handleChange={(e) => setStudy((x) => (x = e.target.value))}
-                  key={8}
+                  key={11}
                   label="Filiere"
                 />
               </div>
@@ -368,7 +368,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) =>
                     setSpeciality((x) => (x = e.target.value))
                   }
-                  key={9}
+                  key={12}
                   label="Spécialité"
                 />
                 <InputComponent
@@ -386,7 +386,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) =>
                     setCountryOfGraduation((x) => (x = e.target.value))
                   }
-                  key={11}
+                  key={13}
                   label="Pays d’optention du diplôme"
                 />
                 <InputComponent
@@ -394,7 +394,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) =>
                     setDiplomeNumber((x) => (x = e.target.value))
                   }
-                  key={12}
+                  key={14}
                   label="Numero du diplôme"
                 />
               </div>
@@ -415,7 +415,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setBirthDateFile(e.target.files[0]);
                   }}
-                  key={11}
+                  key={21}
                   inputType="file"
                   label="Une copie d'acte de naissance"
                   subLabel="Une copie d'acte de naissance ou  jugement supplétif en tenant lieu"
@@ -426,7 +426,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setCassierFile(e.target.files[0]);
                   }}
-                  key={11}
+                  key={23}
                   inputType="file"
                   label="Un extrait du casier judiciare"
                   subLabel="Datant d'au moins de trois(3) mois"
@@ -437,7 +437,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setCertificatVie(e.target.files[0]);
                   }}
-                  key={11}
+                  key={24}
                   inputType="file"
                   label="Un certificat de bonne vie et moeurs"
                   subLabel="Un certificat de bonne vie et moeurs valide"
@@ -448,7 +448,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setCertificate(e.target.files[0]);
                   }}
-                  key={11}
+                  key={25}
                   inputType="file"
                   label="Un certificat de nationalité malienne"
                   subLabel="Un certificat valide"
@@ -459,7 +459,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setCertificatVisite(e.target.files[0]);
                   }}
-                  key={11}
+                  key={26}
                   inputType="file"
                   label="Un certificat de visite et contre visite "
                   subLabel="Délivré par une  autorité médicale agréée"
@@ -469,7 +469,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setDiplomeFile(e.target.files[0]);
                   }}
-                  key={11}
+                  key={27}
                   inputType="file"
                   label="Une copie certifiée conforme du diplome riquis et son équivalence"
                   subLabel="pour les diplomes étrangers"
@@ -479,7 +479,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setNinaFile(e.target.files[0]);
                   }}
-                  key={11}
+                  key={28}
                   inputType="file"
                   label="Carte nina ou fiche individuelle"
                   subLabel="pour les diplomes étrangers"
@@ -531,7 +531,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   handleChange={(e) => {
                     setMaitriseFile(e.target.files[0]);
                   }}
-                  key={105}
+                  key={109}
                   inputType="file"
                   label="Maitrise"
                 />)  }
