@@ -83,12 +83,12 @@ function ExportExcel({datas} ) {
 
     const statutOptions = [
       {
-        label: "En cours de validation",
+        label: "En attente de traitement",
         value: 0,
         color: "bg-yellow-500",
       },
       {
-        label: "Valider",
+        label: "Valider", 
         value: 1,
         color: "bg-green-500"
       },

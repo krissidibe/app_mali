@@ -76,9 +76,10 @@ function CandidatureItem({ data }: any) {
   ];
   return (
     <div className="flex flex-col h-full">
-       <UserPdf data={data} />
+      
        <BackComponent className="mt-2 mb-4" />
-      <p className="pb-2 mb-10 font-semibold border-b-2">
+       <UserPdf data={data} />
+      <p className="pb-2 mt-4 mb-10 font-semibold border-b-2">
         Les information sur la candidature
       </p>
       <div className="flex flex-col gap-6 md:flex-row ">
@@ -86,7 +87,7 @@ function CandidatureItem({ data }: any) {
      <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-white border-[1px] border-gray-200 rounded-md scrollbar-hide md:max-w-[600px]">
      <div className="flex justify-between pb-4 mb-4 border-b-2">
     <p className="font-semibold mb-4 text-md text-[#50a1ef]">N° ENREGISTREMENT : {data.numeroRef} </p>
-       <UserPdf data={data} />
+       
     </div>
      <div className="flex justify-between pb-4 mb-4 border-b-2">
     <p className="font-semibold text-md ">L'etat de votre candidature est : </p>

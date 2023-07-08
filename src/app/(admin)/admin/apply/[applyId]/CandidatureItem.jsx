@@ -95,9 +95,9 @@ function CandidatureItem({ datas }) {
         refModal={showDialogClick}
         message={"La candidature est modifier"}
         handleClick={() => {
-          router.refresh();
-          router.back();
-          router.refresh();
+          router.refresh()
+          router.back()
+          
           /*  router.back({
         
           query: { name: 'Someone' }
