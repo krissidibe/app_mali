@@ -114,7 +114,11 @@ export default function Signin() {
             width="64"
             height="64"
           />
-          <p>DNAJ</p>
+          
+          <div className="flex flex-col items-center justify-center ">
+        <p className="font-bold underline ">DNAJ</p>
+          <p>Direction nationale de l'administration de la justice </p>
+        </div>
         </div>
 
         <Card className="max-w-[400px]  md:max-w-[500px]">
@@ -130,10 +134,11 @@ export default function Signin() {
             <div className="flex items-center mb-4 space-x-4">
               <CardTitle>Inscription</CardTitle>
             </div>
-            <CardDescription>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
-              tincidunt neque. Pellentesque vitae commodo justo. Integer tempor
-              Pellentesque vitae Integer tempor
+            <CardDescription className="">
+           <p> Votre inscription sur cette plateforme vous donne le privilège de candidater aux différents concours organisés par la DNAJ. </p>
+           <p>
+           Donc rassurez-vous de remplir correctement le formulaire d'inscription ci-dessous  avec les informations fiables. En particulier votre adresse mail fournie doit être correcte et accessible permettant de vous contacter en cas de besoin.
+           </p>
             </CardDescription>
           </CardHeader>
           <CardContent>

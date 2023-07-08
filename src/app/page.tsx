@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import InputComponent from "../components/InputComponent";
 import ButtonComponent from "../components/ButtonComponent";
+import ParticulesBackground from "@/components/Particules/ParticulesBackground";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
@@ -111,7 +112,8 @@ function page() {
     }
   };
   return (
-    <div className="flex flex-1 w-screen h-screen overflow-y-scroll bg-white">
+    <div className="flex flex-1 w-screen h-screen overflow-y-scroll">
+    
       <ModalInfo title="Alert" body={modalData} />
       <div className="flex flex-col items-center justify-between w-full h-full p-10 md:w-1/2 overscroll-y-auto ">
         <div className="md:min-w-[450px] mt-10 mb-10 justify-center w-[353px] items-center flex flex-col space-y-2">
@@ -122,15 +124,23 @@ function page() {
             width="64"
             height="64"
           />
-          <p>DNAJ</p>
+        <div className="flex flex-col items-center justify-center w-full text-center ">
+        <p className="font-bold underline ">DNAJ</p>
+       
+          <p>Direction nationale de l'administration de la justice </p>
+          <p className="mt-10 text-2xl  text-[#50a1ef] bg-gray-50  w-full md:w-[420px]  p-4 rounded-md shadow-md font-bold uppercase">Portail CONCOURS
+
+
+</p>
+        </div>
         </div>
 
-        <Card className="md:w-[400px] w-full mt-10">
+        <Card className="md:w-[420px] w-full mt-4">
+        <ParticulesBackground/>
           <CardHeader>
             <CardTitle>Connectez-vous à votre compte</CardTitle>
             <CardDescription>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit
-              animi minima autem{" "}
+            Pour déposer ou suivre votre candidature , veuillez vous connecter avec vos identifiants email et mot de passe.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -181,11 +191,8 @@ function page() {
           </CardFooter>
         </Card>
 
-        <p className="text-[12px] pb-8 text-gray-500 max-w-[400px] text-center mt-10 mb-10">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
-          tincidunt neque. Pellentesque vitae commodo justo. Integer tempor
-          dignissim tortor, eu elementum arcu dictum non. at tincidunt neque.
-          Pellentesque vitae commodo justo. Integer tempor dignissim{" "}
+        <p className="text-[12px] pb-8 text-gray-500 max-w-[420px] text-center mt-10 mb-10">
+        Cette plateforme est une propriété du Ministère de la Justice et des Droit de l'homme du Mali. Elle a pour but de faciliter aux candidats, le dépôt des dossiers de candidature aux concours organisés par la Direction Nationale de l'Administration  de la Justice sans besoin de se déplacer.   Cependant , Toute fraude volontaire ou involontaire sur ce site peut faire l'objet de poursuite judiciaire.
         </p>
       </div>
       <div className="flex flex-col items-center justify-between hidden w-1/2 h-full md:block bg-red-50">

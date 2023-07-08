@@ -36,7 +36,7 @@ export default async function AdminLayout({
           <SideBarUser />
         </div>
         <div className="flex flex-col flex-1">
-          <div className="w-full h-[70px] p-4 bg-gray-50 flex shadow-md  items-center justify-end">
+          <div className="w-full h-[70px] p-4 bg-[#50A1EF] text-white flex shadow-md  items-center justify-end">
             <MenuComponent />
             <div className="flex items-center justify-center">
               <p className="mr-4 text-sm">

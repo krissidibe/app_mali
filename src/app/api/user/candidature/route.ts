@@ -8,13 +8,12 @@ import storeImage from "@/utils/addImageHelper";
 export async function GET(req: NextRequest, res: NextResponse) {
   const { searchParams } = new URL(req.url);
 
-
-  if(searchParams.get("email") && searchParams.get("id") == null ){
+  if (searchParams.get("email") && searchParams.get("id") == null) {
     const data = await prisma.user.findUnique({
       where: {
         email: searchParams.get("email")?.toString(),
       },
-  
+
       include: { candidatures: { include: { competition: {} } } },
     });
     if (!data) {
@@ -22,32 +21,29 @@ export async function GET(req: NextRequest, res: NextResponse) {
         data: data,
         message: "Aucun utilisateur trouvé",
       });
-    } 
+    }
     return NextResponse.json(data);
   }
 
-  if(searchParams.get("email") && searchParams.get("id") != "" ){
+  if (searchParams.get("email") && searchParams.get("id") != "") {
+    let idInt = searchParams.get("id");
     const data = await prisma.candidature.findUnique({
       where: {
-        id: searchParams.get("id")?.toString(),
+        id: parseInt(idInt!),
       },
-      include: { competition: {} }
-      
+      include: { competition: {} },
     });
     if (!data) {
       return NextResponse.json({
         data: data,
         message: "Aucun candidature trouvé",
       });
-    } 
+    }
 
     return NextResponse.json(data);
   }
 
-
-
-
-   return NextResponse.json("Error");
+  return NextResponse.json("Error");
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -149,7 +145,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     diplomeFileName = await storeImage(diplomeFile);
   } catch (error) {
     return new Response(
-      JSON.stringify({ data: "error", message: `Vos fichiers ne sont pas ajoutés car la partie pièces jointe n'est pas complète` })
+      JSON.stringify({
+        data: "error",
+        message: `Vos fichiers ne sont pas ajoutés car la partie pièces jointe n'est pas complète`,
+      })
     );
   }
 
@@ -171,8 +170,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     defFileName = "non renseigné";
   }
 
-
-
   try {
     bacFileName = await storeImage(bacFile);
   } catch (error) {
@@ -192,13 +189,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 
   try {
-    master2FileName = await storeImage(master1File);
+    master2FileName = await storeImage(master2File);
   } catch (error) {
     master2FileName = "non renseigné";
   }
-
-
-
 
   if (
     certificateName == "File not" ||
@@ -222,6 +216,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       statut: "0",
       content: "",
       certificat: "",
+      idString: ";",
       email: user?.email ?? "",
       image: user?.image ?? "",
       number: user?.number ?? "",
@@ -255,6 +250,20 @@ export async function POST(req: NextRequest, res: NextResponse) {
       licence: licenceFileName,
       master1: master1FileName,
       master2: master2FileName,
+    },
+  });
+
+   const dataFormat =new Date(Date.now()).getFullYear().toString().substring(2, 4);
+
+  
+  const strNumber = data.id; 
+ 
+const finalData =  await prisma.candidature.update({
+    where: {
+      id: data.id,
+    },
+    data: {
+      numeroRef:`DNAJ${dataFormat}${strNumber.toString().padStart(6, '0')}`
     },
   });
   return new Response(

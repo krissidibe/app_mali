@@ -34,7 +34,7 @@ let statutNum =  searchParams.get("count");
     const datasPrisma = await prisma.competition.findMany({
       where: {
         statut: {
-          in: ["1", "2"],
+          in: ["1", "2","3"],
         },
       },
       orderBy: [

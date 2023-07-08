@@ -1,8 +1,6 @@
 import React from "react"; 
 import DataUserAdminCandidatureComponent from "../../../../../components/DataUserAdminCandidatureComponent";
-import XLSX from "xlsx";
-import ExcelJS from "exceljs";
-import ExportExcel from "./ExportExcel";
+
 export const dynamic = "force-dynamic"
 async function page({
   params,
@@ -19,7 +17,7 @@ async function page({
  
   return (
     <div className="flex flex-col flex-1 w-full ">
-      <ExportExcel datas={datas}  />
+    
 
  
     <DataUserAdminCandidatureComponent datas={datas} /> 

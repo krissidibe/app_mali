@@ -1,8 +1,5 @@
 "use client"
-import React, { useMemo } from "react";
-import Export from "react-data-table-component";
-import DataUserAdminCandidatureComponent from "../../../../../components/DataUserAdminCandidatureComponent";
-import XLSX from "xlsx";
+import React, { useMemo } from "react";   
 import ExcelJS from "exceljs";
 import dayjs from "dayjs";
 function ExportExcel({datas} ) {
@@ -132,7 +129,7 @@ function ExportExcel({datas} ) {
 
   return (
    
-      <div onClick={exportFile}   className="p-2 border-2 rounded cursor-pointer max-w-max">
+      <div onClick={exportFile}   className="w-[300px] p-2 border-[1px] rounded-sm  cursor-pointer ">
         Exporter la liste 
       </div>
 

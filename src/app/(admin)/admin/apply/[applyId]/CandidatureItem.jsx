@@ -69,6 +69,8 @@ const router = useRouter()
         id: result.id,
         statut: value,
         message: messageAdmin,
+        updatedAt: new Date(Date.now()),
+        admin: "Nom d'admin",
       }),
       headers: {
         "Content-type": "application/json",
@@ -90,8 +92,12 @@ const router = useRouter()
     <div className="flex flex-col h-full">
      
       <AlertModalResponse title="Alert" refModal={showDialogClick} message={"La candidature est modifier"} handleClick={()=>{
-        router.refresh()
-        router.back()
+     /*    router.refresh()
+        router.back() */
+        router.back({
+        
+          query: { name: 'Someone' }
+      }, '/about');
       }}  />
  
 

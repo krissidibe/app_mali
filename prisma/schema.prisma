@@ -73,6 +73,7 @@ model Competition {
   def          Boolean?      @default(false)
   bac          Boolean?      @default(false)
   licence      Boolean?      @default(false)
+  maitrise      Boolean?      @default(false)
   master1      Boolean?      @default(false)
   master2      Boolean?      @default(false)
   createdAt    DateTime?     @default(now()) @db.Timestamp(0)
@@ -83,8 +84,10 @@ model Competition {
 }
 
 model Candidature {
-  id                  String      @id @default(cuid())
-
+  id                  Int      @id @default(autoincrement())
+  idString           String   @default(cuid())
+ 
+  
 email         String?        
   
   image        String?        @default("")
@@ -96,6 +99,8 @@ email         String?
    message          String?       @db.LongText
   title               String
   content             String?     @db.LongText
+   admin         String?
+   numeroRef         String?      @unique
   statut              String
   nina                String
   certificat          String?
@@ -116,6 +121,7 @@ email         String?
   def                 String?    @default("")
   bac                 String?    @default("")
   licence             String?    @default("")
+  maitrise             String?    @default("")
   master1              String?   @default("")
   master2             String?    @default("")
   endDateAt           DateTime?   @db.Date
@@ -136,6 +142,7 @@ email         String?
 }
 
 enum UserRole {
+  SUPERADMIN
   ADMIN
   USER
 }

@@ -29,11 +29,11 @@ const SideBarUser = ({ show = true, handleClick = () => {
   //  alert()
   return (
     <div
-      className={`bg-gray-100 md:w-[260px] w-full ${
+      className={`bg-[#274472] text-white  md:w-[260px] w-full ${
         canClose ? "" : "hidden"
       } md:flex  flex flex-col h-screen transition-all ease-in-out p-4 `}
     >
-      <div className="md:min-w-[450px] w-[353px] items-center justify-between my-4 flex space-x-2">
+      <div className="md:min-w-[450px] w-[353px] text-white items-center justify-between my-4 flex space-x-2">
         <div className="flex items-center space-x-4">
           <Image
             src="/images/logo.png"
@@ -111,12 +111,12 @@ function NavItem({ name, href = "", Icon, className = "", handleClick }) {
       >
         <Icon
           className={`w-6 h-6  group-hover:text-blue-500 transition-all ease-in-out ${
-            router.includes(href) ? "text-blue-500" : "text-gray-500"
+            router.includes(href) ? "text-blue-500" : "text-white"
           }`}
         />
         <p
           className={`text-[16px]  group-hover:text-blue-500 transition-all ease-in-out ${
-            router.includes(href) ? "text-blue-500" : "text-gray-500"
+            router.includes(href) ? "text-blue-500" : "text-white"
           }`}
         >
           {name}
@@ -136,14 +136,14 @@ function NavItem({ name, href = "", Icon, className = "", handleClick }) {
           className={`w-6 h-6  group-hover:text-blue-500 transition-all ease-in-out ${
             router.includes(href.split("/")[2])
               ? "text-blue-500"
-              : "text-gray-500"
+              : "text-white"
           }`}
         />
         <p
           className={`text-[16px]  group-hover:text-blue-500 transition-all ease-in-out ${
             router.includes(href.split("/")[2])
               ? "text-blue-500"
-              : "text-gray-500"
+              : "text-white"
           }`}
         >
           {name}

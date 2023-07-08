@@ -40,7 +40,10 @@ async function Home({
   return (
     <div className="flex flex-col">
           <BackComponent className="mt-4" />
-  <p className="my-4 font-bold">Intutilé du concours : {file.data.title}   </p>
+  <div className="flex flex-col mt-2 mb-2 md:ml-10"> 
+  <p className="font-bold underline">Intutilé du concours :  </p>
+  <p>{file.data.title}  </p>
+  </div>
 
   {
   

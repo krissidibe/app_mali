@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 
 const statutOptions = [
   {
-    label: "En cours de validation",
+    label: "En attente de traitement",
     value: 0,
     color: "bg-yellow-500",
   },
@@ -114,7 +114,7 @@ export default function DataUserCandidatureComponent({datas}) {
 
   const paginatorLeft = <div>k</div>;
   const paginatorRight = <div>k</div>;
-
+ 
 
   useEffect(() => {
     CustomerService.getCustomersMedium().then((data) => setCustomers(data));
@@ -124,7 +124,7 @@ export default function DataUserCandidatureComponent({datas}) {
   <div className="md:hidden" >   <DataUserCandidatureComponent isMobileScreen={true} /></div> */
   return (
     <div className="w-screen md:w-full md:p-4 ">
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam voluptatibus ea, nostrum id laudantium, illum placeat harum quos ad fugiat vitae reprehenderit ut, laborum autem voluptate aut omnis repellendus dignissimos?</p>
+      <p>Retrouvez ci-dessous la liste  de vos candidatures. vous pouvez  consulter votre candidature en cliquant sur un enregistrement ou télécharger votre le récépissé</p>
       <div className="hidden w-full md:max-w-full md:block">
         {" "}
         <DataTable

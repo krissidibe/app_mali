@@ -15,7 +15,7 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/24/solid";
 /* const inter = Inter({ subsets: ["latin"] }); */
-
+export const dynamic = "force-dynamic"
 const Home = async () => {
   const res = await fetch(`${process.env.BASE_URL}/api/admin/user`, {
     cache: "no-store",

@@ -131,12 +131,12 @@ export default function ApplyItem(data, competitionId,fileAttach) {
     formData.append("certificate", certificate);
     formData.append("diplome", diplome);
     formData.append("diplomeNumber", diplomeNumber);
-    formData.append("placeOfGraduation", placeOfGraduation);
+    formData.append("placeOfGraduation", placeOfGraduation); 
     formData.append("countryOfGraduation", countryOfGraduation);
     formData.append("study", study);
     formData.append("speciality", speciality);
 
-    formData.append("uid", session?.user?.email);
+    formData.append("uid", data.data.data.email);
     formData.append("competitionId", data.data.competitionId);
 
 
@@ -537,7 +537,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
           </CardContent>
           <CardFooter className="flex justify-end">
             <ButtonComponent
-              handleClick={() => {}}
+             
               key={8}
               label="Postuler"
               full={true}
