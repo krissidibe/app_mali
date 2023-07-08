@@ -47,7 +47,7 @@ export default async function AdminLayout({
 
           <div className="flex-col flex-1 hidden text-sm text-center md:flex">
             <p>REPUBLIQUE DU MALI</p>
-            <p>UN PEUPLE - UN BUT - UNE FOI</p>
+            <p>Un Peuple - Un But - Une Foi</p>
           </div>
             <MenuComponent />
             <div className="flex items-center justify-center">
