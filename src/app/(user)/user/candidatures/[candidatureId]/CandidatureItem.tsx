@@ -5,6 +5,7 @@ import parse from "html-react-parser";
 import Link from "next/link";
 
 import { Label } from "@/components/ui/label";
+import UserPdf from "@/components/PDF/UserPdf";
 import { FaDownload } from "react-icons/fa";
 import { RiAlertLine, RiDeleteBin6Line } from "react-icons/ri";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -47,7 +48,7 @@ function CandidatureItem({ data }: any) {
 
   const statutOptions = [
     {
-      label: "En cours de validation",
+      label: "En attente de traitement",
       value: 0,
       color: "bg-yellow-500",
     },
@@ -75,6 +76,7 @@ function CandidatureItem({ data }: any) {
   ];
   return (
     <div className="flex flex-col h-full">
+       <UserPdf data={data} />
        <BackComponent className="mt-2 mb-4" />
       <p className="pb-2 mb-10 font-semibold border-b-2">
         Les information sur la candidature
@@ -82,6 +84,10 @@ function CandidatureItem({ data }: any) {
       <div className="flex flex-col gap-6 md:flex-row ">
      
      <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-white border-[1px] border-gray-200 rounded-md scrollbar-hide md:max-w-[600px]">
+     <div className="flex justify-between pb-4 mb-4 border-b-2">
+    <p className="font-semibold mb-4 text-md text-[#50a1ef]">N° ENREGISTREMENT : {data.numeroRef} </p>
+       <UserPdf data={data} />
+    </div>
      <div className="flex justify-between pb-4 mb-4 border-b-2">
     <p className="font-semibold text-md ">L'etat de votre candidature est : </p>
       <p className={`text-sm font-semibold text-white p-2 rounded ${statutOptions[data.statut].color}`}> {statutOptions[data.statut].label } </p>
@@ -338,6 +344,12 @@ function CandidatureItem({ data }: any) {
                   "Licence",
                   "",
                   user.licence
+                )}
+              
+              {user.maitrise.toString().includes("files/")  && fileFunction(
+                  "Maitrise",
+                  "",
+                  user.maitrise
                 )}
               
               {user.master1.toString().includes("files/")  && fileFunction(

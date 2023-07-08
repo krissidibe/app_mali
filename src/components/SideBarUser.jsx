@@ -31,18 +31,30 @@ const SideBarUser = ({ show = true, handleClick = () => {
     <div
       className={`bg-[#274472] text-white  md:w-[260px] w-full ${
         canClose ? "" : "hidden"
-      } md:flex  flex flex-col h-screen transition-all ease-in-out p-4 `}
+      } md:flex  flex flex-col h-screen transition-all ease-in-out px-4 `}
     >
+        <Image
+            src="/images/Dnajml.png"
+            alt="me"
+            className="absolute top-0 left-0"
+            width="64"
+            height="64"
+          />
       <div className="md:min-w-[450px] w-[353px] text-white items-center justify-between my-4 flex space-x-2">
-        <div className="flex items-center space-x-4">
-          <Image
+        <div className="flex items-center pl-10 space-x-4">
+          {/* <Image
             src="/images/logo.png"
             alt="me"
             className=" left-20"
             width="40"
             height="40"
-          />
-          <div>DNAJ</div>
+          /> */}
+        <div className="flex flex-col">
+        <div className="text-xl border-b-2 border-white"><p>DNAJ</p></div>
+          <div className="text-xl font-bold text-[#50a1ef]"><p>CONCOURS</p></div>
+        </div>
+
+        
         </div>
         {show && (
           <XCircleIcon

@@ -69,6 +69,16 @@ function ExportExcel({datas} ) {
         key: "statut",
         width: 40,
       },
+      {
+        header: "MOTIF",
+        key: "message",
+        width: 40,
+      },
+      {
+        header: "TRAITE PAR",
+        key: "admin",
+        width: 40,
+      },
     ];
 
     const statutOptions = [
@@ -108,9 +118,11 @@ function ExportExcel({datas} ) {
         study: item.study,
         id: dayjs(item.createdAt).format("DD/MM/YYYY") ,
         createdAt: dayjs(item.createdAt).format("DD/MM/YYYY") ,
+        id: item.numeroRef,
+        number: item.number,
         statut: statutOptions[item.statut].label,
-        id: item.id,
-        number: item.author.number,
+        message: item.message,
+        admin: item.admin,
       });
     });
     workbook.xlsx.writeBuffer().then(data=>{

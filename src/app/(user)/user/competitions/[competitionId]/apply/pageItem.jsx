@@ -107,6 +107,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
   const [defFile, setDefFile] = useState("");
   const [bacFile, setBacFile] = useState("");
   const [licenceFile, setLicenceFile] = useState("");
+  const [maitriseFile, setMaitriseFile] = useState("");
   const [master1File, setMaster1File] = useState("");
   const [master2File, setMaster2File] = useState("");
   const getUser = async () => {};
@@ -151,6 +152,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
     formData.append("defFile", defFile);
     formData.append("bacFile", bacFile);
     formData.append("licenceFile", licenceFile);
+    formData.append("maitriseFile", maitriseFile);
     formData.append("master1File", master1File);
     formData.append("master2File", master2File);
     
@@ -183,6 +185,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
   const defCheck = data.data.fileAttach.def;
   const bacCheck = data.data.fileAttach.bac;
   const licenceCheck = data.data.fileAttach.licence;
+  const maitriseCheck = data.data.fileAttach.maitrise;
   const master1Check = data.data.fileAttach.master1;
   const master2Check = data.data.fileAttach.master2;
  
@@ -510,6 +513,15 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   key={103}
                   inputType="file"
                   label="Licence"
+                />)  }
+                {maitriseCheck == true &&  ( <InputComponent
+                  checkFileIcon={maitriseFile != ""}
+                  handleChange={(e) => {
+                    setMaitriseFile(e.target.files[0]);
+                  }}
+                  key={105}
+                  inputType="file"
+                  label="Maitrise"
                 />)  }
                 {master1Check == true &&  ( <InputComponent
                   checkFileIcon={master1File != ""}

@@ -279,7 +279,26 @@ export default function Signin() {
         </Card>
       </div>
 
-      <div className="flex flex-col items-center justify-between hidden w-1/2 h-full md:block bg-red-50">
+      <div className="relative flex flex-col items-center justify-between hidden w-1/2 h-full md:block bg-red-50">
+      <Image
+              src="/images/logo2.png"
+              alt="me"
+              className="absolute top-0 left-10 top-10"
+              width="230"
+              height="230"
+            />
+        
+        <Image
+          className="object-cover w-full h-full"
+          // loader={myLoader}
+          src="/images/meilleure-universite-africaine1.jpg"
+          alt="Picture of the author"
+          width={500}
+          height={500}
+        />
+      </div>
+
+     {/*  <div className="flex flex-col items-center justify-between hidden w-1/2 h-full md:block bg-red-50">
         <Image
           className="object-cover w-full h-full"
           // loader={myLoader}
@@ -288,7 +307,7 @@ export default function Signin() {
           width={500}
           height={500}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

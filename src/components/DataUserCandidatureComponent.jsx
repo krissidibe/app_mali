@@ -29,6 +29,12 @@ const statutOptions = [
 
 const columns = [
   {
+    name: "N° ENREGISTREMENT",
+   selector: (row) => row.numeroRef,
+    format: (row) => row.numeroRef,
+   
+  },
+  {
     name: "Intitulé du concours",
    selector: (row) => row.competition.title,
     format: (row) => row.competition.title.toUpperCase(),
@@ -54,6 +60,12 @@ const columns = [
   },
 ];
 const mobileColumns = [
+  {
+    name: "N° ENREGISTREMENT",
+   selector: (row) => row.numeroRef,
+    format: (row) => row.numeroRef,
+   
+  },
   {
     name: "Intitulé du concours",
     selector: (row) => row.competition.title,

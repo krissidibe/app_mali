@@ -26,16 +26,25 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 
   if (searchParams.get("email") && searchParams.get("id") != "") {
+
+
+    
+
+
     let idInt = searchParams.get("id");
-    const data = await prisma.candidature.findUnique({
+    const data = await prisma.candidature.findFirst({
       where: {
+
+        email: searchParams.get("email")?.toString(),
         id: parseInt(idInt!),
+      
       },
+      
       include: { competition: {} },
     });
     if (!data) {
       return NextResponse.json({
-        data: data,
+        data: null,
         message: "Aucun candidature trouvé",
       });
     }
@@ -155,12 +164,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const defFile = formData.get("defFile") as Blob | null;
   const bacFile = formData.get("bacFile") as Blob | null;
   const licenceFile = formData.get("licenceFile") as Blob | null;
+  const maitriseFile = formData.get("maitriseFile") as Blob | null;
   const master1File = formData.get("master1File") as Blob | null;
   const master2File = formData.get("master2File") as Blob | null;
 
   let defFileName = "";
   let bacFileName = "";
   let licenceFileName = "";
+  let maitriseFileName = "";
   let master1FileName = "";
   let master2FileName = "";
 
@@ -180,6 +191,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
     licenceFileName = await storeImage(licenceFile);
   } catch (error) {
     licenceFileName = "non renseigné";
+  }
+
+  try {
+    maitriseFileName = await storeImage(maitriseFile);
+  } catch (error) {
+    maitriseFileName = "non renseigné";
   }
 
   try {
@@ -216,7 +233,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       statut: "0",
       content: "",
       certificat: "",
-      idString: ";",
+      
       email: user?.email ?? "",
       image: user?.image ?? "",
       number: user?.number ?? "",
@@ -248,6 +265,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       def: defFileName,
       bac: bacFileName,
       licence: licenceFileName,
+      maitrise: maitriseFileName,
       master1: master1FileName,
       master2: master2FileName,
     },

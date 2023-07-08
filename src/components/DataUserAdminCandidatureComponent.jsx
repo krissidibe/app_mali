@@ -45,6 +45,12 @@ const sexeOptions = [
 ];
 const columns = [
   {
+    name: "N° ENREGISTREMENT",
+   selector: (row) => row.numeroRef,
+    format: (row) => row.numeroRef,
+   
+  },
+  {
     name: "Nom",
     selector: (row) => row.lastName,
     format: (row) => row.lastName.toUpperCase(),

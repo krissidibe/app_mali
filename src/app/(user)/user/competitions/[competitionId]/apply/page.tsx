@@ -31,6 +31,7 @@ async function Home({
     def: file.data?.def,
     bac: file.data?.bac,
     licence: file.data?.licence,
+    maitrise: file.data?.maitrise,
     master1: file.data?.master1,
     master2: file.data?.master2,
   };

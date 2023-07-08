@@ -59,6 +59,7 @@ function CreateCompetition() {
   const [def, setDef] = useState(false);
   const [bac, setBac] = useState(false);
   const [licence, setLicence] = useState(false);
+  const [maitrise, setMaitrise] = useState(false);
   const [master1, setMaster1] = useState(false);
   const [master2, setMaster2] = useState(false);
   const showDialogClick = useRef(null)
@@ -82,6 +83,7 @@ function CreateCompetition() {
     formData.append("def", def);
     formData.append("bac", bac);
     formData.append("licence", licence);
+    formData.append("maitrise", maitrise);
     formData.append("master1", master1);
     formData.append("master2", master2);
     /*  body: JSON.stringify({
@@ -241,6 +243,10 @@ function CreateCompetition() {
         <div className="flex items-center justify-between">
           <p className="font-semibold text-md">Licence</p> <Switch checked={licence}
                       onCheckedChange={(x) =>setLicence(x => x=!x)} />
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-md">Maitrise</p> <Switch checked={maitrise}
+                      onCheckedChange={(x) =>setMaitrise(x => x=!x)} />
         </div>
         <div className="flex items-center justify-between">
           <p className="font-semibold text-md">Master 1</p> <Switch checked={master1}

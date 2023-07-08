@@ -32,14 +32,14 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import AlertModalResponse from "@/components/Modals/AlertModalResponse";
 import { useRouter } from "next/navigation";
 
-function CandidatureItem({datas}) {
+function CandidatureItem({ datas }) {
   const searchParams = useSearchParams();
   const data = datas;
   const dataUser = datas;
 
   const result = datas;
   const user = datas;
-const router = useRouter()
+  const router = useRouter();
   const statutOptions = [
     {
       label: "En cours de validation",
@@ -62,7 +62,7 @@ const router = useRouter()
   const [modalData, setModalData] = useState("");
   const [statut, setStatut] = useState(data.statut);
   const [messageAdmin, setMessageAdmin] = useState(data.message);
-  const showDialogClick = useRef(null)
+  const showDialogClick = useRef(null);
   const updateApply = async (value) => {
     const res = await fetch(`/api/admin/candidature`, {
       body: JSON.stringify({
@@ -84,22 +84,26 @@ const router = useRouter()
     setModalData((x) => (x = data.message));
     if (data) {
       showDialogClick.current.click();
-    //  modal.onOpen();
+      //  modal.onOpen();
     }
   };
 
   return (
     <div className="flex flex-col h-full">
-     
-      <AlertModalResponse title="Alert" refModal={showDialogClick} message={"La candidature est modifier"} handleClick={()=>{
-     /*    router.refresh()
-        router.back() */
-        router.back({
+      <AlertModalResponse
+        title="Alert"
+        refModal={showDialogClick}
+        message={"La candidature est modifier"}
+        handleClick={() => {
+          router.refresh();
+          router.back();
+          router.refresh();
+          /*  router.back({
         
           query: { name: 'Someone' }
-      }, '/about');
-      }}  />
- 
+      }, '/about'); */
+        }}
+      />
 
       <p className="pb-2 mb-10 font-semibold border-b-2">
         Les information sur la candidature
@@ -108,7 +112,9 @@ const router = useRouter()
         <div className="w-1/2">
           <Card className="mb-10 ">
             <CardHeader>
-              <CardTitle className="mb-2">Mes informations</CardTitle>
+              <CardTitle className="mb-2">
+                Les informations du candidat
+              </CardTitle>
               <CardDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
@@ -292,6 +298,11 @@ const router = useRouter()
 
                 {result.licence.toString().includes("files/") &&
                   fileFunction("Licence", "", result.licence)}
+                   {user.maitrise.toString().includes("files/")  && fileFunction(
+                  "Maitrise",
+                  "",
+                  user.maitrise
+                )}
 
                 {result.master1.toString().includes("files/") &&
                   fileFunction("Master1", "", result.master1)}
@@ -315,31 +326,35 @@ const router = useRouter()
             </CardDescription>
           </CardHeader>
           <CardContent>
+            <p className="font-semibold mb-4 mt-4 text-md text-[#50a1ef]">
+              N° ENREGISTREMENT : {data.numeroRef}{" "}
+            </p>
             <div className="flex justify-between my-4">
               <div>Etat de la candidature : </div>
 
               <div className="flex flex-col space-y-1.5">
-  
-                    <Select
-                      defaultValue={statut}
-                       onValueChange={(e) => setStatut(e)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sexe" />
-                        <SelectContent position="popper">
-                          <SelectItem value="0">En cours de validation</SelectItem>
-                          <SelectItem value="1">Valider</SelectItem>
-                          <SelectItem value="2">refuser</SelectItem>
-                        </SelectContent>
-                      </SelectTrigger>
-                    </Select>
-                    
-                  </div>
-              
+                <Select
+                  defaultValue={statut}
+                  onValueChange={(e) => setStatut(e)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sexe" />
+                    <SelectContent position="popper">
+                      <SelectItem value="0">En cours de validation</SelectItem>
+                      <SelectItem value="1">Valider</SelectItem>
+                      <SelectItem value="2">refuser</SelectItem>
+                    </SelectContent>
+                  </SelectTrigger>
+                </Select>
+              </div>
             </div>
 
-            <div>Note : </div>
-            <textarea value={messageAdmin} onChange={(e)=> setMessageAdmin(e.target.value)}  className="w-full p-4 my-4 border-2 h-[300px] outline-none h-1/2"></textarea>
+            <div>Motif : </div>
+            <textarea
+              value={messageAdmin}
+              onChange={(e) => setMessageAdmin(e.target.value)}
+              className="w-full p-4 my-4 border-2 h-[300px] outline-none h-1/2"
+            ></textarea>
             <div className="flex flex-col space-y-4">
               <ButtonComponent
                 handleClick={() => updateApply(statut)}
@@ -347,7 +362,6 @@ const router = useRouter()
                 full={true}
                 label={"Modifier la candidature"}
               />
-             
             </div>
           </CardContent>
         </Card>

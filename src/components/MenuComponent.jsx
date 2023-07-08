@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { XCircleIcon, Bars4Icon } from "@heroicons/react/24/solid";
+ 
+import { FaBeer } from 'react-icons/fa';
 import SideBarUser from "./SideBarUser";
 function MenuComponent() {
   const [showMenu, setshowMenu] = useState(false);

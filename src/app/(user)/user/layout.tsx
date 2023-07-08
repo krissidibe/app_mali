@@ -9,7 +9,7 @@ import ModalInfo from "../../../components/ModalInfo";
 import { authOptions } from "@/lib/authOption";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-
+import Image from "next/image";
 /* const inter = Inter({ subsets: ["latin"] });
  */
 export const metadata = {
@@ -36,7 +36,19 @@ export default async function AdminLayout({
           <SideBarUser />
         </div>
         <div className="flex flex-col flex-1">
-          <div className="w-full h-[70px] p-4 bg-[#50A1EF] text-white flex shadow-md  items-center justify-end">
+          <div className="w-full h-[70px] p-4 relative bg-[#3582ca]  text-white flex shadow-xl items-center justify-end">
+          <Image
+            src="/images/logo2.png"
+            alt="me"
+            className="absolute md:left-10 left-24"
+            width="200"
+            height="200"
+          />
+
+          <div className="flex-col flex-1 hidden text-sm text-center md:flex">
+            <p>REPUBLIQUE DU MALI</p>
+            <p>UN PEUPLE - UN BUT - UNE FOI</p>
+          </div>
             <MenuComponent />
             <div className="flex items-center justify-center">
               <p className="mr-4 text-sm">

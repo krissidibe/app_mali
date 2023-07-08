@@ -63,6 +63,7 @@ function CompetitionItem({ params, data }) {
   const [def, setDef] = useState(data.def);
   const [bac, setBac] = useState(data.bac);
   const [licence, setLicence] = useState(data.licence);
+  const [maitrise, setMaitrise] = useState(data.maitrise);
   const [master1, setMaster1] = useState(data.master1);
   const [master2, setMaster2] = useState(data.master2);
   
@@ -97,6 +98,7 @@ function CompetitionItem({ params, data }) {
     formData.append("def", def);
     formData.append("bac", bac);
     formData.append("licence", licence);
+    formData.append("maitrise", maitrise);
     formData.append("master1", master1);
     formData.append("master2", master2);
 
@@ -273,6 +275,10 @@ function CompetitionItem({ params, data }) {
         <div className="flex items-center justify-between">
           <p className="font-semibold text-md">Licence</p> <Switch checked={licence}
                       onCheckedChange={(x) =>setLicence(x => x=!x)} />
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-md">Maitrise</p> <Switch checked={maitrise}
+                      onCheckedChange={(x) =>setMaitrise(x => x=!x)} />
         </div>
         <div className="flex items-center justify-between">
           <p className="font-semibold text-md">Master 1</p> <Switch checked={master1}
