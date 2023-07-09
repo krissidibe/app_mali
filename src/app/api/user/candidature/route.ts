@@ -26,20 +26,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 
   if (searchParams.get("email") && searchParams.get("id") != "") {
-
-
-    
-
-
     let idInt = searchParams.get("id");
     const data = await prisma.candidature.findFirst({
       where: {
-
         email: searchParams.get("email")?.toString(),
         id: parseInt(idInt!),
-      
       },
-      
+
       include: { competition: {} },
     });
     if (!data) {
@@ -122,6 +115,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
   let certificatVisiteName = "";
   let diplomeFileName = "";
   let ninaFileName = "";
+  let infoCardFileName = "";
+  let demandeFileName = "";
 
   const certificate = formData.get("certificate") as Blob | null;
   const birthDateFile = formData.get("birthDateFile") as Blob | null;
@@ -130,6 +125,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const certificatVisite = formData.get("certificatVisite") as Blob | null;
   const diplomeFile = formData.get("diplomeFile") as Blob | null;
   const ninaFile = formData.get("ninaFile") as Blob | null;
+  const infoCardFile = formData.get("infoCardFile") as Blob | null;
+  const demandeFile = formData.get("demandeFile") as Blob | null;
 
   if (
     certificate?.toString() == "" ||
@@ -156,6 +153,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     certificatVisiteName = await storeImage(certificatVisite);
     diplomeFileName = await storeImage(diplomeFile);
     ninaFileName = await storeImage(ninaFile);
+    infoCardFileName = await storeImage(infoCardFile);
+    demandeFileName = await storeImage(demandeFile);
   } catch (error) {
     return new Response(
       JSON.stringify({
@@ -237,7 +236,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       statut: "0",
       content: "",
       certificat: "",
-      
+
       email: user?.email ?? "",
       image: user?.image ?? "",
       number: user?.number ?? "",
@@ -252,7 +251,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       diplomeNumber: formData.get("diplomeNumber")?.toString() ?? "",
       placeOfGraduation: formData.get("placeOfGraduation")?.toString() ?? "",
       countryOfGraduation:
-      formData.get("countryOfGraduation")?.toString() ?? "",
+        formData.get("countryOfGraduation")?.toString() ?? "",
       study: formData.get("study")?.toString() ?? "",
       speciality: formData.get("speciality")?.toString() ?? "",
       authorId: user?.id,
@@ -265,7 +264,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
       certificatVisite: certificatVisiteName,
       diplomeFile: diplomeFileName,
       ninaFile: ninaFileName,
-      
+      infoCardFile: infoCardFileName,
+      demandeFile: demandeFileName,
+
       def: defFileName,
       bac: bacFileName,
       licence: licenceFileName,
@@ -275,17 +276,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
     },
   });
 
-   const dataFormat =new Date(Date.now()).getFullYear().toString().substring(2, 4);
+  const dataFormat = new Date(Date.now())
+    .getFullYear()
+    .toString()
+    .substring(2, 4);
 
-  
-  const strNumber = data.id; 
- 
-const finalData =  await prisma.candidature.update({
+  const strNumber = data.id;
+
+  const finalData = await prisma.candidature.update({
     where: {
       id: data.id,
     },
     data: {
-      numeroRef:`DNAJ${dataFormat}${strNumber.toString().padStart(6, '0')}`
+      numeroRef: `DNAJ${dataFormat}${strNumber.toString().padStart(6, "0")}`,
     },
   });
   return new Response(

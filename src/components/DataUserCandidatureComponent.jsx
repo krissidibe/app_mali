@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-
+import UserPdf from "@/components/PDF/UserPdf";
 import { CustomerService } from "../Services/Candidature";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import parse from "html-react-parser";
@@ -56,7 +56,16 @@ const columns = [
     name: "Statut",
     selector: (row) => row.statut,
     sortable: true,
-    cell: row => (<div className={`p-1 text-white text-[12px] px-2  rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
+    cell: row => (<div className={`p-1 text-white text-[12px] px-2 h-10 text-center flex items-center  rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
+  },
+  {
+    name: "Action",
+   selector: (row) => row.id,
+   cell: row => ( <UserPdf data={row} className="h-10 p-0 text-center text-white bg-green-500  text-[12px] px-2  rounded-md  " />),
+    /* cell: row => (<button onClick={()=>{
+      alert("kkk")
+    }} className={`p-1 text-white text-[12px] px-2 rounded-md   `} >récépissé</button>),
+    */
   },
 ];
 const mobileColumns = [
@@ -78,6 +87,15 @@ const mobileColumns = [
     selector: (row) => row.statut,
     sortable: true,
     cell: row => (<div className={`p-1 text-white text-[12px] px-2  rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
+  },
+  {
+    name: "Action",
+   selector: (row) => row.id,
+   cell: row => ( <UserPdf data={row} className="h-10 p-0 text-center text-white bg-green-500  text-[12px] px-2  rounded-md  " />),
+    /* cell: row => (<button onClick={()=>{
+      alert("kkk")
+    }} className={`p-1 text-white text-[12px] px-2 rounded-md   `} >récépissé</button>),
+    */
   },
 ];
 

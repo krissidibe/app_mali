@@ -188,30 +188,49 @@ function page() {
 
         <p className="text-[12px] pb-8 text-gray-500 max-w-[420px] text-center mt-10 mb-10">
           Cette plateforme est une propriété du Ministère de la Justice et des
-          Droit de l'homme du Mali. Elle a pour but de faciliter aux candidats,
+          Droits de l'homme du Mali. Elle a pour but de faciliter aux candidats,
           le dépôt des dossiers de candidature aux concours organisés par la
           Direction Nationale de l'Administration de la Justice sans besoin de
           se déplacer. Cependant , Toute fraude volontaire ou involontaire sur
           ce site peut faire l'objet de poursuite judiciaire.
+
+         
         </p>
       </div>
-      <div className="relative flex flex-col items-center justify-between hidden w-1/2 h-full md:block bg-red-50">
+      <div className="relative md:flex flex-col items-center justify-center hidden w-1/2 h-full bg-[#274472] ">
       <Image
               src="/images/logo2.png"
               alt="me"
-              className="absolute top-0 left-10 top-10"
+              className="absolute left-10 top-10"
               width="290"
               height="290"
             />
+
+<div className="absolute flex-col flex-1 text-sm text-center text-white right-10 top-10 md:flex">
+            <p>REPUBLIQUE DU MALI</p>
+            <p>Un Peuple - Un But - Une Foi</p>
+          </div>
+
+          <div className="absolute flex-col flex-1 max-w-lg space-y-2 text-sm text-left text-white left-20 right-20 bottom-20 md:flex">
+            <p className="text-lg font-bold border-b-2">PORTAIL CONCOURS</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dolore ullam totam itaque explicabo eveniet, obcaecati sequi consectetur porro tempore error ab laborum dolor sint, libero, magni distinctio! Et, totam!</p>
+          </div>
+      <Image
+              src="/images/111.png"
+              alt="me"
+              className=""
+              width={400}
+              height={400}
+            />
         
-        <Image
+       {/*  <Image
           className="object-cover w-full h-full"
           // loader={myLoader}
           src="/images/meilleure-universite-africaine1.jpg"
           alt="Picture of the author"
           width={500}
           height={500}
-        />
+        /> */}
       </div>
      {/*  <div className="flex flex-col items-center relative justify-between hidden w-1/2 h-full md:block bg-[#274472]">
         

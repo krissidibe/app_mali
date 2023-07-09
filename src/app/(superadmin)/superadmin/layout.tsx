@@ -3,9 +3,9 @@ import { Inter } from "next/font/google";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; // theme
 import "primereact/resources/primereact.css";
-import MenuComponent from "../../../components/MenuComponent";
-import SideBarUser from "../../../components/SideBarUser";
-import ModalInfo from "../../../components/ModalInfo";
+import MenuComponent from "@/components/MenuComponent";
+import SideBarSuperAdmin from "@/components/SideBarSuperAdmin";
+import ModalInfo from "@/components/ModalInfo";
 import { authOptions } from "@/lib/authOption";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -33,7 +33,7 @@ export default async function AdminLayout({
         <ModalInfo title="Alert" body="kris" />
 
         <div className="hidden md:block">
-          <SideBarUser />
+          <SideBarSuperAdmin />
         </div>
         <div className="flex flex-col flex-1">
           <div className="w-full h-[70px] p-4 relative bg-[#3582ca]  text-white flex shadow-xl items-center justify-end">
@@ -49,20 +49,8 @@ export default async function AdminLayout({
             <p>REPUBLIQUE DU MALI</p>
             <p>Un Peuple - Un But - Une Foi</p>
           </div>
-            <MenuComponent />
-            <div className="flex items-center justify-center">
-              <p className="mr-4 text-sm">
-           
-                {session?.user?.email}{" "}
-              </p>
-
-              <Avatar>
-                <AvatarImage
-                  src={`${process.env.BASE_URL}${session?.user?.image}`}
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </div>
+            
+            
           </div>
           <div className="h-full p-4 overflow-y-scroll md:p-10 ">
             {children}

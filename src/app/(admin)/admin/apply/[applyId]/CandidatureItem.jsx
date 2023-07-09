@@ -284,6 +284,16 @@ function CandidatureItem({ datas }) {
                   "",
                   result.ninaFile
                 )}
+                 {fileFunction(
+                  "Une copie de la pièce d’identité ",
+                  "",
+                  result.infoCardFile
+                )}
+                 {fileFunction(
+                  "Une demande manuscrite timbrée",
+                  "",
+                  result.demandeFile
+                )}
               </div>
 
               <CardTitle className="mt-4 mb-2 text-green-500">
@@ -388,7 +398,7 @@ export default CandidatureItem;
 
 function fileFunction(label, subLabel = "", result) {
   return (
-    <div>
+    <div key={label} >
       <div className="flex flex-col">
         <Label className="mb-2">{label}</Label>
         {/*  { <span className="text-[13px] text-gray-400">{subLabel}</span>} */}

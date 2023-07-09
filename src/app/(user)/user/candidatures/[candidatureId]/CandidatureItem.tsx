@@ -323,6 +323,16 @@ function CandidatureItem({ data }: any) {
                   "",
                   user.ninaFile
                 )}
+                  {fileFunction(
+                  "Une copie de la pièce d’identité",
+                  "",
+                  user.infoCardFile
+                )}
+                 {fileFunction(
+                  "Une demande manuscrite timbrée",
+                  "",
+                  user.demandeFile
+                )}
               </div>
 
               <CardTitle className="mt-4 mb-10 text-green-500">

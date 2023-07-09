@@ -85,6 +85,8 @@ export default function ApplyItem(data, competitionId,fileAttach) {
   const [sexe, setSexe] = useState(sexeOptions[0].label);
   const [nina, setNina] = useState(data.data.data.nina ?? "");
   const [ninaFile, setNinaFile] = useState("");
+  const [infoCardFile, setInfoCardFile] = useState("");
+  const [demandeFile, setDemandeFile] = useState("");
 
   const [certificate, setCertificate] = useState("");
   const [birthDateFile, setBirthDateFile] = useState("");
@@ -149,6 +151,8 @@ export default function ApplyItem(data, competitionId,fileAttach) {
     formData.append("certificatVisite", certificatVisite);
     formData.append("diplomeFile", diplomeFile);
     formData.append("ninaFile", ninaFile);
+    formData.append("infoCardFile", infoCardFile);
+    formData.append("demandeFile", demandeFile);
 
     //Diplome 
     formData.append("defFile", defFile);
@@ -483,6 +487,26 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   inputType="file"
                   label="Carte nina ou fiche individuelle"
                   subLabel="pour les diplomes étrangers"
+                />
+                <InputComponent
+                  checkFileIcon={infoCardFile != ""}
+                  handleChange={(e) => {
+                    setInfoCardFile(e.target.files[0]);
+                  }}
+                  key={29}
+                  inputType="file"
+                  label="Une copie de la pièce d’identité"
+                  subLabel=""
+                />
+                <InputComponent
+                  checkFileIcon={demandeFile != ""}
+                  handleChange={(e) => {
+                    setDemandeFile(e.target.files[0]);
+                  }}
+                  key={30}
+                  inputType="file"
+                  label="Une demande manuscrite timbrée"
+                  subLabel="Timbrée à 200 F"
                 />
               </div>
 

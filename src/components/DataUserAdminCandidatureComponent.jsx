@@ -179,10 +179,7 @@ export default function DataUserAdminCandidatureComponent({ datas }) {
             
             <Select defaultValue={statut} onValueChange={(e) => {
               setStatut(e);
-            
-              
            handleFilter("",e)
-              
               }}>
               <SelectTrigger>
                 <SelectValue placeholder="Sexe" />

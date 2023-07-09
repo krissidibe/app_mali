@@ -114,6 +114,8 @@ email         String?
   ninaFile            String?
   requestLetter            String?
   birthDateFile       String?
+  infoCardFile       String?
+  demandeFile       String?
   cassierFile         String?
   certificatVie       String?
   certificatVisite    String?

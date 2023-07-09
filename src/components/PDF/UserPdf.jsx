@@ -75,6 +75,7 @@ const MyDocument = ({ data }) => (
           {InfoInput("Sexe", data?.sexe)}
           {InfoInput("Adresse", data?.address)}
           {InfoInput("NINA", data?.nina)}
+        
         </View>
 
         <View
@@ -125,9 +126,7 @@ const MyDocument = ({ data }) => (
           style={{
             marginBottom: "5px",
             paddingBottom: "5px",
-            borderBottom: "solid",
-            borderBottomColor: "black",
-            borderBottomWidth: "2px",
+            
           }}
         >
                
@@ -138,7 +137,8 @@ const MyDocument = ({ data }) => (
           {InfoInputFile("Un certificat de visite et contre visite", data?.certificatVisite)}
           {InfoInputFile("Une copie certifiée conforme du diplome riquis", data?.diplomeFile)}
           {InfoInputFile("Carte nina ou fiche individuelle", data?.ninaFile)}
-         
+          {InfoInputFile("Une copie de la pièce d’identité", data?.infoCardFile)}
+          {InfoInputFile("Une demande manuscrite timbrée", data?.demandeFile)}
          
 
         </View>
@@ -213,7 +213,7 @@ function _buildExperienceItem(e) {
 }
 
 
-function UserPdf({ data }) {
+function UserPdf({ data ,className=""}) {
   const [isClient, setIsClient] = useState(false);
   const [textUrl, setTextUrl] = useState("");
 
@@ -242,7 +242,7 @@ function UserPdf({ data }) {
       {isClient && (
         <div>
          {/*  <MyDocument /> */}
-          <button className="p-4 border-2 rounded-sm" onClick={() => generatePdfDocument(data)}>
+          <button className={`border-2 rounded-sm ${className}`}  onClick={() => generatePdfDocument(data)}>
             Télécharger le recipissé
           </button>
         </div>
