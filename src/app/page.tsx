@@ -61,7 +61,7 @@ function page() {
       }
 
       if (callback?.ok && !callback?.error) {
-        toast.success("Logged in successfully!");
+       toast.success("Connecté avec succès");
         
         if (session.data?.user) {
           router.push(`/${session.data?.user.role.toString().toLowerCase()}`);
@@ -104,7 +104,7 @@ function page() {
         }
 
         if (callback?.ok && !callback?.error) {
-          toast.success("Logged in successfully!");
+          toast.success("Connecté avec succès");
         }
       });
 
@@ -193,7 +193,7 @@ function page() {
           </CardFooter>
         </Card>
 
-        <p className="text-[12px] pb-8 text-gray-500 max-w-[420px] text-center mt-10 mb-10">
+        <p className="text-[12px] pb-8 text-gray-500 max-w-[420px] text-justify mt-10 mb-10">
           Cette plateforme est une propriété du Ministère de la Justice et des
           Droits de l'homme du Mali. Elle a pour but de faciliter aux candidats,
           le dépôt des dossiers de candidature aux concours organisés par la

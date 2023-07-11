@@ -88,16 +88,22 @@ function CandidatureItem({ datas }) {
     }
   };
 
+ 
+
   return (
     <div className="flex flex-col h-full">
       <AlertModalResponse
-        title="Alert"
+        title="Candidature modifier"
         refModal={showDialogClick}
         message={"La candidature est modifier"}
         handleClick={() => {
           router.refresh()
-          router.back()
-          
+          const timer = setTimeout(() => {
+      
+              router.back()
+          }, 300);
+          return () => clearTimeout(timer);
+          showDialogClick.current = null
           /*  router.back({
         
           query: { name: 'Someone' }
@@ -243,59 +249,65 @@ function CandidatureItem({ datas }) {
               <CardTitle className="mt-4 mb-2 text-blue-500">
                 Les pieces jointes
               </CardTitle>
-              <CardDescription>
+            {/*   <CardDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
-              </CardDescription>
+              </CardDescription> */}
               <div className="grid gap-6 mt-4 md:grid-cols-2">
-                {fileFunction(
-                  "Une copie d'acte de naissance",
+              {fileFunction(
+                  "La copie d'acte de naissance",
                   "ou  jugement supplétif en tenant lieu",
                   result.birthDateFile
                 )}
                 {fileFunction(
-                  "Un extrait du casier judiciare",
+                  "L'extrait du casier judiciaire",
                   "Datant d'au moins de trois(3) mois",
                   result.cassierFile
                 )}
                 {fileFunction(
-                  "Un certificat de bonne vie et moeurs",
+                  "Le certificat de bonne vie et moeurs",
                   "Un certificat de bonne vie et moeurs valide",
                   result.certificatVie
                 )}
                 {fileFunction(
-                  "Un certificat de nationalité malienne",
+                  "Le certificat de nationalité malienne",
                   "Un certificat valide",
                   result.certificate
                 )}
-                {fileFunction(
-                  "Un certificat de visite et contre visite",
-                  "Délivré par une  autorité médicale agréée",
-                  result.certificatVisite
-                )}
-                {fileFunction(
-                  "Une copie certifiée conforme du diplome riquis",
+                 {fileFunction(
+                  "La copie certifiée conforme du diplome requis",
                   "et son équivalence pour les diplomes étrangers",
                   result.diplomeFile
                 )}
+                {fileFunction(
+                  "Le certificat de visite et contre visite",
+                  "Délivré par une  autorité médicale agréée",
+                  result.certificatVisite
+                )}
                  {fileFunction(
-                  "Carte nina ou fiche individuelle",
+                  "L'équivalence du diplomes requis pour les étrangers",
+                  "et son équivalence pour les diplomes étrangers",
+                  result.equivalenceFile
+                )}
+               
+                {fileFunction(
+                  "La copie de la carte nina ou la fiche individuelle",
                   "",
                   result.ninaFile
                 )}
-                 {fileFunction(
-                  "Une copie de la pièce d’identité ",
+                  {fileFunction(
+                  "La copie de la pièce d’identité",
                   "",
                   result.infoCardFile
                 )}
                  {fileFunction(
-                  "Une demande manuscrite timbrée",
+                  "La demande manuscrite timbrée",
                   "",
                   result.demandeFile
                 )}
               </div>
-
+{/* 
               <CardTitle className="mt-4 mb-2 text-green-500">
                 Les Diplômes
               </CardTitle>
@@ -324,7 +336,7 @@ function CandidatureItem({ datas }) {
 
                 {result.master2.toString().includes("files/") &&
                   fileFunction("Master2", "", result.master2)}
-              </div>
+              </div> */}
             </CardContent>
           </Card>
         </div>
@@ -355,7 +367,7 @@ function CandidatureItem({ datas }) {
                   <SelectTrigger>
                     <SelectValue placeholder="Sexe" />
                     <SelectContent position="popper">
-                      <SelectItem value="0">En cours de validation</SelectItem>
+                      <SelectItem value="0">En attente de traitement</SelectItem>
                       <SelectItem value="1">Valider</SelectItem>
                       <SelectItem value="2">refuser</SelectItem>
                     </SelectContent>
@@ -398,7 +410,7 @@ export default CandidatureItem;
 
 function fileFunction(label, subLabel = "", result) {
   return (
-    <div key={label} >
+    <div key={label} className={result.length <= 15 ? "hidden" :""} >
       <div className="flex flex-col">
         <Label className="mb-2">{label}</Label>
         {/*  { <span className="text-[13px] text-gray-400">{subLabel}</span>} */}

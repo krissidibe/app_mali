@@ -411,7 +411,7 @@ export default CandidatureItem;
 
 function fileFunction(label: String, subLabel: String ="", result: any) {
   return (
-    <div className={result == "File not" ? "hidden" :""} >
+    <div className={result.length <= 15 ? "hidden" :""} >
       <div className="flex flex-col">
         <Label className="mb-2">{label}</Label>
       {/*  { <span className="text-[13px] text-gray-400">{subLabel}</span>} */}

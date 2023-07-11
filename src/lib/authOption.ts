@@ -56,8 +56,8 @@ export const authOptions: AuthOptions = {
     //-session.user.role = token.role ?? "";
     session.user.image = token.picture;
     session.user.role = `${token.role}`;
-    console.log(`session => ${JSON.stringify(session.user)}`);
-    console.log(`session => ${JSON.stringify(token.role)}`);
+   // console.log(`session => ${JSON.stringify(session.user)}`);
+   // console.log(`session => ${JSON.stringify(token.role)}`);
       }
   
 
