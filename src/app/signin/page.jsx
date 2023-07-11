@@ -278,8 +278,47 @@ export default function Signin() {
           </CardFooter>
         </Card>
       </div>
+      <div className="relative md:flex flex-col items-center justify-center hidden w-1/2 h-full bg-[#274472] ">
+        <Image
+          src="/images/logo2.png"
+          alt="me"
+          className="absolute left-10 top-10"
+          width="290"
+          height="290"
+        />
 
-      <div className="relative flex flex-col items-center justify-between hidden w-1/2 h-full md:block bg-red-50">
+        <div className="absolute flex-col flex-1 text-sm text-center text-white right-10 top-10 md:flex">
+          <p>REPUBLIQUE DU MALI</p>
+          <p>Un Peuple - Un But - Une Foi</p>
+        </div>
+
+        <div className="absolute flex-col flex-1 max-w-lg space-y-2 text-sm text-left text-white left-20 right-20 bottom-20 md:flex">
+          <p className="text-lg font-bold border-b-2">PORTAIL CONCOURS</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
+            dolore ullam totam itaque explicabo eveniet, obcaecati sequi
+            consectetur porro tempore error ab laborum dolor sint, libero, magni
+            distinctio! Et, totam!
+          </p>
+        </div>
+        <Image
+          src="/images/111.png"
+          alt="me"
+          className=""
+          width={400}
+          height={400}
+        />
+
+        {/*  <Image
+          className="object-cover w-full h-full"
+          // loader={myLoader}
+          src="/images/meilleure-universite-africaine1.jpg"
+          alt="Picture of the author"
+          width={500}
+          height={500}
+        /> */}
+      </div>
+    {/*   <div className="relative flex flex-col items-center justify-between hidden w-1/2 h-full md:block bg-red-50">
       <Image
               src="/images/logo2.png"
               alt="me"
@@ -296,8 +335,8 @@ export default function Signin() {
           width={500}
           height={500}
         />
-      </div>
-
+      </div> */}
+ 
      {/*  <div className="flex flex-col items-center justify-between hidden w-1/2 h-full md:block bg-red-50">
         <Image
           className="object-cover w-full h-full"
