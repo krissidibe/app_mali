@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     textAlign: "left",
-    margin: 30,
+    marginHorizontal: 20,
+    marginTop:5,
     color: "black",
   },
 });
@@ -37,129 +38,322 @@ const statutOptions = [
     color: "bg-yellow-500",
   },
   {
-    label: "Valider", 
+    label: "Valider",
     value: 1,
-    color: "bg-green-500"
+    color: "bg-green-500",
   },
   {
     label: "refuser",
     value: 3,
-    color: "bg-red-500"
+    color: "bg-red-500",
   },
 ];
 const MyDocument = ({ data }) => (
+  /* 
+      <Image
+          src="/images/logo2.png"
+          alt="me"
+          className="absolute left-10 top-10"
+          width="290"
+          height="290"
+        />
+
+        <div className="absolute flex-col flex-1 text-sm text-center text-white right-10 top-10 md:flex">
+          <p>REPUBLIQUE DU MALI</p>
+          <p>Un Peuple - Un But - Une Foi</p>
+        </div>
+  */
   <Document>
     <Page size="A4" style={styles.page}>
+      <View
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          flexDirection: "row",
+          paddingHorizontal: 10,
+          marginTop: 10,
+        }}
+      >
+        <Image
+          src="/images/logo2n.png"
+          style={{ height: 50, objectFit: "contain" }}
+        />
+        <View
+          style={{
+            fontSize: 10,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginRight: 15,
+          }}
+        >
+          <Text>REPUBLIQUE DU MALI</Text>
+          <Text>Un Peuple - Un But - Une Foi</Text>
+        </View>
+      </View>
+
+      <Text
+        style={{
+          fontSize: 14,
+          fontWeight: "bold",
+          padding: 5,
+          marginLeft: 15,
+          marginTop:10,
+          marginBottom:20
+          
+        }}
+      >
+        RECEPISSE DE DEPOT DE LA CANDIDATURE
+      </Text>
+
       <View style={styles.section}>
-      {InfoInput("N° ENREGISTREMENT", data?.numeroRef)}
-      {InfoInput("Date du dépôt",  `${dayjs(data?.createdAt).format("DD/MM/YYYY")}`  )}
-      {InfoInput("Etat",  `${statutOptions[parseInt(data?.statut ?? 0)].label} `  )}
-       
-       
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            flexDirection: "row",
+            marginBottom: 6,
+          }}
+        >
+          {InfoInput("N° ENREGISTREMENT", data?.numeroRef)}
+          {InfoInput(
+            "Date du dépôt",
+            `${dayjs(data?.createdAt).format("DD/MM/YYYY")}`
+          )}
+        </View>
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            flexDirection: "row",
+            marginTop: 4,
+            marginBottom:15,
+           
+          }}
+        >
+          {InfoInput(
+            "Etat",
+            ` ${statutOptions[parseInt(data?.statut ?? 0)].label} `
+          )}
+        </View>
+
         <View
           style={{
             marginBottom: "10px",
-            marginTop:"5px",
+            marginTop: "5px",
             paddingBottom: "5px",
-            borderBottom: "solid",
-            borderBottomColor: "black",
-            borderBottomWidth: "2px",
+            border: "solid",
+            borderColor: "black",
+            borderWidth: "1px", padding:10,
+            width:"100%",
+            marginHorizontal:"auto",
+           borderRadius:5
           }}
         >
-          {InfoInput("Nom", data?.firstName)}
+          <View
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              flexDirection: "row",
+              marginTop: 10,
+              
+            }}
+          >
+            {InfoInput("Nom", data?.firstName)}
+          <View style={{ width:"50%"}}>
           {InfoInput("Prénom", data?.firstName)}
-          {InfoInput("Email", data?.email)}
+          </View>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              flexDirection: "row",
+              marginTop: 10,
+              
+            }}
+          >
+             {InfoInput("Email", data?.email)}
+             <View style={{ width:"50%"}}>
+          
           {InfoInput("Téléphone", data?.number)}
-          {InfoInput("Date de naissance",dayjs(data?.birthDate).format("DD/MM/YYYY")   )}
+          </View>
+          </View>
+
+          <View
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              flexDirection: "row",
+              marginTop: 10,
+              
+            }}
+          >
+            {InfoInput(
+            "Date de naissance",
+            dayjs(data?.birthDate).format("DD/MM/YYYY")
+          )}
+
+<View style={{ width:"50%"}}>
+           
           {InfoInput("Lieu de naissance", data?.placeBirthDate)}
-          {InfoInput("Sexe", data?.sexe)}
-          {InfoInput("Adresse", data?.address)}
-          {InfoInput("NINA", data?.nina)}
+          </View>
+          </View>
         
+
+          <View
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              flexDirection: "row",
+              marginTop: 10,
+              
+            }}
+          >
+           {InfoInput("Sexe", data?.sexe)}
+           <View style={{ width:"50%"}}>
+           
+          {InfoInput("Adresse", data?.address)}
+          </View>
+          </View>
+         
+          
+          <View
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              flexDirection: "row",
+              marginTop: 10,
+              
+            }}
+          >
+           
+           <View style={{ width:"50%"}}>
+           
+           {InfoInput("NINA", data?.nina)}
+          </View>
+          </View>
+    
         </View>
 
         <View
           style={{
             marginBottom: "6px",
             paddingBottom: "5px",
-            borderBottom: "solid",
-            borderBottomColor: "black",
-            borderBottomWidth: "2px",
+           
           }}
         >
-          <Text style={{ marginBottom: "10px" }}>
-            Les informations pour le concours
+          <Text style={{ marginTop: "10px" }}>
+          Informations à propos du concours
+
           </Text>
         </View>
         <View
           style={{
             marginBottom: "5px",
             paddingBottom: "5px",
-            borderBottom: "solid",
-            borderBottomColor: "black",
-            borderBottomWidth: "2px",
+            border: "solid",
+            borderColor: "black",
+            borderWidth: "1px",
+            padding:10,
+            borderRadius:5,
+            height:"160px",
+            display:"flex",
+            justifyContent:'space-between'
           }}
         >
-              {InfoInput("Diplôme de nationalité", data?.diplome)}
+          {InfoInput("Diplôme de nationalité", data?.diplome)}
           {InfoInput("Filiere", data?.study)}
           {InfoInput("Spécialité", data?.speciality)}
           {InfoInput("Lieu d’optention du diplôme", data?.placeOfGraduation)}
           {InfoInput("Pays d’optention du diplôme", data?.countryOfGraduation)}
           {InfoInput("Numero du diplôme", data?.diplomeNumber)}
-
+          { data?.orderOfMagistrates !=""
+                && ( 
+                  InfoInput("Ordre des magistrats", data?.orderOfMagistrates == "0" ? "Ordre admnistratif" : "Ordre judiciaire")
+                  
+                 )
+                }
         </View>
         <View
           style={{
-            marginBottom: "5px",
+            marginBottom: "6px",
             paddingBottom: "5px",
-            borderBottom: "solid",
-            borderBottomColor: "black",
-            borderBottomWidth: "2px",
+           
           }}
         >
-          <Text style={{ marginBottom: "10px" }}>
+          <Text style={{ marginTop: "10px" }}>
           Les pieces jointes
 
           </Text>
         </View>
+         
         <View
           style={{
             marginBottom: "5px",
             paddingBottom: "5px",
-            
+            border: "solid",
+            borderColor: "black",
+            borderWidth: "1px",
+            padding:10,
+            borderRadius:5,
+            height:"240px",
+            display:"flex",
+            justifyContent:'space-between'
           }}
         >
-               
-          {InfoInputFile("Une copie d'acte de naissance", data?.birthDateFile)}
-          {InfoInputFile("Un extrait du casier judiciare", data?.cassierFile)}
-          {InfoInputFile("Un certificat de bonne vie et moeurs", data?.certificatVie)}
-          {InfoInputFile("Un certificat de nationalité malienne", data?.certificate)}
-          {InfoInputFile("Un certificat de visite et contre visite", data?.certificatVisite)}
-          {InfoInputFile("Une copie certifiée conforme du diplome riquis", data?.diplomeFile)}
-          {InfoInputFile("Carte nina ou fiche individuelle", data?.ninaFile)}
-          {InfoInputFile("Une copie de la pièce d’identité", data?.infoCardFile)}
-          {InfoInputFile("Une demande manuscrite timbrée", data?.demandeFile)}
-         
-
-        </View>
- 
-        <View
-          style={{
-           
-          }}
-        >
-           
-               
-          { data?.def.toString().includes("files/")  &&  InfoInputFile("DEF", data?.def)}
-          { data?.bac.toString().includes("files/")  &&  InfoInputFile("BAC", data?.bac)}
-          { data?.licence.toString().includes("files/")  &&  InfoInputFile("LICENCE", data?.licence)}
-          { data?.maitrise.toString().includes("files/")  &&  InfoInputFile("MAITRISE", data?.maitrise)}
-          { data?.master1.toString().includes("files/")  &&  InfoInputFile("MASTER1", data?.master1)}
-          { data?.master2.toString().includes("files/")  &&  InfoInputFile("MASTER2", data?.master2)}
           
-       
- 
+          {InfoInputFile("La copie d'acte de naissance", data?.birthDateFile)}
+          {InfoInputFile("L'extrait du casier judiciaire", data?.cassierFile)}
+          {InfoInputFile(
+            "Le certificat de bonne vie et moeurs",
+            data?.certificatVie
+          )}
+          {InfoInputFile(
+            "Le certificat de nationalité malienne",
+            data?.certificate
+          )}
+          {InfoInputFile(
+            "Le certificat de visite et contre visite",
+            data?.certificatVisite
+          )}
+          {InfoInputFile(
+            "Le copie certifiée conforme du diplome requis",
+            data?.diplomeFile
+          )}
+          {InfoInputFile(
+            "L'équivalence du diplomes requis pour les étrangers",
+            data?.equivalenceFile
+          )}
+          {InfoInputFile("La copie de la carte nina ou la fiche individuelle", data?.ninaFile)}
+          {InfoInputFile(
+            "La copie de la pièce d’identité",
+            data?.infoCardFile
+          )}
+          {InfoInputFile("La demande manuscrite timbrée", data?.demandeFile)}
+        </View>
 
+        <View style={{}}>
+          {data?.def.toString().includes("files/") &&
+            InfoInputFile("DEF", data?.def)}
+          {data?.bac.toString().includes("files/") &&
+            InfoInputFile("BAC", data?.bac)}
+          {data?.licence.toString().includes("files/") &&
+            InfoInputFile("LICENCE", data?.licence)}
+          {data?.maitrise.toString().includes("files/") &&
+            InfoInputFile("MAITRISE", data?.maitrise)}
+          {data?.master1.toString().includes("files/") &&
+            InfoInputFile("MASTER1", data?.master1)}
+          {data?.master2.toString().includes("files/") &&
+            InfoInputFile("MASTER2", data?.master2)}
         </View>
       </View>
     </Page>
@@ -170,15 +364,16 @@ function InfoInput(label, value) {
   return (
     <View
       style={{
-        marginBottom: "10px",
+       
         fontSize: "12px",
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "",
+        alignItems:"flex-center"
       }}
     >
-      <Text>{label} :</Text>
-      <Text>{value}</Text>
+      <Text style={{fontWeight:"black" ,fontSize:12}} >{label} :    </Text>
+      <Text style={{fontWeight:"thin" ,fontSize:12,color:"#1b1b1b"}} >{value}</Text>
     </View>
   );
 }
@@ -194,7 +389,7 @@ function InfoInputFile(label, value = false) {
       }}
     >
       <Text>{label} :</Text>
-      <Text>{value.toString().includes("files/")  ? "Oui" :"Non"}</Text>
+      <Text>{value.toString().includes("files/") ? "Oui" : "Non"}</Text>
     </View>
   );
 }
@@ -212,8 +407,7 @@ function _buildExperienceItem(e) {
   );
 }
 
-
-function UserPdf({ data ,className=""}) {
+function UserPdf({ data, className = "" }) {
   const [isClient, setIsClient] = useState(false);
   const [textUrl, setTextUrl] = useState("");
 
@@ -222,7 +416,7 @@ function UserPdf({ data ,className=""}) {
     const blob = await pdf(
       <MyDocument data={datas} title="My PDF" pdfDocumentData={documentData} />
     ).toBlob();
-    saveAs(blob, fileName);
+    saveAs(blob, datas?.numeroRef);
   };
   useEffect(() => {
     setIsClient(true);
@@ -232,18 +426,19 @@ function UserPdf({ data ,className=""}) {
   }, [isClient]);
   return (
     <div>
-      
-{/* 
-      {isClient && (
+     {/*  {isClient && (
         <PDFViewer width="100%" height="1000px">
           <MyDocument data={datas} />
         </PDFViewer>
       )} */}
       {isClient && (
         <div>
-         {/*  <MyDocument /> */}
-          <button className={`border-2 rounded-sm ${className}`}  onClick={() => generatePdfDocument(data)}>
-            Télécharger le recipissé
+          {/*  <MyDocument /> */}
+          <button
+            className={`border-2 rounded-sm ${className}`}
+            onClick={() => generatePdfDocument(data)}
+          >
+            Télécharger le récépissé
           </button>
         </div>
       )}

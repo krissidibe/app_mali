@@ -244,6 +244,14 @@ function CandidatureItem({ datas }) {
                   key={12}
                   label="Numero du diplôme"
                 />
+
+{ result.orderOfMagistrates !=""
+                && (  <InputComponent
+                  value={result.orderOfMagistrates == "0" ? "Ordre admnistratif" : "Ordre judiciaire"} 
+                  key={12}
+                  label="Ordre des magistrats"
+                />)
+                }
               </div>
 
               <CardTitle className="mt-4 mb-2 text-blue-500">
