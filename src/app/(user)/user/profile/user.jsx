@@ -178,7 +178,7 @@ const showDialogClick = useRef(null)
         />
       )} */}
 
-<AlertModalResponse title="Alert" refModal={showDialogClick} message={message} handleClick={()=>{router.back()}}  />
+<AlertModalResponse title="" refModal={showDialogClick} message={message} handleClick={()=>{router.back()}}  />
  
 
 

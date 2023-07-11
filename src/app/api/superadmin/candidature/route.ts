@@ -15,17 +15,15 @@ export async function GET(req: NextRequest) {
   return new Response(JSON.stringify("Data"));
 }
 export async function PATCH(req: NextRequest, res: NextResponse) {
-  const { id, statut, message, admin, updatedAt } = await req.json();
+  const { id, canEdit } = await req.json();
  
   const data = await prisma.candidature.update({
     where: {
       id: id,
     },
     data: {
-      statut: statut,
-      message: message,
-      updatedAt: updatedAt,
-      admin: admin,
+      canEdit: canEdit,
+      
      
     },
   });

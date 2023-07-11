@@ -66,16 +66,16 @@ function CandidatureItem({ datas }) {
   const [messageAdmin, setMessageAdmin] = useState(data.message);
   const showDialogClick = useRef(null);
   const updateApply = async (value) => {
-    const session = await getSession()
     
      
-    const res = await fetch(`/api/admin/candidature`, {
+   // const session = await getSession()
+     
+    const res = await fetch(`/api/superadmin/candidature`, {
       body: JSON.stringify({
         id: result.id,
-        statut: value,
-        message: messageAdmin,
-        updatedAt: new Date(Date.now()),
-        admin: session?.user?.email,
+        canEdit: value,
+    
+        
       }),
       headers: {
         "Content-type": "application/json",
@@ -396,12 +396,27 @@ function CandidatureItem({ datas }) {
               className="w-full p-4 my-4 border-2 h-[300px] outline-none h-1/2"
             ></textarea>
             <div className="flex flex-col space-y-4">
-              <ButtonComponent
-                handleClick={() => updateApply(statut)}
+             
+
+              {
+                data.canEdit == false 
+                ? <ButtonComponent
+                handleClick={() => updateApply(true)}
                 className=""
                 full={true}
-                label={"Modifier la candidature"}
+                label={"Activer l'accès à utilisateur de modifier sa candidature"}
               />
+                
+                :   <ButtonComponent
+                handleClick={() => updateApply(false)}
+                className=""
+                full={true}
+                label={"Désactiver l'accès"}
+              />
+              }
+             
+
+           
             </div>
           </CardContent>
         </Card>

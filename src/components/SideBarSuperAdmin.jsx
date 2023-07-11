@@ -78,6 +78,13 @@ const SideBarSuperAdmin = ({ show = true, handleClick = () => {
           href="/superadmin/profile"
           Icon={BookOpenIcon}
         />
+        <NavItem
+          key={2}
+          handleClick={handleClick}
+          name="Candidatures"
+          href="/superadmin/candidatures"
+          Icon={BookOpenIcon}
+        />
  
       </div>
       <NavItem

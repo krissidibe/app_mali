@@ -45,7 +45,7 @@ function ExportExcel({datas} ) {
         width: 50,
       },
       {
-        header: "Diplome",
+        header: "DIPLOME",
         key: "diplome",
         width: 50,
       },
@@ -57,6 +57,11 @@ function ExportExcel({datas} ) {
       {
         header: "DATE DEPOT",
         key: "createdAt",
+        width: 50,
+      },
+      {
+        header: "DATE DE TRAITEMENT",
+        key: "updatedAt",
         width: 50,
       },
       {
@@ -123,6 +128,7 @@ function ExportExcel({datas} ) {
         statut: statutOptions[item.statut].label,
         message: item.message,
         admin: item.admin,
+        updatedAt: dayjs(item.updatedAt).format("DD/MM/YYYY") ,
       });
     });
     workbook.xlsx.writeBuffer().then(data=>{

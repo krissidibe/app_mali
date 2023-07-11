@@ -79,6 +79,16 @@ function CandidatureItem({ data }: any) {
       
        <BackComponent className="mt-2 mb-4" />
        <UserPdf data={data} className="p-4 text-white bg-green-500" />
+   {
+   data.canEdit == true
+   && (    <div className="p-4 border-[1px] border-green-500 flex justify-between  shadow-md rounded-md my-4">
+
+    <div>
+Vous pouvez modifier les informations de la candidature
+
+    </div>
+    <RiAlertLine className="w-6 h-6 text-green-500" />
+       </div>)}
       <p className="pb-2 mt-4 mb-10 font-semibold border-b-2">
     
         Informations à propos de votre candidature

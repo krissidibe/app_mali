@@ -6,7 +6,7 @@ import { SessionProvider } from "next-auth/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "DNAJ | Concours",
+  title: "DNAJ | SUPERADMIN",
   description: "Direction nationale de l'administration de la justice",
 };
 
