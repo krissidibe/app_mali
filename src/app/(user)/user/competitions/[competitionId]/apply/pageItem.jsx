@@ -5,11 +5,11 @@ import InputComponent from "@/components/InputComponent";
 import ModalInfo from "@/components/ModalInfo";
 import { useModalInfoStore } from "@/store/useModalInfoStore";
 import { getServerSession } from "next-auth";
-import { useSearchParams,useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { FaDownload } from "react-icons/fa";
 import { RiAlertLine, RiDeleteBin6Line } from "react-icons/ri";
-import { BiArrowBack} from "react-icons/bi";
+import { BiArrowBack } from "react-icons/bi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import AlertModalResponse from "@/components/Modals/AlertModalResponse";
 
@@ -47,25 +47,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import  BackComponent from "@/components/BackComponent";
+import BackComponent from "@/components/BackComponent";
 import { useSession } from "next-auth/react";
 import dayjs from "dayjs";
-export default function ApplyItem(data, competitionId,fileAttach) {
+export default function ApplyItem(data, competitionId, fileAttach) {
   const { data: session, status } = useSession();
   const [lastName, setLastName] = useState(data.data.data.lastName);
   const [firstName, setFirstName] = useState(data.data.data.firstName);
 
   const [image, setImage] = useState(data.data.data.image);
-  const [birthDatePlace, setBirthDatePlace] = useState(data.data.data.placeBirthDate);
+  const [birthDatePlace, setBirthDatePlace] = useState(
+    data.data.data.placeBirthDate
+  );
 
   const [email, setEmail] = useState(data.data.data.email);
   const [number, setNumber] = useState(data.data.data.number);
   const [address, setAddress] = useState(data.data.data.address);
 
   const [numberNina, setNumberNina] = useState(data.data.data.numberNina);
-  const showDialogClick = useRef(null)
+  const showDialogClick = useRef(null);
   const [date, setDate] = useState(
-    
     dayjs(data.data.data.birthDate).format("DD/MM/YYYY")
   );
 
@@ -94,7 +95,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
   const [certificatVie, setCertificatVie] = useState("");
   const [certificatVisite, setCertificatVisite] = useState("");
   const [diplomeFile, setDiplomeFile] = useState("");
- 
+  const [equivalenceFile, setEquivalenceFile] = useState("");
 
   const [diplome, setDiplome] = useState("");
   const [diplomeNumber, setDiplomeNumber] = useState("");
@@ -104,6 +105,7 @@ export default function ApplyItem(data, competitionId,fileAttach) {
   const [speciality, setSpeciality] = useState("");
 
   const modal = useModalInfoStore();
+  const [titleModal, setTitleModal] = useState("");
   const [modalData, setModalData] = useState("");
   const dataAttach = JSON.parse(`${router.get("fileAttach")}`);
   const defRef = useRef(null);
@@ -126,16 +128,30 @@ export default function ApplyItem(data, competitionId,fileAttach) {
   }, []);
 
   const createApply = async (e) => {
+
     e.preventDefault();
 
-    const formData = new FormData();
+    if (diplome == "" || study == "" || speciality == "") {
+     
+      showDialogClick.current.click();
 
+      setTitleModal((x) => (x = "Impossible"));
+      setModalData((x) => (x = "Veuillez renseigner les champs obligatoires (*)"));
+   
+      return;
+    }
+
+
+
+    const formData = new FormData();
+ 
+   
     formData.append("sexe", sexe);
     formData.append("nina", nina);
     formData.append("certificate", certificate);
     formData.append("diplome", diplome);
     formData.append("diplomeNumber", diplomeNumber);
-    formData.append("placeOfGraduation", placeOfGraduation); 
+    formData.append("placeOfGraduation", placeOfGraduation);
     formData.append("countryOfGraduation", countryOfGraduation);
     formData.append("study", study);
     formData.append("speciality", speciality);
@@ -143,25 +159,25 @@ export default function ApplyItem(data, competitionId,fileAttach) {
     formData.append("uid", data.data.data.email);
     formData.append("competitionId", data.data.competitionId);
 
-
     formData.append("certificate", certificate);
     formData.append("birthDateFile", birthDateFile);
     formData.append("cassierFile", cassierFile);
     formData.append("certificatVie", certificatVie);
     formData.append("certificatVisite", certificatVisite);
     formData.append("diplomeFile", diplomeFile);
+    formData.append("equivalenceFile", equivalenceFile);
     formData.append("ninaFile", ninaFile);
     formData.append("infoCardFile", infoCardFile);
     formData.append("demandeFile", demandeFile);
 
-    //Diplome 
-    formData.append("defFile", defFile);
+    //Diplome
+    /* formData.append("defFile", defFile);
     formData.append("bacFile", bacFile);
     formData.append("licenceFile", licenceFile);
     formData.append("maitriseFile", maitriseFile);
     formData.append("master1File", master1File);
-    formData.append("master2File", master2File);
-    
+    formData.append("master2File", master2File); */
+
     /* 
     body: JSON.stringify({
         sexe,
@@ -184,8 +200,11 @@ export default function ApplyItem(data, competitionId,fileAttach) {
     console.log(dataNew);
 
     setModalData((x) => (x = dataNew.message));
+  
+
     if (dataNew) {
-      showDialogClick.current.click()
+      setTitleModal((x) => (x = dataNew.data == "error" ? "Impossible" : "Candidature enregistrée avec succès" ));
+      showDialogClick.current.click();
     }
   };
   const defCheck = data.data.fileAttach.def;
@@ -194,100 +213,109 @@ export default function ApplyItem(data, competitionId,fileAttach) {
   const maitriseCheck = data.data.fileAttach.maitrise;
   const master1Check = data.data.fileAttach.master1;
   const master2Check = data.data.fileAttach.master2;
- 
 
   return (
     <>
-    
-<AlertModalResponse title="Alert" refModal={showDialogClick} message={modalData} handleClick={()=>{modalData == "La candidature est créer" ||  modalData == "Vous avez déja postuler"  ?() => { routerPaht.refresh(); routerPaht.back() } : null}}  />
- 
-    <div className="flex flex-col md:flex-row md:space-x-10">
-     
+      <AlertModalResponse
+        title={titleModal}
+        refModal={showDialogClick}
+        message={modalData}
+        handleClick={() => {
+          modalData == "La candidature est créer" ||
+          modalData == "Vous avez déja postuler"
+            ? () => {
+                routerPaht.refresh();
+                routerPaht.back();
+              }
+            : null;
+        }}
+      />
 
-      <Card className="flex-1 mb-10  md:max-w-[500px]">
-        <CardHeader>
-          <CardTitle className="mb-2">Mes informations</CardTitle>
-          <CardDescription>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
-            tincidunt neque. Pellentesque vitae commodo justo. Integer tempor
-            Pellentesque vitae Integer tempor
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div>
-            <Avatar className="w-[100px] h-[100px]   mb-4">
-              <AvatarImage src={`${process.env.BASE_URL}${image}`} />
-              <AvatarFallback>
-                {firstName[0]}
-                {lastName[0]}
-              </AvatarFallback>
-            </Avatar>{" "}
-            <div className="grid items-center w-full gap-4">
-              <div className="grid gap-6 md:grid-cols-2">
-                <InputComponent
-                  value={lastName}
-                  readonly={true}
-                  key={1}
-                  label="Nom"
-                />
-                <InputComponent
-                  value={firstName}
-                  readonly={true}
-                  key={2}
-                  label="Prénom"
-                />
-              </div>
-              <div className="grid gap-6 md:grid-cols-2">
-                <InputComponent
-                  value={email}
-                  readonly={true}
-                  withIcon={true}
-                  key={3}
-                  label="Email"
-                  inputType="email"
-                />
-                <InputComponent
-                  value={number}
-                  readonly={true}
-                  withIcon={true}
-                  key={4}
-                  label="Numero de téléphone"
-                />
-              </div>
+      <div className="flex flex-col md:flex-row md:space-x-10">
+        <Card className="flex-1 mb-10  md:max-w-[500px]">
+          <CardHeader>
+            <CardTitle className="mb-2">Mes informations</CardTitle>
+            <CardDescription>
+              Avant de postuler, rassurez vous que vos informations personnelles
+              ci-dessous sont correctes sinon vous pouvez les modifier en
+              cliquant sur le bouton " Modifier le compte" en bas du formulaire
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div>
+              <Avatar className="w-[100px] h-[100px]   mb-4">
+                <AvatarImage src={`${process.env.BASE_URL}${image}`} />
+                <AvatarFallback>
+                  {firstName[0]}
+                  {lastName[0]}
+                </AvatarFallback>
+              </Avatar>{" "}
+              <div className="grid items-center w-full gap-4">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    value={lastName}
+                    readonly={true}
+                    key={1}
+                    label="Nom"
+                  />
+                  <InputComponent
+                    value={firstName}
+                    readonly={true}
+                    key={2}
+                    label="Prénom"
+                  />
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    value={email}
+                    readonly={true}
+                    withIcon={true}
+                    key={3}
+                    label="Email"
+                    inputType="email"
+                  />
+                  <InputComponent
+                    value={number}
+                    readonly={true}
+                    withIcon={true}
+                    key={4}
+                    label="Numero de téléphone"
+                  />
+                </div>
 
-              <div className="grid gap-6 md:grid-cols-2">
-                <InputComponent
-                  value={date}
-                  inputType="text"
-                  readonly={true}
-                  key={5}
-                  label="Date de naissance"
-                />
-                <InputComponent
-                  value={birthDatePlace}
-                  inputType="text"
-                  readonly={true}
-                  key={6}
-                  label="Lieu de naissance"
-                />
-                <InputComponent
-                  value={data.data.data.sexe}
-                  inputType="text"
-                  readonly={true}
-                  key={7}
-                  label="Sexe"
-                />
-                <InputComponent
-                  value={data.data.data.address}
-                  inputType="text"
-                  readonly={true}
-                  key={8}
-                  label="Adresse physique"
-                />
-              </div>
-              <div className="grid gap-6 md:grid-cols-2">
-                <InputComponent value={nina} key={9} label="Numéro nina" />
-         {/*    
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    value={date}
+                    inputType="text"
+                    readonly={true}
+                    key={5}
+                    label="Date de naissance"
+                  />
+                  <InputComponent
+                    value={birthDatePlace}
+                    inputType="text"
+                    readonly={true}
+                    key={6}
+                    label="Lieu de naissance"
+                  />
+                  <InputComponent
+                    value={data.data.data.sexe}
+                    inputType="text"
+                    readonly={true}
+                    key={7}
+                    label="Sexe"
+                  />
+                  <InputComponent
+                    value={data.data.data.address}
+                    inputType="text"
+                    readonly={true}
+                    key={8}
+                    label="Adresse physique"
+                  />
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent value={nina} key={9} label="Numéro nina" />
+                  {/*    
                 {ninaFile.length > 10  ? (
                   <div>
                     <Label>Carte nina ou fiche individuelle</Label>
@@ -320,197 +348,225 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                     </div>
                   </div>
                 )} */}
+                </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-        <CardFooter className="flex justify-end">
-          <ButtonComponent
-            href={"/user/profile"}
-            key={8}
-            label="Modifier le compte"
-            full={true}
-            className="self-end w-full mt-8 md:w-[200px]"
-          />
-        </CardFooter>
-      </Card>
-      <form
-        onSubmit={createApply}
-        encType="multipart/form-data"
-        className="flex-1 mb-10 "
-      >
+          </CardContent>
+          <CardFooter className="flex justify-end">
+            <ButtonComponent
+              href={"/user/profile"}
+              key={8}
+              label="Modifier le compte"
+              full={true}
+              className="self-end w-full mt-8 md:w-[200px]"
+            />
+          </CardFooter>
+        </Card>
+        <form
+          onSubmit={createApply}
+          encType="multipart/form-data"
+          className="flex-1 mb-10 "
+        >
+          <Card>
+            <CardHeader className="mb-4">
+              <CardTitle>
+                Les informations a renseigné pour le concours
+              </CardTitle>
+              <CardDescription>
+                Veuillez renseigner correctement le formulaire ci-dessous avec
+                les informations fiables car elles feront objet de vérification.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid items-center w-full gap-4">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    value={diplome}
+                    handleChange={(e) =>
+                      setDiplome((x) => (x = e.target.value))
+                    }
+                    key={10}
+                    label="Diplôme"
+                    required="*"
+                  />
+                  <InputComponent
+                    value={study}
+                    handleChange={(e) => setStudy((x) => (x = e.target.value))}
+                    key={11}
+                    label="Filiere"
+                    required="*"
+                  />
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    value={speciality}
+                    handleChange={(e) =>
+                      setSpeciality((x) => (x = e.target.value))
+                    }
+                    key={12}
+                    label="Spécialité"
+                    required="*"
+                  />
+                  <InputComponent
+                    value={placeOfGraduation}
+                    handleChange={(e) =>
+                      setPlaceOfGraduation((x) => (x = e.target.value))
+                    }
+                    key={10}
+                    label="Lieu d’optention du diplôme"
+                  />
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    value={countryOfGraduation}
+                    handleChange={(e) =>
+                      setCountryOfGraduation((x) => (x = e.target.value))
+                    }
+                    key={13}
+                    label="Pays d’optention du diplôme"
+                  />
+                  <InputComponent
+                    value={diplomeNumber}
+                    handleChange={(e) =>
+                      setDiplomeNumber((x) => (x = e.target.value))
+                    }
+                    key={14}
+                    label="Numero du diplôme"
+                  />
+                </div>
+                <div className="py-4 mt-4 mb-4 border-t-2 border-black">
+                  <CardTitle className="mb-2 text-blue-500">
+                    Les pieces jointes
+                  </CardTitle>
+                  <CardDescription>
+                    Veuillez joindre ou téléverser les pièces demandées
+                    ci-dessous. Rassurez vous de fournir les copies légalisées
+                    ou originales. les formats autorisés sont les images
+                    (jpeg,jpg, png, gif,...) ou PDF. La taille maximum autorisée
+                    pour les fichiers est de 5 Mega octets.
+                  </CardDescription>
+                </div>
 
-        <Card>
-          <CardHeader className="mb-4">
-            <CardTitle>Les informations a renseigné pour le concours</CardTitle>
-            <CardDescription>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
-              tincidunt neque. Pellentesque vitae commodo justo. Integer tempor
-              Pellentesque vitae Integer tempor
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-           
-            <div className="grid items-center w-full gap-4">
-              <div className="grid gap-6 md:grid-cols-2">
-                <InputComponent
-                  value={diplome}
-                  handleChange={(e) => setDiplome((x) => (x = e.target.value))}
-                  key={10}
-                  label="Diplôme de nationalité"
-                />
-                <InputComponent
-                  value={study}
-                  handleChange={(e) => setStudy((x) => (x = e.target.value))}
-                  key={11}
-                  label="Filiere"
-                />
-              </div>
-              <div className="grid gap-6 md:grid-cols-2">
-                <InputComponent
-                  value={speciality}
-                  handleChange={(e) =>
-                    setSpeciality((x) => (x = e.target.value))
-                  }
-                  key={12}
-                  label="Spécialité"
-                />
-                <InputComponent
-                  value={placeOfGraduation}
-                  handleChange={(e) =>
-                    setPlaceOfGraduation((x) => (x = e.target.value))
-                  }
-                  key={10}
-                  label="Lieu d’optention du diplôme"
-                />
-              </div>
-              <div className="grid gap-6 md:grid-cols-2">
-                <InputComponent
-                  value={countryOfGraduation}
-                  handleChange={(e) =>
-                    setCountryOfGraduation((x) => (x = e.target.value))
-                  }
-                  key={13}
-                  label="Pays d’optention du diplôme"
-                />
-                <InputComponent
-                  value={diplomeNumber}
-                  handleChange={(e) =>
-                    setDiplomeNumber((x) => (x = e.target.value))
-                  }
-                  key={14}
-                  label="Numero du diplôme"
-                />
-              </div>
-              <div className="py-4 mt-4 mb-4 border-t-2 border-black">
-                <CardTitle className="mb-2 text-blue-500">
-                  Les pieces jointes
-                </CardTitle>
-                <CardDescription>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                  at tincidunt neque. Pellentesque vitae commodo justo. Integer
-                  tempor Pellentesque vitae Integer tempor
-                </CardDescription>
-              </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <InputComponent
+                    checkFileIcon={birthDateFile != ""}
+                    handleChange={(e) => {
+                      setBirthDateFile(e.target.files[0]);
+                    }}
+                    key={21}
+                    inputType="file"
+                    required="*"
+                    label="Une copie d'acte de naissance"
+                    subLabel="Une copie d'acte de naissance ou  jugement supplétif en tenant lieu"
+                  />
 
-              <div className="grid gap-6 md:grid-cols-2">
-                <InputComponent
-                  checkFileIcon={birthDateFile != ""}
-                  handleChange={(e) => {
-                    setBirthDateFile(e.target.files[0]);
-                  }}
-                  key={21}
-                  inputType="file"
-                  label="Une copie d'acte de naissance"
-                  subLabel="Une copie d'acte de naissance ou  jugement supplétif en tenant lieu"
-                />
+                  <InputComponent
+                    checkFileIcon={cassierFile != ""}
+                    handleChange={(e) => {
+                      setCassierFile(e.target.files[0]);
+                    }}
+                    key={22}
+                    inputType="file"
+                    required="*"
+                    label=" Un extrait du casier judiciaire"
+                    subLabel="Datant d'au moins de trois(3) mois"
+                  />
 
-                <InputComponent
-                  checkFileIcon={cassierFile != ""}
-                  handleChange={(e) => {
-                    setCassierFile(e.target.files[0]);
-                  }}
-                  key={23}
-                  inputType="file"
-                  label="Un extrait du casier judiciare"
-                  subLabel="Datant d'au moins de trois(3) mois"
-                />
+                  <InputComponent
+                    checkFileIcon={certificatVie != ""}
+                    handleChange={(e) => {
+                      setCertificatVie(e.target.files[0]);
+                    }}
+                    key={23}
+                    inputType="file"
+                    required="*"
+                    label="Un certificat de bonne vie et moeurs"
+                    subLabel="Un certificat de bonne vie et moeurs valide"
+                  />
 
-                <InputComponent
-                  checkFileIcon={certificatVie != ""}
-                  handleChange={(e) => {
-                    setCertificatVie(e.target.files[0]);
-                  }}
-                  key={24}
-                  inputType="file"
-                  label="Un certificat de bonne vie et moeurs"
-                  subLabel="Un certificat de bonne vie et moeurs valide"
-                />
+                  <InputComponent
+                    checkFileIcon={certificate != ""}
+                    handleChange={(e) => {
+                      setCertificate(e.target.files[0]);
+                    }}
+                    key={24}
+                    inputType="file"
+                    required="*"
+                    label="Un certificat de nationalité malienne"
+                    subLabel="Un certificat valide"
+                  />
 
-                <InputComponent
-                  checkFileIcon={certificate != ""}
-                  handleChange={(e) => {
-                    setCertificate(e.target.files[0]);
-                  }}
-                  key={25}
-                  inputType="file"
-                  label="Un certificat de nationalité malienne"
-                  subLabel="Un certificat valide"
-                />
+                  <InputComponent
+                    checkFileIcon={diplomeFile != ""}
+                    handleChange={(e) => {
+                      setDiplomeFile(e.target.files[0]);
+                    }}
+                    key={25}
+                    inputType="file"
+                    required="*"
+                    label="Une copie certifiée conforme du diplome requis"
+                    subLabel=""
+                  />
+                  <InputComponent
+                    checkFileIcon={certificatVisite != ""}
+                    handleChange={(e) => {
+                      setCertificatVisite(e.target.files[0]);
+                    }}
+                    key={26}
+                    inputType="file"
+                    required="*"
+                    label="Un certificat de visite et contre visite "
+                    subLabel="Délivré par une  autorité médicale agréée"
+                  />
 
-                <InputComponent
-                  checkFileIcon={certificatVisite != ""}
-                  handleChange={(e) => {
-                    setCertificatVisite(e.target.files[0]);
-                  }}
-                  key={26}
-                  inputType="file"
-                  label="Un certificat de visite et contre visite "
-                  subLabel="Délivré par une  autorité médicale agréée"
-                />
-                <InputComponent
-                  checkFileIcon={diplomeFile != ""}
-                  handleChange={(e) => {
-                    setDiplomeFile(e.target.files[0]);
-                  }}
-                  key={27}
-                  inputType="file"
-                  label="Une copie certifiée conforme du diplome riquis et son équivalence"
-                  subLabel="pour les diplomes étrangers"
-                />
-                <InputComponent
-                  checkFileIcon={ninaFile != ""}
-                  handleChange={(e) => {
-                    setNinaFile(e.target.files[0]);
-                  }}
-                  key={28}
-                  inputType="file"
-                  label="Carte nina ou fiche individuelle"
-                  subLabel="pour les diplomes étrangers"
-                />
-                <InputComponent
-                  checkFileIcon={infoCardFile != ""}
-                  handleChange={(e) => {
-                    setInfoCardFile(e.target.files[0]);
-                  }}
-                  key={29}
-                  inputType="file"
-                  label="Une copie de la pièce d’identité"
-                  subLabel=""
-                />
-                <InputComponent
-                  checkFileIcon={demandeFile != ""}
-                  handleChange={(e) => {
-                    setDemandeFile(e.target.files[0]);
-                  }}
-                  key={30}
-                  inputType="file"
-                  label="Une demande manuscrite timbrée"
-                  subLabel="Timbrée à 200 F"
-                />
-              </div>
+                  <InputComponent
+                    checkFileIcon={equivalenceFile != ""}
+                    handleChange={(e) => {
+                      setEquivalenceFile(e.target.files[0]);
+                    }}
+                    key={27}
+                    inputType="file"
+                    label="L'équivalence du diplomes requis pour les étrangers"
+                    subLabel=""
+                  />
 
-              <div className="py-4 mt-4 mb-4 border-t-2 border-black ">
+                  <InputComponent
+                    checkFileIcon={infoCardFile != ""}
+                    handleChange={(e) => {
+                      setInfoCardFile(e.target.files[0]);
+                    }}
+                    key={29}
+                    inputType="file"
+                    required="*"
+                    label="Une copie de la pièce d’identité en cours de validité"
+                    subLabel=""
+                  />
+
+                  <InputComponent
+                    checkFileIcon={ninaFile != ""}
+                    handleChange={(e) => {
+                      setNinaFile(e.target.files[0]);
+                    }}
+                    key={28}
+                    inputType="file"
+                    label="Une copie de la carte nina ou la fiche individuelle"
+                    subLabel="pour les diplomes étrangers"
+                  />
+
+                  <InputComponent
+                    checkFileIcon={demandeFile != ""}
+                    handleChange={(e) => {
+                      setDemandeFile(e.target.files[0]);
+                    }}
+                    key={30}
+                    inputType="file"
+                    required="*"
+                    label="Une demande manuscrite timbrée"
+                    subLabel="Timbrée à 200 F"
+                  />
+                </div>
+
+                {/*     <div className="py-4 mt-4 mb-4 border-t-2 border-black ">
                 <CardTitle className="mb-2 text-green-500 ">
                   Les Diplômes
                 </CardTitle>
@@ -519,9 +575,9 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                   at tincidunt neque. Pellentesque vitae commodo justo. Integer
                   tempor Pellentesque vitae Integer tempor
                 </CardDescription>
-              </div>
- 
-              <div className="grid gap-6 md:grid-cols-2">
+              </div> */}
+
+                {/*   <div className="grid gap-6 md:grid-cols-2">
 
                 {defCheck == true &&  ( <InputComponent
                   checkFileIcon={defFile != ""}
@@ -579,24 +635,21 @@ export default function ApplyItem(data, competitionId,fileAttach) {
                 />)  }
                 
               </div>
-
-              
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-end">
-            <ButtonComponent
-             
-              key={8}
-              label="Postuler"
-              full={true}
-              type="submit"
-              className="self-end w-full mt-4 md:w-[200px]"
-            />
-          </CardFooter>
-        </Card>
-      </form>
-    </div>
-    
+ */}
+              </div>
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <ButtonComponent
+                key={8}
+                label="Postuler"
+                full={true}
+                type="submit"
+                className="self-end w-full mt-4 md:w-[200px]"
+              />
+            </CardFooter>
+          </Card>
+        </form>
+      </div>
     </>
   );
 }

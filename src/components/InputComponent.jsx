@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 function InputComponent({
   value = "",
+  required = "",
   label,
   subLabel="",
   className = "",
@@ -24,7 +25,7 @@ function InputComponent({
       <div className="flex items-center">
       <div className="flex flex-col flex-1">
         
-        <Label className="" htmlFor="email"> <span className="flex-1">{label}</span>     </Label>
+        <Label className="" htmlFor="email"> <span className="flex-1">{label}</span> <span className="text-red-500">{required}</span>     </Label>
         {subLabel.length > 0 && <span className="text-[13px] text-gray-400">{subLabel}</span> }
   
         </div>

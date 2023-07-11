@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import parse from "html-react-parser";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOption";
+import Link from "next/link";
 export const dynamic = "force-dynamic";
 async function ShowCompetition({
   params,
@@ -68,7 +69,7 @@ const access = arrayCandidature.filter(word => word.competitionId == data.data.i
             statutData[parseInt(data.data.statut)].color
           }  `}
         >
-          Etat du concours : {statutData[parseInt(data.data.statut)].name}
+          Statut du concours : {statutData[parseInt(data.data.statut)].name}
         </span>
         <span className="text-[14px]  text-gray-500   ">
           Date : du{" "}
@@ -76,7 +77,7 @@ const access = arrayCandidature.filter(word => word.competitionId == data.data.i
           {new Date(data.data.endDateAt).toLocaleDateString("fr-FR")}
         </span>
         <span className="text-[14px]  text-gray-500  ">
-          L'age est comprise entre : {data.data.ageMin} ans et{" "}
+        Agé(e) de {data.data.ageMin} ans à{" "}
           {data.data.ageMax} ans
         </span>
       </div>
@@ -85,20 +86,32 @@ const access = arrayCandidature.filter(word => word.competitionId == data.data.i
       </p>
      {access ?  <div className="flex items-end justify-end w-full my-4 ">
         {new Date(data.data.endDateAt) > new Date(Date.now()) && data.data.statut == "1" ? (
+
+         <Link 
+         href={`/user/competitions/${data.data?.id}/apply?title=${data.data.title}`}
+         >
           <ButtonComponent
+            key={4}
+            label="Postuler"
+            className="md:w-[150px] self-end "
+            
+            full={true}
+          />
+         </Link>
+        /*   <ButtonComponent
             key={4}
             label="Postuler"
             className="md:w-[150px] self-end "
             href={`/user/competitions/${data.data?.id}/apply?title=${data.data.title}`}
             full={true}
-          />
+          /> */
         ) : (
-          <div className="flex w-full items-center justify-center p-4 my-4 border-[1px] border-orange-300 bg-slate-50">
-          <p>La date du concours est depassé ou le concours n'est plus disponible </p>
+          <div className="flex w-full items-center justify-center p-4 my-4 border-[1px] border-orange-300   text-white bg-red-500">
+          <p>La date du concours est dépassée où le concours n'est plus disponible</p>
           </div>
         )}
-      </div> : <div className="flex items-center justify-center p-4 my-4 border-[1px] border-orange-300 bg-slate-50">
-        Vous avez déja postuler
+      </div> : <div className="flex items-center justify-center p-4 my-4 border-[1px] text-xl  text-white bg-red-500">
+        Vous avez déja postulé
         </div>}
     </div>
   );

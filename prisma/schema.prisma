@@ -114,12 +114,13 @@ email         String?
   ninaFile            String?
   requestLetter            String?
   birthDateFile       String?
-  infoCardFile       String?
-  demandeFile       String?
-  cassierFile         String?
-  certificatVie       String?
-  certificatVisite    String?
-  diplomeFile         String?
+  infoCardFile       String?    @default("")
+  demandeFile       String?    @default("")
+  cassierFile         String?    @default("") 
+  certificatVie       String?    @default("")
+  certificatVisite    String?    @default("")
+  diplomeFile         String?    @default("")
+  equivalenceFile         String?    @default("")
   def                 String?    @default("")
   bac                 String?    @default("")
   licence             String?    @default("")

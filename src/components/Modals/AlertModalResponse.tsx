@@ -29,7 +29,9 @@ function AlertModalResponse({refModal = null, title ="",message ="",handleClick=
     <AlertDialogContent>
       <AlertDialogHeader>
         <AlertDialogTitle>
-         {title}
+      <div className="flex space-x-2" > 
+     <p> Message :</p> <p className={`${title == "Impossible" ? "text-red-500" : "text-green-500"}`}>{title}</p>
+      </div>
         </AlertDialogTitle>
         <AlertDialogDescription>
          {message}
@@ -40,7 +42,7 @@ function AlertModalResponse({refModal = null, title ="",message ="",handleClick=
         <AlertDialogAction
           onClick={handleClick}
         >
-          {"D'accord"}
+          {"OK"}
         </AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>

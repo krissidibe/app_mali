@@ -114,8 +114,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
   let certificatVieName = "";
   let certificatVisiteName = "";
   let diplomeFileName = "";
-  let ninaFileName = "";
+  let equivalenceFileName = "";
   let infoCardFileName = "";
+  let ninaFileName = "";
   let demandeFileName = "";
 
   const certificate = formData.get("certificate") as Blob | null;
@@ -124,9 +125,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const certificatVie = formData.get("certificatVie") as Blob | null;
   const certificatVisite = formData.get("certificatVisite") as Blob | null;
   const diplomeFile = formData.get("diplomeFile") as Blob | null;
-  const ninaFile = formData.get("ninaFile") as Blob | null;
   const infoCardFile = formData.get("infoCardFile") as Blob | null;
   const demandeFile = formData.get("demandeFile") as Blob | null;
+  const ninaFile = formData.get("ninaFile") as Blob | null;
+  const equivalenceFile = formData.get("equivalenceFile") as Blob | null;
 
   if (
     certificate?.toString() == "" ||
@@ -135,12 +137,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
     certificatVie?.toString() == "" ||
     certificatVisite?.toString() == "" ||
     diplomeFile?.toString() == "" ||
-    ninaFile?.toString() == ""
+    infoCardFile?.toString() == "" ||
+    demandeFile?.toString() == ""
   ) {
     return new Response(
       JSON.stringify({
         data: "error",
-        message: `Vos fichiers ne sont pas ajoutés car la partie pièces jointe n'est pas complète`,
+        message: `Veuillez ajouter les pièces obligatoires (*)`,
       })
     );
   }
@@ -152,6 +155,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     certificatVieName = await storeImage(certificatVie);
     certificatVisiteName = await storeImage(certificatVisite);
     diplomeFileName = await storeImage(diplomeFile);
+    equivalenceFileName = await storeImage(equivalenceFile);
     ninaFileName = await storeImage(ninaFile);
     infoCardFileName = await storeImage(infoCardFile);
     demandeFileName = await storeImage(demandeFile);
@@ -159,11 +163,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return new Response(
       JSON.stringify({
         data: "error",
-        message: `Vos fichiers ne sont pas ajoutés car la partie pièces jointe n'est pas complète `,
+        message: `Veuillez ajouter les pièces obligatoires (*) `,
       })
     );
   }
-
+/* 
   const defFile = formData.get("defFile") as Blob | null;
   const bacFile = formData.get("bacFile") as Blob | null;
   const licenceFile = formData.get("licenceFile") as Blob | null;
@@ -212,15 +216,18 @@ export async function POST(req: NextRequest, res: NextResponse) {
     master2FileName = await storeImage(master2File);
   } catch (error) {
     master2FileName = "non renseigné";
-  }
+  } */
 
+ 
   if (
     certificateName == "File not" ||
     birthDateFileName == "File not" ||
     cassierFileName == "File not" ||
     certificatVieName == "File not" ||
     certificatVisiteName == "File not" ||
-    diplomeFileName == "File not"
+    diplomeFileName == "File not" ||
+    infoCardFileName == "File not" ||
+    demandeFileName == "File not" 
   ) {
     return new Response(
       JSON.stringify({
@@ -263,16 +270,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
       certificatVie: certificatVieName,
       certificatVisite: certificatVisiteName,
       diplomeFile: diplomeFileName,
+      equivalenceFile: equivalenceFileName,
       ninaFile: ninaFileName,
       infoCardFile: infoCardFileName,
       demandeFile: demandeFileName,
 
-      def: defFileName,
-      bac: bacFileName,
-      licence: licenceFileName,
-      maitrise: maitriseFileName,
-      master1: master1FileName,
-      master2: master2FileName,
+     
     },
   });
 
@@ -292,6 +295,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
     },
   });
   return new Response(
-    JSON.stringify({ data: data.id, message: "La candidature est créer" })
+    JSON.stringify({ data: "data.id", message: "La candidature est créer" })
   );
+ 
+  /* 
+   
+
+   */
 }

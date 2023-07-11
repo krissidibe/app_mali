@@ -43,7 +43,7 @@ function page() {
         //dayjs(date).format("DD/MM/YYYY")
         let birthDate = date;
     
-        const res = await fetch(`/api/user/superadmin/author`, {
+        const res = await fetch(`/api/superadmin/author`, {
           body: JSON.stringify({
             firstName,
             lastName,
@@ -51,6 +51,7 @@ function page() {
             number,
             sexe,
             adress,
+            
             password,
             type: "create",
           }),
@@ -62,6 +63,7 @@ function page() {
         const data = await res.json();
         console.log(data);
         if (data.message) {
+          alert(data.message)
           /*  modal.onOpen(); */
        
         //  showDialogClick.current.click();
@@ -188,7 +190,7 @@ function page() {
           </CardContent>
           <CardFooter className="flex justify-end">
             <ButtonComponent
-             // handleClick={createUser}
+            handleClick={createUser}
               key={8}
               label="Créer le compte"
               full={true}

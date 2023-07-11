@@ -4,7 +4,7 @@ import React,{useState,useCallback} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter ,usePathname} from 'next/navigation';
-
+import { useSession, signOut } from "next-auth/react";
 import { HomeIcon,BookOpenIcon,UserIcon,AcademicCapIcon,ArrowLeftIcon ,XCircleIcon} from '@heroicons/react/24/solid'
 const SideBarAdmin = ({show=true,handleClick=()=>{
 
@@ -45,7 +45,7 @@ const SideBarAdmin = ({show=true,handleClick=()=>{
       {/*   <NavItem key={4} handleClick={handleClick} name="Profile" href="/admin/profile" Icon={UserIcon}  /> */}
        
       </div>
-      <NavItem key={5} name="Deconnexion" href="/" Icon={ArrowLeftIcon} className="mb-20" />
+      <NavItem key={5} name="Deconnexion"  handleClick={() => signOut()}   Icon={ArrowLeftIcon} className="mb-20" />
       
     </div>
   );

@@ -78,9 +78,10 @@ function CandidatureItem({ data }: any) {
     <div className="flex flex-col h-full">
       
        <BackComponent className="mt-2 mb-4" />
-       <UserPdf data={data} />
+       <UserPdf data={data} className="p-4 text-white bg-green-500" />
       <p className="pb-2 mt-4 mb-10 font-semibold border-b-2">
-        Les information sur la candidature
+    
+        Informations à propos de votre candidature
       </p>
       <div className="flex flex-col gap-6 md:flex-row ">
      
@@ -90,7 +91,7 @@ function CandidatureItem({ data }: any) {
        
     </div>
      <div className="flex justify-between pb-4 mb-4 border-b-2">
-    <p className="font-semibold text-md ">L'etat de votre candidature est : </p>
+    <p className="font-semibold text-md ">Statut de votre candidature : </p>
       <p className={`text-sm font-semibold text-white p-2 rounded ${statutOptions[data.statut].color}`}> {statutOptions[data.statut].label } </p>
     </div>
      <div className="w-full h-full p-4 my-4  text-sm bg-white border-[1px] border-gray-200 rounded-md scrollbar-hide md:max-w-[600px]">
@@ -141,11 +142,11 @@ function CandidatureItem({ data }: any) {
           <Card className="flex-1">
             <CardHeader>
               <CardTitle className="mb-2">Mes informations</CardTitle>
-              <CardDescription>
+             {/*  <CardDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
-              </CardDescription>
+              </CardDescription> */}
             </CardHeader>
             <CardContent>
               <div>
@@ -244,18 +245,18 @@ function CandidatureItem({ data }: any) {
               </div>
 
               <CardTitle className="mt-4 mb-2">
-                Les informations a renseigné pour le concours
+              Informations à propos du concours
               </CardTitle>
-              <CardDescription>
+            {/*   <CardDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
-              </CardDescription>
+              </CardDescription> */}
               <div className="grid gap-6 mt-4 md:grid-cols-2">
                 <InputComponent
                   value={user.diplome}
                   key={7}
-                  label="Diplôme de nationalité"
+                  label="Diplôme"
                 />
                 <InputComponent value={user.study} key={8} label="Filiere" />
                 <InputComponent
@@ -282,59 +283,65 @@ function CandidatureItem({ data }: any) {
               <CardTitle className="mt-4 mb-2 text-blue-500">
                 Les pieces jointes
               </CardTitle>
-              <CardDescription>
+            {/*   <CardDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
-              </CardDescription>
+              </CardDescription> */}
               <div className="grid gap-6 mt-4 md:grid-cols-2">
                 {fileFunction(
-                  "Une copie d'acte de naissance",
+                  "La copie d'acte de naissance",
                   "ou  jugement supplétif en tenant lieu",
                   user.birthDateFile
                 )}
                 {fileFunction(
-                  "Un extrait du casier judiciare",
+                  "L'extrait du casier judiciaire",
                   "Datant d'au moins de trois(3) mois",
                   user.cassierFile
                 )}
                 {fileFunction(
-                  "Un certificat de bonne vie et moeurs",
+                  "Le certificat de bonne vie et moeurs",
                   "Un certificat de bonne vie et moeurs valide",
                   user.certificatVie
                 )}
                 {fileFunction(
-                  "Un certificat de nationalité malienne",
+                  "Le certificat de nationalité malienne",
                   "Un certificat valide",
                   user.certificate
                 )}
-                {fileFunction(
-                  "Un certificat de visite et contre visite",
-                  "Délivré par une  autorité médicale agréée",
-                  user.certificatVisite
-                )}
-                {fileFunction(
-                  "Une copie certifiée conforme du diplome riquis",
+                 {fileFunction(
+                  "La copie certifiée conforme du diplome requis",
                   "et son équivalence pour les diplomes étrangers",
                   user.diplomeFile
                 )}
                 {fileFunction(
-                  "Carte nina ou fiche individuelle",
+                  "Le certificat de visite et contre visite",
+                  "Délivré par une  autorité médicale agréée",
+                  user.certificatVisite
+                )}
+                 {fileFunction(
+                  "L'équivalence du diplomes requis pour les étrangers",
+                  "et son équivalence pour les diplomes étrangers",
+                  user.equivalenceFile
+                )}
+               
+                {fileFunction(
+                  "La copie de la carte nina ou la fiche individuelle",
                   "",
                   user.ninaFile
                 )}
                   {fileFunction(
-                  "Une copie de la pièce d’identité",
+                  "La copie de la pièce d’identité",
                   "",
                   user.infoCardFile
                 )}
                  {fileFunction(
-                  "Une demande manuscrite timbrée",
+                  "La demande manuscrite timbrée",
                   "",
                   user.demandeFile
                 )}
               </div>
-
+{/* 
               <CardTitle className="mt-4 mb-10 text-green-500">
                 Les Diplômes
               </CardTitle>
@@ -382,7 +389,7 @@ function CandidatureItem({ data }: any) {
               
                 
                 
-              </div>
+              </div> */}
             </CardContent>
           </Card>
         </div>
@@ -404,7 +411,7 @@ export default CandidatureItem;
 
 function fileFunction(label: String, subLabel: String ="", result: any) {
   return (
-    <div>
+    <div className={result == "File not" ? "hidden" :""} >
       <div className="flex flex-col">
         <Label className="mb-2">{label}</Label>
       {/*  { <span className="text-[13px] text-gray-400">{subLabel}</span>} */}
