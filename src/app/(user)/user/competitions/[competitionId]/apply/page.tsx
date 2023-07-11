@@ -28,6 +28,7 @@ async function Home({
   const file: any = await res2.json();
 
   const fileAttach = {
+    orderOfMagistrates: file.data?.orderOfMagistrates,
     def: file.data?.def,
     bac: file.data?.bac,
     licence: file.data?.licence,

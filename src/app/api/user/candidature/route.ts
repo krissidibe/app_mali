@@ -232,7 +232,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return new Response(
       JSON.stringify({
         data: "error",
-        message: `Vos fichiers ne sont pas ajoutés car la partie pièces jointe n'est pas complète`,
+        message: `Veuillez ajouter les pièces obligatoires (*)`,
       })
     );
   }
@@ -274,7 +274,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       ninaFile: ninaFileName,
       infoCardFile: infoCardFileName,
       demandeFile: demandeFileName,
-
+      orderOfMagistrates: formData.get("orderOfMagistratesType")?.toString() ?? "",
      
     },
   });

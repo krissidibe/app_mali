@@ -70,6 +70,7 @@ model Competition {
   statut       String
   ageMin       Int?
   ageMax       Int?
+  orderOfMagistrates          Boolean?      @default(false)
   def          Boolean?      @default(false)
   bac          Boolean?      @default(false)
   licence      Boolean?      @default(false)
@@ -121,6 +122,8 @@ email         String?
   certificatVisite    String?    @default("")
   diplomeFile         String?    @default("")
   equivalenceFile         String?    @default("")
+  orderOfMagistrates                 String?    @default("")
+  canEdit      Boolean?      @default(false)
   def                 String?    @default("")
   bac                 String?    @default("")
   licence             String?    @default("")

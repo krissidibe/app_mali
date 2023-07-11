@@ -56,6 +56,7 @@ function CreateCompetition() {
     { name: "Suspendu", code: "3" },
   ];
   const router = useRouter();
+  const [orderOfMagistrates, setOrderOfMagistrates] = useState(false);
   const [def, setDef] = useState(false);
   const [bac, setBac] = useState(false);
   const [licence, setLicence] = useState(false);
@@ -80,6 +81,7 @@ function CreateCompetition() {
     formData.append("endDateAt", endDateAt);
     formData.append("statut", statut.code);
 
+    formData.append("orderOfMagistrates", orderOfMagistrates);
     formData.append("def", def);
     formData.append("bac", bac);
     formData.append("licence", licence);
@@ -120,7 +122,7 @@ function CreateCompetition() {
       onSubmit={(e) => createData(e)}
       className="flex flex-col"
     >
-      <AlertModalResponse title="Alert" refModal={showDialogClick} message={message} handleClick={()=>{ 
+      <AlertModalResponse title="" refModal={showDialogClick} message={message} handleClick={()=>{ 
  router.refresh()
  router.push("/admin/competitions")
 
@@ -227,12 +229,18 @@ function CreateCompetition() {
    
       <div className="flex self-end flex-col w-[380px] mt-4 space-y-4 border-2 p-4">
         
+        <h1 className="flex items-center justify-between font-bold text-md">
+        <p className="font-semibold text-md">Ordre des magistrats</p> <Switch checked={orderOfMagistrates}
+                      onCheckedChange={(x) =>setOrderOfMagistrates(x => x=!x)}   />
+        </h1>
+   
+       {/*  
         <h1 className="font-bold text-md">
           Les documents a fournir pour le concours
         </h1>
-   
+    */}
 
-        <div className="flex items-center justify-between">
+       {/*  <div className="flex items-center justify-between">
           <p className="font-semibold text-md">Def</p> <Switch checked={def}
                       onCheckedChange={(x) =>setDef(x => x=!x)}   />
         </div>
@@ -255,7 +263,7 @@ function CreateCompetition() {
         <div className="flex items-center justify-between">
           <p className="font-semibold text-md">Master 2</p> <Switch checked={master2}
                       onCheckedChange={(x) =>setMaster2(x => x=!x)} />
-        </div>
+        </div> */}
       </div>
       <p className="text-[14px] text-gray-500 mt-8">
         <EditorComponent value={content} handleChange={(v) => setContent(v)} />

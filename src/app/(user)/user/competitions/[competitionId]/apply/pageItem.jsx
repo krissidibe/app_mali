@@ -115,6 +115,8 @@ export default function ApplyItem(data, competitionId, fileAttach) {
   const [maitriseFile, setMaitriseFile] = useState("");
   const [master1File, setMaster1File] = useState("");
   const [master2File, setMaster2File] = useState("");
+
+  const [orderOfMagistratesType, setOrderOfMagistratesType] = useState("");
   const getUser = async () => {};
   useEffect(() => {
     if (status == "loading") {
@@ -131,6 +133,13 @@ export default function ApplyItem(data, competitionId, fileAttach) {
 
     e.preventDefault();
 
+    if (orderOfMagistratesType == "" && orderOfMagistratesCheck == true) {
+
+      setTitleModal((x) => (x = "Impossible"));
+      setModalData((x) => (x = "Veuillez renseigner les champs obligatoires (*)"));
+      return
+
+    }
     if (diplome == "" || study == "" || speciality == "") {
      
       showDialogClick.current.click();
@@ -169,6 +178,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
     formData.append("ninaFile", ninaFile);
     formData.append("infoCardFile", infoCardFile);
     formData.append("demandeFile", demandeFile);
+    formData.append("orderOfMagistratesType", orderOfMagistratesType);
 
     //Diplome
     /* formData.append("defFile", defFile);
@@ -207,6 +217,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
       showDialogClick.current.click();
     }
   };
+  const orderOfMagistratesCheck = data.data.fileAttach.orderOfMagistrates;
   const defCheck = data.data.fileAttach.def;
   const bacCheck = data.data.fileAttach.bac;
   const licenceCheck = data.data.fileAttach.licence;
@@ -281,6 +292,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
                     key={4}
                     label="Numero de téléphone"
                   />
+             
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
@@ -433,6 +445,31 @@ export default function ApplyItem(data, competitionId, fileAttach) {
                     key={14}
                     label="Numero du diplôme"
                   />
+                      
+                       {orderOfMagistratesCheck && (  <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="name">
+                    <div className="flex space-x-2">
+                    <p>Ordre des magistrats </p> <p className="text-red-500">*</p>
+                    </div>
+                     </Label>
+                    <Select
+                     // defaultValue={orderOfMagistratesType}
+                      onValueChange={(e) => setOrderOfMagistratesType(e)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="--------" />
+                        <SelectContent position="popper">
+                          <SelectItem value="">--------</SelectItem>
+                          <SelectItem value="0">Ordre admnistratif</SelectItem>
+                          <SelectItem value="1">Ordre judiciaire</SelectItem>
+                        </SelectContent>
+                      </SelectTrigger>
+                    </Select>
+                    
+                  </div>)
+
+                       }
+                     
                 </div>
                 <div className="py-4 mt-4 mb-4 border-t-2 border-black">
                   <CardTitle className="mb-2 text-blue-500">
