@@ -133,13 +133,16 @@ export default function ApplyItem(data, competitionId, fileAttach) {
 
     e.preventDefault();
 
-    if (orderOfMagistratesType == "" && orderOfMagistratesCheck == true) {
+    if(orderOfMagistratesCheck == true){
+      if (orderOfMagistratesType == "" ) {
 
-      setTitleModal((x) => (x = "Impossible"));
-      setModalData((x) => (x = "Veuillez renseigner les champs obligatoires (*)"));
-      return
-
+        setTitleModal((x) => (x = "Impossible"));
+        setModalData((x) => (x = "Veuillez renseigner les champs obligatoires (*)"));
+  
+      }
     }
+
+
     if (diplome == "" || study == "" || speciality == "") {
      
       showDialogClick.current.click();

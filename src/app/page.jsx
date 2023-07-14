@@ -7,7 +7,7 @@ import ParticulesBackground from "@/components/Particules/ParticulesBackground";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useModalInfoStore } from "../store/useModalInfoStore";
 import ModalInfo from "@/components/ModalInfo";
 import { Input } from "@/components/ui/input";
@@ -29,10 +29,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import AlertModalResponse from "@/components/Modals/AlertModalResponse";
 function page() {
   const [email, setEmail] = useState("");
 
   const router = useRouter();
+  const showDialogClick = useRef(null);
+  const [modalTitle, setModalTitle] = useState("");
   const [password, setPassword] = useState("");
   const modal = useModalInfoStore();
   const [modalData, setModalData] = useState("");
@@ -52,8 +55,23 @@ function page() {
     } */
   });
 
-  const login2User = async (e: FormEvent) => {
+  const login2User = async (e) => {
     e.preventDefault();
+
+
+    if (  
+      data["email"].length < 10 ||
+      data["password"].length < 6 
+    /*   data["email"].length <= 2 ||  
+      data["password"].length < 6    */
+     ) {
+      
+      setModalTitle("Impossible");
+      setModalData(`Veuillez remplir les champs (minimum 2 characters) et le mot de passe (minimum 6 characters)`);
+      showDialogClick.current.click();
+
+      return
+    }
 
     signIn("credentials", { ...data, redirect: false }).then((callback) => {
       if (callback?.error) {
@@ -70,7 +88,7 @@ function page() {
     });
   };
 
-  const loginUser = async (e: FormEvent) => {
+  const loginUser = async (e) => {
     e.preventDefault();
 
     const res = await fetch("/author/user", {
@@ -117,7 +135,16 @@ function page() {
   };
   return (
     <div className="flex flex-1 w-screen h-screen overflow-y-scroll">
-      <ModalInfo title="Alert" body={modalData} />
+      {/* <ModalInfo title="Alert" body={modalData} /> */}
+      <AlertModalResponse
+          title={modalTitle}
+          refModal={showDialogClick}
+          message={modalData}
+          handleClick={() => {
+            modalTitle == "Impossible" ? null : router.back()
+           // router.back();
+          }}
+        />
       <div className="flex flex-col items-center justify-between w-full h-full p-10 md:w-1/2 overscroll-y-auto ">
         <div className="md:min-w-[450px] mt-10 mb-10 justify-center w-[353px] items-center flex flex-col space-y-2">
           <Image

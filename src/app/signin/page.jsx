@@ -44,7 +44,7 @@ export default function Signin() {
   const [number, setNumber] = useState("");
   const [placeBirthDate, setPlaceBirthDate] = useState("");
   const [adress, setAdress] = useState("");
-  const [date, setDate] = useState(new Date(Date.now()));
+  const [date, setDate] = useState();
 
   const showDialogClick = useRef(null);
   const sexeOptions = [
@@ -62,10 +62,39 @@ export default function Signin() {
   const [passwordVeirfy, setPasswordVerify] = useState("");
 
   const modal = useModalInfoStore();
+  const [modalTitle, setModalTitle] = useState("");
   const [modalData, setModalData] = useState("");
   const router = useRouter();
   const createUser = async () => {
+    
     //dayjs(date).format("DD/MM/YYYY")
+
+    if (firstName.length <= 1 ||
+      lastName.length <= 1 ||
+      email.length <= 1 ||
+      number.length <= 1 ||
+      placeBirthDate.length <= 1 ||
+      
+      date == undefined ||
+      sexe.length <= 1 ||
+      password.length < 6 ||
+      passwordVeirfy.length < 6 ) {
+      
+      setModalTitle("Impossible");
+      setModalData("Veuillez remplir les champs (minimum 2 characters) et le mot de passe (minimum 6 characters)");
+      showDialogClick.current.click();
+
+      return
+    }
+
+    if (password !=  passwordVeirfy  ) {
+      
+      setModalTitle("Impossible");
+      setModalData("Les mots de passe sont incorrects");
+      showDialogClick.current.click();
+
+      return
+    }
     let birthDate = date;
 
     const res = await fetch(`/api/user/author`, {
@@ -90,6 +119,7 @@ export default function Signin() {
     console.log(data);
     if (data.message) {
       /*  modal.onOpen(); */
+      setModalTitle(data.user == null ? "Impossible": "Le compte est créer");
       setModalData(data.message);
       showDialogClick.current.click();
     }
@@ -99,11 +129,12 @@ export default function Signin() {
     <div className="flex flex-1 w-screen h-screen bg-black ">
       <div className="flex flex-col items-center w-full h-full p-10 overflow-y-scroll md:w-1/2 bg-gray-50">
         <AlertModalResponse
-          title="Alert"
+          title={modalTitle}
           refModal={showDialogClick}
           message={modalData}
           handleClick={() => {
-            router.back();
+          
+           // router.back();
           }}
         />
         <div className="md:min-w-[450px] mt-10 mb-10 justify-center w-[353px] items-center flex flex-col space-y-2">
@@ -154,6 +185,7 @@ export default function Signin() {
                     withIcon={true}
                     key={1}
                     label="Nom"
+                    required="*"
                   />
                   <InputComponent
                     value={firstName}
@@ -164,6 +196,7 @@ export default function Signin() {
                     withIcon={true}
                     key={2}
                     label="Prénom"
+                    required="*"
                   />
                 </div>
                 <div className="grid gap-6 md:grid-cols-2">
@@ -176,6 +209,7 @@ export default function Signin() {
                     withIcon={true}
                     key={3}
                     label="Email"
+                    required="*"
                     inputType="email"
                   />
                   <InputComponent
@@ -187,6 +221,7 @@ export default function Signin() {
                     withIcon={true}
                     key={4}
                     label="Numero de téléphone"
+                    required="*"
                   />
                 </div>
 
@@ -201,6 +236,7 @@ export default function Signin() {
                     key={4}
                     inputType="date"
                     label="Date de Naissance"
+                    required="*"
                   />
                   <InputComponent
                     value={placeBirthDate}
@@ -212,10 +248,11 @@ export default function Signin() {
                     key={4}
                     inputType=""
                     label="Lieu de Naissance"
+                    required="*"
                   />
 
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Sexe</Label>
+                    <Label htmlFor="name"><span>Sexe</span>  <span className="text-red-500">*</span>   </Label>
                     <Select
                       defaultValue={sexe}
                       onValueChange={(e) => setSexe(e)}
@@ -237,7 +274,7 @@ export default function Signin() {
                     Icon={PhoneIcon}
                     withIcon={true}
                     key={4}
-                    label="Adresse physique"
+                    label="Adresse de domiciliation"
                   />
                 </div>
                 <div className="grid gap-6 md:grid-cols-2">
@@ -250,6 +287,7 @@ export default function Signin() {
                     withIcon={true}
                     key={6}
                     label="Mot de passe"
+                    required="*"
                     inputType="password"
                   />
                   <InputComponent
@@ -261,6 +299,7 @@ export default function Signin() {
                     withIcon={true}
                     key={7}
                     inputType="password"
+                    required="*"
                     label="Confirmer le mot de passe"
                   />
                 </div>

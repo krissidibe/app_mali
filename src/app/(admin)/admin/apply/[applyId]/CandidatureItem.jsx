@@ -201,7 +201,7 @@ function CandidatureItem({ datas }) {
                       inputType="text"
                       readonly={true}
                       key={4}
-                      label="Adresse physique"
+                      label="Adresse de domiciliation"
                     />
                   </div>
                   <div className="grid gap-6 md:grid-cols-2">

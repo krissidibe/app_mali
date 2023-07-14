@@ -224,7 +224,7 @@ Vous pouvez modifier les informations de la candidature
                     />
                   <InputComponent
                       key={1}
-                      label="Adresse complete"
+                      label="Adresse de domiciliation"
                       value={user.address}
                       readonly={true}
                     />

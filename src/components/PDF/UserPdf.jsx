@@ -92,15 +92,37 @@ const MyDocument = ({ data }) => (
           <Text>Un Peuple - Un But - Une Foi</Text>
         </View>
       </View>
-
       <Text
         style={{
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: "bold",
           padding: 5,
           marginLeft: 15,
-          marginTop:10,
-          marginBottom:20
+          marginTop:0,
+          marginBottom:5,
+/* 
+          borderLeft:"solid",
+          borderColor: "black",
+          borderLeftWidth: "4px", */
+          
+        }}
+      >
+       Direction nationale de l'administration de la justice
+      </Text>
+      <Text
+        style={{
+          fontSize: 15,
+          fontWeight: "bold",
+          padding: 5,
+          marginLeft: 15,
+          paddingHorizontal:10,
+          marginTop:7,
+          
+          marginBottom:20,
+          marginHorizontal:"auto",
+          color:"#FFFFFF",
+          backgroundColor:"#00000067",
+          borderRadius:5
           
         }}
       >
@@ -130,12 +152,12 @@ const MyDocument = ({ data }) => (
             width: "100%",
             flexDirection: "row",
             marginTop: 4,
-            marginBottom:15,
+            marginBottom:5,
            
           }}
         >
           {InfoInput(
-            "Etat",
+            "Statut de candidature : ",
             ` ${statutOptions[parseInt(data?.statut ?? 0)].label} `
           )}
         </View>
@@ -163,7 +185,7 @@ const MyDocument = ({ data }) => (
               
             }}
           >
-            {InfoInput("Nom", data?.firstName)}
+            {InfoInput("Nom", data?.lastName)}
           <View style={{ width:"50%"}}>
           {InfoInput("Prénom", data?.firstName)}
           </View>
@@ -220,7 +242,7 @@ const MyDocument = ({ data }) => (
            {InfoInput("Sexe", data?.sexe)}
            <View style={{ width:"50%"}}>
            
-          {InfoInput("Adresse", data?.address)}
+          {InfoInput("Adresse de domiciliation", data?.address)}
           </View>
           </View>
          
@@ -341,7 +363,7 @@ const MyDocument = ({ data }) => (
           {InfoInputFile("La demande manuscrite timbrée", data?.demandeFile)}
         </View>
 
-        <View style={{}}>
+       {/*  <View style={{}}>
           {data?.def.toString().includes("files/") &&
             InfoInputFile("DEF", data?.def)}
           {data?.bac.toString().includes("files/") &&
@@ -354,7 +376,7 @@ const MyDocument = ({ data }) => (
             InfoInputFile("MASTER1", data?.master1)}
           {data?.master2.toString().includes("files/") &&
             InfoInputFile("MASTER2", data?.master2)}
-        </View>
+        </View> */}
       </View>
     </Page>
   </Document>
