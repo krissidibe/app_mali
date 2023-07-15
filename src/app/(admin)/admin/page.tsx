@@ -56,10 +56,10 @@ const Home = async () => {
             <CardTitle>Overview</CardTitle>
           </CardHeader>
           <CardContent className="pl-2 space-y-3">
-           <ItemInfoCompetiton nombre={competitionBrouillonData.length.toString()} label="Compétitions en mode brouillon" />
-           <ItemInfoCompetiton nombre={competitionOpenData.length.toString()} label="Competitions ouverts" />
-           <ItemInfoCompetiton nombre={competitionCloseData.length.toString()} label="Competitions fermée" />
-           <ItemInfoCompetiton nombre={competitionSusData.length.toString()} label="Competitions suspendu" />
+           <ItemInfoCompetiton nombre={competitionBrouillonData.length.toString()} label="Concours en mode brouillon" />
+           <ItemInfoCompetiton nombre={competitionOpenData.length.toString()} label="Concours ouverts" />
+           <ItemInfoCompetiton nombre={competitionCloseData.length.toString()} label="Concours fermée" />
+           <ItemInfoCompetiton nombre={competitionSusData.length.toString()} label="Concours suspendu" />
  
           </CardContent>
         </Card>

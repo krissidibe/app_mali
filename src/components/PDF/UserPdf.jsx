@@ -102,7 +102,7 @@ const MyDocument = ({ data }) => (
           paddingHorizontal:10,
           marginTop:7,
           
-          marginBottom:20,
+          marginBottom:0,
           marginHorizontal:"auto",
           color:"#FFFFFF",
           backgroundColor:"#00000067",
@@ -111,6 +111,29 @@ const MyDocument = ({ data }) => (
         }}
       >
         RÉCÉPISSÉ DE DÉPÔT DE CANDIDATURE
+      
+      </Text>
+      <Text
+        style={{
+          fontSize: 12,
+          
+          padding: 5,
+          marginLeft: 15,
+          paddingHorizontal:10,
+          marginTop:7,
+          
+          marginBottom:12,
+          marginHorizontal:"auto",
+          color:"#FFFFFF",
+          backgroundColor:"#00000057",
+          borderRadius:5,
+          maxLines:1,
+          
+          
+        }}
+      >
+     {  data?.competition.title}
+        
       
       </Text>
 
@@ -433,11 +456,11 @@ function UserPdf({ data, className = "" }) {
   }, [isClient]);
   return (
     <div>
-      {isClient && (
+     {/*  {isClient && (
         <PDFViewer width="100%" height="1000px">
           <MyDocument data={datas} />
         </PDFViewer>
-      )}
+      )} */}
       {isClient && (
         <div>
           {/*  <MyDocument /> */}

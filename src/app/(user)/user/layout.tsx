@@ -8,7 +8,7 @@ import SideBarUser from "../../../components/SideBarUser";
 import ModalInfo from "../../../components/ModalInfo";
 import { authOptions } from "@/lib/authOption";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { redirect } from "next/navigation"; 
 import Image from "next/image";
 /* const inter = Inter({ subsets: ["latin"] });
  */
