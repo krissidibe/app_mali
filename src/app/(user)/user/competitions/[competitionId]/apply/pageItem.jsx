@@ -235,13 +235,23 @@ export default function ApplyItem(data, competitionId, fileAttach) {
         refModal={showDialogClick}
         message={modalData}
         handleClick={() => {
-          modalData == "La candidature est créer" ||
-          modalData == "Vous avez déja postuler"
-            ? () => {
-                routerPaht.refresh();
-                routerPaht.back();
-              }
-            : null;
+
+
+
+          if(  modalData == "La candidature est créée" ||
+          modalData == "Vous avez déjà postulé"){
+            routerPaht.refresh();
+   
+            const timer = setTimeout(() => {
+    
+               
+              routerPaht.push("/user/candidatures");
+          }, 300);
+          }
+
+
+
+         
         }}
       />
 
@@ -449,7 +459,9 @@ export default function ApplyItem(data, competitionId, fileAttach) {
                     label="Numero du diplôme"
                   />
                       
-                       {orderOfMagistratesCheck && (  <div className="flex flex-col space-y-1.5">
+                       {orderOfMagistratesCheck && (  
+                       
+                       <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name">
                     <div className="flex space-x-2">
                     <p>Ordre des magistrats </p> <p className="text-red-500">*</p>
@@ -545,7 +557,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
                     inputType="file"
                     required="*"
                     label="Une copie certifiée conforme du diplome requis"
-                    subLabel=""
+                    subLabel="-"
                   />
                   <InputComponent
                     checkFileIcon={certificatVisite != ""}
@@ -590,7 +602,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
                     key={28}
                     inputType="file"
                     label="Une copie de la carte nina ou la fiche individuelle"
-                    subLabel="pour les diplomes étrangers"
+                    subLabel="-"
                   />
 
                   <InputComponent

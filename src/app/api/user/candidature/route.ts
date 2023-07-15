@@ -103,7 +103,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return new Response(
       JSON.stringify({
         data: candidatureCheck.id,
-        message: "Vous avez déja postuler",
+        message: "Vous avez déjà postulé",
       })
     );
   }
@@ -295,7 +295,183 @@ export async function POST(req: NextRequest, res: NextResponse) {
     },
   });
   return new Response(
-    JSON.stringify({ data: "data.id", message: "La candidature est créer" })
+    JSON.stringify({ data: "data.id", message: "La candidature est créée" })
+  );
+ 
+  /* 
+   
+
+   */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export async function PUT(req: NextRequest, res: NextResponse) {
+  
+  const formData = await req.formData();
+
+ 
+  
+  const user = await prisma.user.findFirst({
+    where: {
+      email: formData.get("email")?.toString(),
+    },
+  });
+  if (!user) {
+    return new Response(
+      JSON.stringify({ data: "error", message: `Utilisateur non trouvé` })
+    );
+  }
+
+/*   const candidatureCheck = await prisma.candidature.findFirst({
+    where: {
+      authorId: user?.id,
+      competitionId: formData.get("competitionId")?.toString(),
+    },
+  }); */
+
+  let certificateName = "";
+  let birthDateFileName = "";
+  let cassierFileName = "";
+  let certificatVieName = "";
+  let certificatVisiteName = "";
+  let diplomeFileName = "";
+  let equivalenceFileName = "";
+  let infoCardFileName = "";
+  let ninaFileName = "";
+  let demandeFileName = "";
+ 
+
+  const certificate = formData.get("certificate") as Blob | null;
+  const birthDateFile = formData.get("birthDateFile") as Blob | null;
+  const cassierFile = formData.get("cassierFile") as Blob | null;
+  const certificatVie = formData.get("certificatVie") as Blob | null;
+  const certificatVisite = formData.get("certificatVisite") as Blob | null;
+  const diplomeFile = formData.get("diplomeFile") as Blob | null;
+  const infoCardFile = formData.get("infoCardFile") as Blob | null;
+  const demandeFile = formData.get("demandeFile") as Blob | null;
+  const ninaFile = formData.get("ninaFile") as Blob | null;
+  const equivalenceFile = formData.get("equivalenceFile") as Blob | null; 
+ 
+  if (
+    certificate?.toString() == "" ||
+    birthDateFile?.toString() == "" ||
+    cassierFile?.toString() == "" ||
+    certificatVie?.toString() == "" ||
+    certificatVisite?.toString() == "" ||
+    diplomeFile?.toString() == "" ||
+    infoCardFile?.toString() == "" ||
+    demandeFile?.toString() == ""
+  ) {
+    return new Response(
+      JSON.stringify({
+        data: "error",
+        message: `Veuillez ajouter les pièces obligatoires (*)`,
+      })
+    );
+  }
+
+  try {
+    certificateName = await storeImage(certificate);
+    birthDateFileName = await storeImage(birthDateFile);
+    cassierFileName = await storeImage(cassierFile);
+    certificatVieName = await storeImage(certificatVie);
+    certificatVisiteName = await storeImage(certificatVisite);
+    diplomeFileName = await storeImage(diplomeFile);
+    equivalenceFileName = await storeImage(equivalenceFile);
+    ninaFileName = await storeImage(ninaFile);
+    infoCardFileName = await storeImage(infoCardFile);
+    demandeFileName = await storeImage(demandeFile);
+  } catch (error) {
+    return new Response(
+      JSON.stringify({
+        data: "error",
+        message: `Veuillez ajouter les pièces obligatoires (*) `,
+      })
+    );
+  }
+ 
+ 
+  if (
+    certificateName == "File not" ||
+    birthDateFileName == "File not" ||
+    cassierFileName == "File not" ||
+    certificatVieName == "File not" ||
+    certificatVisiteName == "File not" ||
+    diplomeFileName == "File not" ||
+    infoCardFileName == "File not" ||
+    demandeFileName == "File not" 
+  ) {
+    return new Response(
+      JSON.stringify({
+        data: "error",
+        message: `Veuillez ajouter les pièces obligatoires (*)`,
+      })
+    );
+  }  
+
+
+ 
+  const data = await prisma.candidature.update({
+    where:{
+      id:parseInt(formData.get("candId")!.toString()),
+      
+    }
+    ,
+    data: {
+     
+
+     
+      number: formData.get("number")?.toString() ?? ""  ,
+      address: formData.get("address")?.toString() ?? ""  ,
+      firstName: formData.get("firstName")?.toString() ?? ""  ,
+      lastName: formData.get("lastName")?.toString() ?? ""  ,
+      birthDate: new Date( formData.get("birthDate")!.toString() ),
+      placeBirthDate: formData.get("placeBirthDate")?.toString() ?? ""  ,
+      sexe: formData.get("sexe")?.toString() ?? ""  ,
+      nina: formData.get("nina")?.toString() ?? ""  ,
+
+      diplome: formData.get("diplome")?.toString() ?? ""  ,
+      study: formData.get("study")?.toString() ?? ""  ,
+      speciality: formData.get("speciality")?.toString() ?? ""  ,
+      placeOfGraduation: formData.get("placeOfGraduation")?.toString() ?? ""  ,
+      countryOfGraduation: formData.get("countryOfGraduation")?.toString() ?? ""  ,
+      diplomeNumber: formData.get("diplomeNumber")?.toString() ?? ""  ,
+      orderOfMagistrates: formData.get("orderOfMagistrates")?.toString() ?? ""  ,
+     
+      //file
+      certificate: certificateName,
+      birthDateFile: birthDateFileName,
+      cassierFile: cassierFileName,
+      certificatVie: certificatVieName,
+      certificatVisite: certificatVisiteName,
+      diplomeFile: diplomeFileName,
+      equivalenceFile: equivalenceFileName,
+      ninaFile: ninaFileName,
+      infoCardFile: infoCardFileName,
+      demandeFile: demandeFileName,
+     
+     //
+     canEdit:false
+    },
+  });
+
+ 
+  return new Response(
+    JSON.stringify({ data: data, message: "La candidature est modifiée" })
   );
  
   /* 

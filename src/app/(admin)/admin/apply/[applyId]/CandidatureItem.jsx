@@ -126,11 +126,11 @@ function CandidatureItem({ datas }) {
               <CardTitle className="mb-2">
                 Les informations du candidat
               </CardTitle>
-              <CardDescription>
+             {/*  <CardDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
-              </CardDescription>
+              </CardDescription> */}
             </CardHeader>
             <CardContent>
               <div>
@@ -217,11 +217,11 @@ function CandidatureItem({ datas }) {
               <CardTitle className="mt-4 mb-2">
                 Les informations a renseigné pour le concours
               </CardTitle>
-              <CardDescription>
+            {/*   <CardDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
-              </CardDescription>
+              </CardDescription> */}
               <div className="grid gap-6 mt-4 md:grid-cols-2">
                 <InputComponent
                   value={result.diplome}
@@ -359,11 +359,11 @@ function CandidatureItem({ datas }) {
             <CardTitle className="mb-2">
               Information de la candidature
             </CardTitle>
-            <CardDescription>
+          {/*   <CardDescription>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
               tincidunt neque. Pellentesque vitae commodo justo. Integer tempor
               Pellentesque vitae Integer tempor
-            </CardDescription>
+            </CardDescription> */}
           </CardHeader>
           <CardContent>
             <p className="font-semibold mb-4 mt-4 text-md text-[#50a1ef]">

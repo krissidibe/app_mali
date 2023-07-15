@@ -77,7 +77,7 @@ const MyDocument = ({ data }) => (
       >
         <Image
           src="/images/logo2n.png"
-          style={{ height: 50, objectFit: "contain" }}
+          style={{ height: 60, objectFit: "contain" }}
         />
         <View
           style={{
@@ -92,23 +92,7 @@ const MyDocument = ({ data }) => (
           <Text>Un Peuple - Un But - Une Foi</Text>
         </View>
       </View>
-      <Text
-        style={{
-          fontSize: 12,
-          fontWeight: "bold",
-          padding: 5,
-          marginLeft: 15,
-          marginTop:0,
-          marginBottom:5,
-/* 
-          borderLeft:"solid",
-          borderColor: "black",
-          borderLeftWidth: "4px", */
-          
-        }}
-      >
-       Direction nationale de l'administration de la justice
-      </Text>
+      
       <Text
         style={{
           fontSize: 15,
@@ -126,7 +110,8 @@ const MyDocument = ({ data }) => (
           
         }}
       >
-        RECEPISSE DE DEPOT DE LA CANDIDATURE
+        RÉCÉPISSÉ DE DÉPÔT DE CANDIDATURE
+      
       </Text>
 
       <View style={styles.section}>
@@ -157,7 +142,7 @@ const MyDocument = ({ data }) => (
           }}
         >
           {InfoInput(
-            "Statut de candidature : ",
+            "Statut de candidature",
             ` ${statutOptions[parseInt(data?.statut ?? 0)].label} `
           )}
         </View>
@@ -448,11 +433,11 @@ function UserPdf({ data, className = "" }) {
   }, [isClient]);
   return (
     <div>
-     {/*  {isClient && (
+      {isClient && (
         <PDFViewer width="100%" height="1000px">
           <MyDocument data={datas} />
         </PDFViewer>
-      )} */}
+      )}
       {isClient && (
         <div>
           {/*  <MyDocument /> */}
