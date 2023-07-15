@@ -119,7 +119,7 @@ export default function Signin() {
     console.log(data);
     if (data.message) {
       /*  modal.onOpen(); */
-      setModalTitle(data.user == null ? "Impossible": "Le compte est créer");
+      setModalTitle(data.user == null ? "Impossible": "Le compte est créé");
       setModalData(data.message);
       showDialogClick.current.click();
     }
@@ -134,7 +134,11 @@ export default function Signin() {
           message={modalData}
           handleClick={() => {
           
-           // router.back();
+            if(modalTitle == "Le compte est créé"){
+
+            // router.refresh();
+             router.back();
+            }
           }}
         />
         <div className="md:min-w-[450px] mt-10 mb-10 justify-center w-[353px] items-center flex flex-col space-y-2">

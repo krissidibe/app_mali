@@ -116,6 +116,8 @@ export default function ApplyItem(data, competitionId, fileAttach) {
   const [master1File, setMaster1File] = useState("");
   const [master2File, setMaster2File] = useState("");
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const [orderOfMagistratesType, setOrderOfMagistratesType] = useState("");
   const getUser = async () => {};
   useEffect(() => {
@@ -132,7 +134,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
   const createApply = async (e) => {
 
     e.preventDefault();
-
+setIsLoading(x => x = false)
     if(orderOfMagistratesCheck == true){
       if (orderOfMagistratesType == "" ) {
 
@@ -235,7 +237,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
         refModal={showDialogClick}
         message={modalData}
         handleClick={() => {
-
+          setIsLoading(x => x = true)
 
 
           if(  modalData == "La candidature est créée" ||
@@ -691,13 +693,15 @@ export default function ApplyItem(data, competitionId, fileAttach) {
               </div>
             </CardContent>
             <CardFooter className="flex justify-end">
-              <ButtonComponent
+
+              {isLoading ?   <ButtonComponent
                 key={8}
                 label="Postuler"
                 full={true}
                 type="submit"
                 className="self-end w-full mt-4 md:w-[200px]"
-              />
+              /> : <p>Envoi en cours...</p> }
+            
             </CardFooter>
           </Card>
         </form>

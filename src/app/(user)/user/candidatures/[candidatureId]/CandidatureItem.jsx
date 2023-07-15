@@ -53,7 +53,7 @@ function CandidatureItem({ data }) {
     { name: "Fermé", code: "2", color: "text-orange-500" },
     { name: "Suspendu", code: "3", color: "text-red-500" },
   ];
-
+  const [isLoading, setIsLoading] = useState(true);
   const statutOptions = [
     {
       label: "En attente de traitement",
@@ -120,6 +120,7 @@ function CandidatureItem({ data }) {
   const updateApply = async (e) => {
 
     e.preventDefault();
+    setIsLoading(x => x = false)
 if(!data.canEdit){
 return
 }
@@ -261,7 +262,7 @@ return
 
 
         handleClick={() => {
-         
+          setIsLoading(x => x = true)
             if( modalData == "La candidature est modifiée"){
               routerPaht.refresh();
      
@@ -850,13 +851,14 @@ return
               </div> */}
             </CardContent>
            {data.canEdit &&   <CardFooter className="flex justify-end">
-              <ButtonComponent
+
+{isLoading ?               <ButtonComponent
                 key={8}
                 label="Modifier"
                 full={true}
                 type="submit"
                 className="self-end w-full mt-4 md:w-[200px]"
-              />
+              /> : <p>Envoi en cours...</p> }
             </CardFooter>}
           </Card>
         </div>

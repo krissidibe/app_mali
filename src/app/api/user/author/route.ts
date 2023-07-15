@@ -75,7 +75,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         },
       });
       return new Response(
-        JSON.stringify({ user: data, message: "Votre compte est créer" })
+        JSON.stringify({ user: data, message: "Votre compte est créé" })
       );
 
       /*  res.status(200).json(data); */
@@ -96,7 +96,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         );
 
       return new Response(
-        JSON.stringify({ user: user, message: "Votre compte est créer" })
+        JSON.stringify({ user: user, message: "Votre compte est créé" })
       );
 
       /*  res.status(200).json(data); */
