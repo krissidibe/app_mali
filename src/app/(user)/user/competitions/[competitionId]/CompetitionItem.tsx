@@ -35,7 +35,7 @@ export default async function CompetitionItem({
           <img
             src={`https://picsum.photos/300/200?random=${data.id}`}
             alt="image"
-            className="object-cover w-full max-h-[310px] md:max-h-[410px]  rounded-lg"
+            className="object-contain w-full max-h-[310px] md:max-h-[410px]  rounded-lg"
           />
         </picture>
       </div>

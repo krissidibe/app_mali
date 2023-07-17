@@ -53,12 +53,12 @@ const access = arrayCandidature.filter(word => word.competitionId == data.data.i
     <div className="flex flex-col">
  
      
-      <div className="w-full mb-6 rounded-lg h-1/2 bg-slate-600 ">
+      <div className="w-full mb-6 bg-white border rounded-lg h-1/2 ">
         <picture>
           <img
             src={`${process.env.BASE_URL}${data.data.image}`}
             alt="image"
-            className="object-cover w-full max-h-[360px] md:max-h-[410px]  rounded-lg"
+            className="object-contain w-full max-h-[360px] md:max-h-[410px]  rounded-lg"
           />
         </picture>
       </div>

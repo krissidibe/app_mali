@@ -22,10 +22,10 @@ const router = useRouter();
     <div  onClick={()=>{
       router.push(`/admin/competitions/${data.id}`)
     }}       className="flex flex-col cursor-pointer rounded-lg   h-[360px] shadow-md mr-4 mt-4 ">
-      <div className="w-full rounded-t-lg h-1/2 bg-slate-600 ">
+      <div className="w-full bg-white border rounded-t-lg h-1/2 ">
         
      <picture>
-     <img src={imageUrl} alt="image" className="object-cover w-full h-full rounded-t-lg" />
+     <img src={imageUrl} alt="image" className="object-contain w-full h-full rounded-t-lg" />
      </picture>
       </div>
        
