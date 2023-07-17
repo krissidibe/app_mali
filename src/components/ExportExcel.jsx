@@ -14,19 +14,21 @@ function ExportExcel({datas} ) {
         key: "id",
         width: 40,
       }, */
+
       {
-        header: "NOM",
-        key: "lastName",
-        width: 40,
+        header: "N° ENREGISTREMENT",
+        key: "id",
+        width: 50,
       },
+     
       {
         header: "PRENOM",
         key: "firstName",
         width: 40,
       },
       {
-        header: "CONTACT",
-        key: "number",
+        header: "NOM",
+        key: "lastName",
         width: 40,
       },
       {
@@ -54,21 +56,35 @@ function ExportExcel({datas} ) {
         key: "study",
         width: 50,
       },
+
+
+      {
+        header: "CONTACT",
+        key: "number",
+        width: 40,
+      },
+      
+     
       {
         header: "DATE DEPOT",
         key: "createdAt",
         width: 50,
       },
+
+      
       {
         header: "DATE DE TRAITEMENT",
         key: "updatedAt",
         width: 50,
       },
+     
       {
-        header: "N° ENREGISTREMENT",
-        key: "id",
-        width: 50,
+        header: "TRAITE PAR",
+        key: "admin",
+        width: 40,
       },
+
+      
       {
         header: "STATUT",
         key: "statut",
@@ -79,11 +95,7 @@ function ExportExcel({datas} ) {
         key: "message",
         width: 40,
       },
-      {
-        header: "TRAITE PAR",
-        key: "admin",
-        width: 40,
-      },
+    
     ];
 
     const statutOptions = [

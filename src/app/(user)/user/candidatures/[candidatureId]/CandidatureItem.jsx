@@ -370,7 +370,7 @@ return
                   </AvatarFallback>
                 </Avatar>{" "}
                 <div className="grid items-center w-full gap-4">
-                  <div className="grid gap-6 md:grid-cols-2">
+                  <div className="grid gap-6 min-[1720px]:grid-cols-2">
                     <InputComponent
                       value={dataUser.lastName}
                       handleChange={(e) =>
@@ -392,7 +392,7 @@ return
                       required={`${data.canEdit ? "*" : ""}`}
                     />
                   </div>
-                  <div className="grid gap-6 md:grid-cols-2">
+                  <div className="grid gap-6 min-[1720px]:grid-cols-2">
                     <InputComponent
                       value={dataUser.email}
                       readonly={true}
@@ -415,7 +415,7 @@ return
                     />
                   </div>
 
-                  <div className="grid gap-6 md:grid-cols-2">
+                  <div className="grid gap-6 min-[1720px]:grid-cols-2">
                     <InputComponent
                       //  value={     dayjs(dataUser.birthDate).format("DD/MM/YYYY")  }
                       value={dayjs(dataUser.birthDate).format("YYYY-MM-DD")}
@@ -521,7 +521,7 @@ return
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
               </CardDescription> */}
-              <div className="grid gap-6 mt-4 md:grid-cols-2">
+              <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
                 <InputComponent
                     value={dataUser.diplome}
                   handleChange={(e) =>
@@ -628,7 +628,7 @@ return
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
               </CardDescription> */}
-              <div className="grid gap-6 mt-4 md:grid-cols-2">
+              <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
 {data.canEdit ? ( <InputComponent
                     checkFileIcon={birthDateFile != ""}
                     handleChange={(e) => {
@@ -742,11 +742,11 @@ return
                 }}
                 key={27}
                 inputType="file"
-                label="L'équivalence du diplomes requis pour les étrangers"
+                label="L'équivalence du diplômes requis pour les diplômes étrangers"
                 subLabel=""
               />
                 : fileFunction(
-                  "L'équivalence du diplomes requis pour les étrangers",
+                  "L'équivalence du diplômes requis pour les diplômes étrangers",
                   "et son équivalence pour les diplomes étrangers",
                   user.equivalenceFile
                 )}

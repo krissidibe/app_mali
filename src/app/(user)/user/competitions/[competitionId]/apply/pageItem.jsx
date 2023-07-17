@@ -134,6 +134,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
   const createApply = async (e) => {
 
     e.preventDefault();
+   
 setIsLoading(x => x = false)
     if(orderOfMagistratesCheck == true){
       if (orderOfMagistratesType == "" ) {
@@ -406,7 +407,7 @@ setIsLoading(x => x = false)
             </CardHeader>
             <CardContent>
               <div className="grid items-center w-full gap-4">
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="grid gap-6 min-[1720px]:grid-cols-2">
                   <InputComponent
                     value={diplome}
                     handleChange={(e) =>
@@ -424,7 +425,7 @@ setIsLoading(x => x = false)
                     required="*"
                   />
                 </div>
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="grid gap-6 min-[1720px]:grid-cols-2">
                   <InputComponent
                     value={speciality}
                     handleChange={(e) =>
@@ -443,7 +444,7 @@ setIsLoading(x => x = false)
                     label="Lieu d’optention du diplôme"
                   />
                 </div>
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="grid gap-6 min-[1720px]:grid-cols-2">
                   <InputComponent
                     value={countryOfGraduation}
                     handleChange={(e) =>
@@ -501,7 +502,7 @@ setIsLoading(x => x = false)
                   </CardDescription>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="grid gap-6 min-[1720px]:grid-cols-2">
                   <InputComponent
                     checkFileIcon={birthDateFile != ""}
                     handleChange={(e) => {
@@ -580,7 +581,7 @@ setIsLoading(x => x = false)
                     }}
                     key={27}
                     inputType="file"
-                    label="L'équivalence du diplomes requis pour les étrangers"
+                    label="L'équivalence du diplômes requis pour les diplômes étrangers"
                     subLabel=""
                   />
 

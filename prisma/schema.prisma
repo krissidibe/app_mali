@@ -67,6 +67,7 @@ model Competition {
   image        String?
   title        String
   content      String?       @db.LongText
+  letterNumber      String?      @default("")
   statut       String
   ageMin       Int?
   ageMax       Int?

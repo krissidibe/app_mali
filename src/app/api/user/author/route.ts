@@ -251,3 +251,124 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
     })
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export async function PUT(req: NextRequest, res: NextResponse) {
+  const formData = await req.formData();
+  
+ 
+
+const user = await prisma.user.findFirst({
+  where: {
+    AND: [{ email: formData.get("email")!.toString() }, { role: "USER" }],
+  },
+});
+
+
+
+const passwordCrypCheck = await bcrypt.compare(formData.get("passwordOld")!.toString(),user!.password);
+
+if(passwordCrypCheck == false){
+  return new Response(
+    JSON.stringify({
+      user: "error",
+      message: `Votre mot de passe ancienne est incorrect`,
+    })
+  )
+  
+}
+
+const passwordCryp = await bcrypt.hash(formData.get("password")!.toString(), 10);
+
+  const val = formData.get("birthDate");
+  const dataNew = await prisma.user.update({
+    where: {
+      email: formData.get("email")?.toString(),
+    },
+    data: {
+      password: passwordCryp,
+      
+    },
+  });
+  return new Response(
+    JSON.stringify({
+      user: dataNew,
+      message: `Votre mot de passe est modifier`,
+    })
+  );
+
+  // saveFile(formData.get("file"))
+  return new Response(
+    JSON.stringify({
+      user: "dataUpdate",
+      message: `Votre   `,
+    })
+  );
+
+  //
+
+  const {
+    email,
+    firstName,
+    lastName,
+    number,
+    sexe,
+    password,
+    type,
+    birthDate,
+    numberNina,
+    image,
+  } = await req.json();
+  const data = await prisma.user.findFirst({
+    where: {
+      AND: [{ email: email }, { role: "USER" }],
+    },
+  });
+
+  if (data == null)
+    return new Response(
+      JSON.stringify({
+        user: data,
+        message: "L'email n'existe pas veuillez créer votre compte",
+      })
+    );
+
+  /*     return new Response(
+      JSON.stringify({
+        user: {},
+        message: `Votre profile est  ${numberNina}`,
+      })
+    ); */
+
+  const dataUpdate = await prisma.user.update({
+    where: {
+      email: email,
+    },
+    data: {
+      firstName: firstName,
+      lastName: lastName,
+      sexe: sexe,
+      birthDate: birthDate,
+      nina: numberNina,
+      number: number,
+    },
+  });
+  return new Response(
+    JSON.stringify({
+      user: dataUpdate,
+      message: `Votre profile est modifier`,
+    })
+  );
+}

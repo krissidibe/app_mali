@@ -52,18 +52,7 @@ import ModalComponent from "@/components/ModalComponent";
 import { useSession } from "next-auth/react";
 import { Calendar } from "primereact/calendar";
 function UserProfile({ data }) {
-  const download = (filename, content) => {
-    var element = document.createElement("a");
-    element.setAttribute("href", content);
-    element.setAttribute("download", filename);
-    element.style.display = "none";
-    document.body.appendChild(element);
-
-    element.click();
-
-    document.body.removeChild(element);
-  };
-
+ 
   const router = useRouter();
   const sexeOptions = [
     {
@@ -78,7 +67,10 @@ function UserProfile({ data }) {
 
   const imageRef = useRef(null);
   const toast = useRef < Toast > null;
-
+  const [modalTitle, setModalTitle] = useState(""); 
+  const [passwordOld, setPasswordOld] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordVeirfy, setPasswordVerify] = useState("");
   const show = () => {
     toast.current?.show({
       severity: "info",
@@ -88,6 +80,23 @@ function UserProfile({ data }) {
   };
   const createUser = async (e) => {
     e.preventDefault();
+    if (firstName.length <= 1 ||
+      lastName.length <= 1 ||
+      email.length <= 1 ||
+      number.length <= 1 ||
+      placeBirthDate.length <= 1 ||
+      
+      birthDate == undefined ||
+      sexe.length <= 1  ) {
+      
+      setModalTitle("Impossible");
+      setMessage("Veuillez remplir les champs (minimum 2 characters) et le mot de passe (minimum 6 characters)");
+      showDialogClick.current.click();
+
+      return
+    }
+  
+
 
     const formData = new FormData();
 
@@ -117,10 +126,83 @@ function UserProfile({ data }) {
     if (dataNew.user) {
       showDialogClick.current.click();
       setShowModal((x) => (x = true));
+      setModalTitle("Votre profile est modifier")
       setMessage(dataNew.message);
+
       useRouter.refresh();
     }
   };
+
+
+
+
+  const updatePasswordUser = async (e) => {
+    e.preventDefault()
+    if (
+      
+      
+      password.length < 6 ||
+      passwordVeirfy.length < 6 
+      
+      ) {
+      
+      setModalTitle("Impossible");
+      setMessage("Veuillez remplir les champs (minimum 2 characters) et le mot de passe (minimum 6 characters)");
+      showDialogClick.current.click();
+
+      return
+    }
+
+
+    if (
+      
+      
+      password  !=
+      passwordVeirfy  
+      
+      ) {
+      
+      setModalTitle("Impossible");
+      setMessage("Les mots de passe sont incorrects");
+      showDialogClick.current.click();
+
+      return
+    }
+
+
+   
+
+
+    const formData = new FormData();
+
+   
+    formData.append("email", email);
+    formData.append("passwordOld", passwordOld);
+    formData.append("password", password);
+ 
+
+    
+
+    const datas = Object.fromEntries(formData);
+    const res = await fetch(`/api/user/author`, {
+      body: formData,
+
+      method: "PUT",
+    });
+    const dataNew = await res.json();
+    console.log(dataNew);
+
+    if (dataNew.user) {
+      showDialogClick.current.click();
+      setShowModal((x) => (x = true));
+      setModalTitle(dataNew.user == "error" ? "Impossible" : "Votre mot de passe est modifier")
+      setMessage(dataNew.message);
+
+      useRouter.refresh();
+    }
+  };
+
+
 
   // @ts-ignore
   const [image, setImage] = useState("");
@@ -178,7 +260,15 @@ const showDialogClick = useRef(null)
         />
       )} */}
 
-<AlertModalResponse title="" refModal={showDialogClick} message={message} handleClick={()=>{router.back()}}  />
+<AlertModalResponse  title={modalTitle} refModal={showDialogClick} message={message} handleClick={()=>{
+  if(modalTitle =="Votre profile est modifier" || modalTitle =="Votre mot de passe est modifier"){
+
+    router.push("/user")
+  }
+  
+  
+  
+  }}  />
  
 
 
@@ -421,18 +511,10 @@ const showDialogClick = useRef(null)
         <Card className="flex-1 md:w-[400px]   ">
           <CardHeader>
             <CardTitle>Modifier le mot de passe de votre compte</CardTitle>
-            <CardDescription>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
-              aliquid distinctio enim beatae fuga quia, unde, eius reiciendis
-              adipisci iusto possimus? Corrupti ex nihil, ullam quod doloribus
-              blanditiis eaque? Natus! Lorem, ipsum dolor sit amet consectetur
-              adipisicing elit. Perspiciatis debitis corporis eveniet placeat
-              dicta id, natus quidem officia perferendis? Quasi porro unde saepe
-              illo quia distinctio, ipsa consequatur modi voluptatibus?
-            </CardDescription>
+            
           </CardHeader>
           <CardContent>
-            <form>
+            <form    onSubmit={updatePasswordUser}>
               <div className="grid items-center w-full gap-4">
                 <InputComponent
                   key={1}
@@ -452,8 +534,9 @@ const showDialogClick = useRef(null)
                   Icon={LockClosedIcon}
                   withIcon={true}
                   inputType="password"
+                  value={passwordOld}
                   handleChange={(e) =>
-                    setData({ ...data, password: e.target.value })
+                    setPasswordOld( e.target.value)
                   }
                 />
                 <InputComponent
@@ -463,8 +546,9 @@ const showDialogClick = useRef(null)
                   Icon={LockClosedIcon}
                   withIcon={true}
                   inputType="password"
+                  value={password}
                   handleChange={(e) =>
-                    setData({ ...data, password: e.target.value })
+                    setPassword( e.target.value)
                   }
                 />
                 <InputComponent
@@ -474,8 +558,9 @@ const showDialogClick = useRef(null)
                   Icon={LockClosedIcon}
                   withIcon={true}
                   inputType="password"
+                  value={passwordVeirfy}
                   handleChange={(e) =>
-                    setData({ ...data, password: e.target.value })
+                    setPasswordVerify( e.target.value)
                   }
                 />
                 <div className="flex  justify-end md:max-w-[300px]">

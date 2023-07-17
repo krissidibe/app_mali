@@ -142,7 +142,7 @@ function CandidatureItem({ datas }) {
                   </AvatarFallback>
                 </Avatar>{" "}
                 <div className="grid items-center w-full gap-4">
-                  <div className="grid gap-6 md:grid-cols-2">
+                  <div className="grid gap-6 min-[1720px]:grid-cols-2">
                     <InputComponent
                       value={user.firstName}
                       readonly={true}
@@ -156,7 +156,7 @@ function CandidatureItem({ datas }) {
                       label="Prénom"
                     />
                   </div>
-                  <div className="grid gap-6 md:grid-cols-2">
+                  <div className="grid gap-6 min-[1720px]:grid-cols-2">
                     <InputComponent
                       value={user.email}
                       readonly={true}
@@ -174,7 +174,7 @@ function CandidatureItem({ datas }) {
                     />
                   </div>
 
-                  <div className="grid gap-6 md:grid-cols-2">
+                  <div className="grid gap-6 min-[1720px]:grid-cols-2">
                     <InputComponent
                       value={dayjs(user.birthDate).format("DD/MM/YYYY")}
                       inputType="text"
@@ -204,7 +204,7 @@ function CandidatureItem({ datas }) {
                       label="Adresse de domiciliation"
                     />
                   </div>
-                  <div className="grid gap-6 md:grid-cols-2">
+                  <div className="grid gap-6 min-[1720px]:grid-cols-2">
                     <InputComponent
                       value={user.nina}
                       key={5}
@@ -222,7 +222,7 @@ function CandidatureItem({ datas }) {
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
               </CardDescription> */}
-              <div className="grid gap-6 mt-4 md:grid-cols-2">
+              <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
                 <InputComponent
                   value={result.diplome}
                   key={7}
@@ -267,7 +267,7 @@ function CandidatureItem({ datas }) {
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
               </CardDescription> */}
-              <div className="grid gap-6 mt-4 md:grid-cols-2">
+              <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
               {fileFunction(
                   "La copie d'acte de naissance",
                   "ou  jugement supplétif en tenant lieu",
@@ -299,7 +299,7 @@ function CandidatureItem({ datas }) {
                   result.certificatVisite
                 )}
                  {fileFunction(
-                  "L'équivalence du diplomes requis pour les étrangers",
+                  "L'équivalence du diplômes requis pour les diplômes étrangers",
                   "et son équivalence pour les diplomes étrangers",
                   result.equivalenceFile
                 )}

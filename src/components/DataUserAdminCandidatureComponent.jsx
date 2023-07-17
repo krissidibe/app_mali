@@ -16,6 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+
+
 const statutOptions = [
   {
     label: "En attente de traitement",
@@ -43,6 +46,50 @@ const sexeOptions = [
     value: 1,
   },
 ];
+
+
+
+const data = [
+  {
+    id: 1,
+    title: "Concours d'entrée medecine",
+    dateEnd: "1988",
+    description: "description",
+    statut: "statut",
+  },
+  {
+    id: 2,
+    title: "Concours d'entrée exemple 1",
+    dateEnd: "1984",
+    description: "description",
+    statut: "statut",
+  },
+  {
+    id: 3,
+    title: "Concours d'entrée exemple 2",
+    dateEnd: "1984",
+    description: "description",
+    statut: "statut",
+  },
+  {
+    id: 4,
+    title: "Concours d'entrée exemple 3",
+    dateEnd: "1984",
+    description: "description",
+    statut: "statut",
+  },
+  {
+    id: 5,
+    title: "Concours d'entrée exemple 4",
+    dateEnd: "1984",
+    description: "description",
+    statut: "statut",
+  },
+];
+
+export default function DataUserAdminCandidatureComponent({ datas }) {
+
+
 const columns = [
   {
     name: "N° ENREGISTREMENT",
@@ -88,47 +135,20 @@ const columns = [
       </div>
     ),
   },
-];
-
-const data = [
   {
-    id: 1,
-    title: "Concours d'entrée medecine",
-    dateEnd: "1988",
-    description: "description",
-    statut: "statut",
-  },
-  {
-    id: 2,
-    title: "Concours d'entrée exemple 1",
-    dateEnd: "1984",
-    description: "description",
-    statut: "statut",
-  },
-  {
-    id: 3,
-    title: "Concours d'entrée exemple 2",
-    dateEnd: "1984",
-    description: "description",
-    statut: "statut",
-  },
-  {
-    id: 4,
-    title: "Concours d'entrée exemple 3",
-    dateEnd: "1984",
-    description: "description",
-    statut: "statut",
-  },
-  {
-    id: 5,
-    title: "Concours d'entrée exemple 4",
-    dateEnd: "1984",
-    description: "description",
-    statut: "statut",
+    name: "Action",
+    selector: (row) => row.sexe,
+    cell: (row) => <div
+    
+ onClick={()=>{
+  router.push(`/admin/apply/${row.id}`, {
+    query: { data: row },
+  });
+ }}
+    className={` cursor-pointer rounded-md  bg-black text-white p-2 px-6`}>{"Ouvrir"}</div>,
+    // format: (row) => parse(row.content.substring(0,70)  || ""),
   },
 ];
-
-export default function DataUserAdminCandidatureComponent({ datas }) {
   const router = useRouter();
   const [customers, setCustomers] = useState([]);
   const [records, setRecords] = useState(datas);
@@ -146,6 +166,7 @@ export default function DataUserAdminCandidatureComponent({ datas }) {
     const newData = datas.filter((row) => {
       if (statut == "") {
         return (
+          (row.numeroRef.toLowerCase().includes(e.trim())) ||
           (row.lastName.toLowerCase().includes(e.trim())) ||
           (row.firstName.toLowerCase().includes(e.trim())) ||
           (row.number.toLowerCase().includes(e.trim())) ||

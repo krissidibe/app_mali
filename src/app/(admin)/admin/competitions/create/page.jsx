@@ -44,6 +44,7 @@ function CreateCompetition() {
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [ageMax, setAgeMax] = useState("");
+  const [letterNumber, setLetterNumber] = useState("");
   const [ageMin, setAgeMin] = useState("");
   const [content, setContent] = useState(EditorState.createEmpty());
   const [statut, setStatutSelect] = useState({ name: "Brouillon", code: "0" });
@@ -75,6 +76,7 @@ function CreateCompetition() {
     formData.append("image", image);
     formData.append("title", title);
     formData.append("ageMax", ageMax);
+    formData.append("letterNumber", letterNumber);
     formData.append("ageMin", ageMin);
     formData.append("valueContent", valueContent);
     formData.append("startDateAt", startDateAt);
@@ -228,11 +230,26 @@ function CreateCompetition() {
      
    
       <div className="flex self-end flex-col w-[380px] mt-4 space-y-4 border-2 p-4">
+      <h1 className="flex items-center justify-between mb-4 font-bold text-md">
+       
+        
+        <InputComponent
+            key={3}
+            label={"Lettre de référence"}
+            value={letterNumber}
+            inputType="text"
+            handleChange={(e) => {
+              setLetterNumber(e.target.value);
+            }}
+          />
+        </h1>
         
         <h1 className="flex items-center justify-between font-bold text-md">
         <p className="font-semibold text-md">Ordre des magistrats</p> <Switch checked={orderOfMagistrates}
                       onCheckedChange={(x) =>setOrderOfMagistrates(x => x=!x)}   />
         </h1>
+
+       
    
        {/*  
         <h1 className="font-bold text-md">

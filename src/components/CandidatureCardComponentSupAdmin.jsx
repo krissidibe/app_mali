@@ -20,7 +20,7 @@ const router = useRouter();
 
   return (
     <div  onClick={()=>{
-      router.push(`/superadmin/candidatures/${data.id}`,{datas:data})
+      router.push(`/superadmin/candidatures/${data.id}/${data.title}`,{datas:data})
     }}   passHref legacyBehavior className="flex flex-col cursor-pointer rounded-lg   h-[558px] shadow-md mr-4 mt-4 ">
       <div className="w-full rounded-t-lg h-1/2 bg-slate-600 ">
         

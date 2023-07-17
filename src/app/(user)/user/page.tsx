@@ -67,19 +67,19 @@ async function Home() {
  
         <CardMiniComponent
           key={1}
-          number={competitionOpenData.length}
+          number={competitionOpenData?.length ?? ""}
           label={"Concours ouverts"}
           Icon={BookOpenIcon}
         />
         <CardMiniComponent
           key={2}
-          number={competitionCloseData.length}
+          number={competitionCloseData?.length ?? ""}
           label={"Concours fermées"}
           Icon={AcademicCapIcon}
         />
         <CardMiniComponent
           key={3}
-          number={data.candidatures.length}
+          number={data.candidatures?.length ?? ""}
           label={"Mes Candidatures"}
           Icon={AcademicCapIcon}
         />

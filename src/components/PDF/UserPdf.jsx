@@ -360,7 +360,7 @@ const MyDocument = ({ data }) => (
             data?.diplomeFile
           )}
           {InfoInputFile(
-            "L'équivalence du diplomes requis pour les étrangers",
+            "L'équivalence du diplômes requis pour les diplômes étrangers",
             data?.equivalenceFile
           )}
           {InfoInputFile("La copie de la carte nina ou la fiche individuelle", data?.ninaFile)}

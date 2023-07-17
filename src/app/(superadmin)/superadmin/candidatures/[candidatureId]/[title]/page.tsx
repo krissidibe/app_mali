@@ -1,5 +1,5 @@
 import React from "react"; 
-import DataUserAdminCandidatureComponentSupAdmin from "../../../../../components/DataUserAdminCandidatureComponentSupAdmin";
+import DataUserAdminCandidatureComponentSupAdmin from "../../../../../../components/DataUserAdminCandidatureComponentSupAdmin";
 
 export const dynamic = "force-dynamic"
 async function page({
@@ -7,6 +7,7 @@ async function page({
 }: {
   params: {
     candidatureId: string;
+    title: string;
   };
 }) {
   const res = await fetch(
@@ -18,7 +19,7 @@ async function page({
   return (
     <div className="flex flex-col flex-1 w-full ">
     
-
+    <p className="text-xl font-bold">L'intitulé du concours : {decodeURI(params.title)}</p>
  
     <DataUserAdminCandidatureComponentSupAdmin datas={datas} /> 
     </div>

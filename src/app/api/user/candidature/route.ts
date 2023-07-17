@@ -71,10 +71,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
     where: {
       id: formData.get("competitionId")?.toString(),
     },
-    select: {
-      id: true,
-    },
+    include :{ candidatures:true }
+   
   });
+
+
 
   if (!competition) {
     return new Response(
@@ -87,6 +88,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
       email: formData.get("uid")?.toString(),
     },
   });
+
+  
   if (!user) {
     return new Response(
       JSON.stringify({ data: "", message: `Utilisateur non trouvé` })
@@ -163,7 +166,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return new Response(
       JSON.stringify({
         data: "error",
-        message: `Veuillez ajouter les pièces obligatoires (*) `,
+        message: `Veuillez ajouter les pièces obligatoires (*)`,
       })
     );
   }
@@ -284,18 +287,24 @@ export async function POST(req: NextRequest, res: NextResponse) {
     .toString()
     .substring(2, 4);
 
-  const strNumber = data.id;
+  const strNumber = competition.candidatures.length + 1;
 
   const finalData = await prisma.candidature.update({
     where: {
       id: data.id,
     },
     data: {
-      numeroRef: `DNAJ${dataFormat}${strNumber.toString().padStart(6, "0")}`,
+      numeroRef: `DNAJ${competition.letterNumber?.toUpperCase()}${dataFormat}${strNumber.toString().padStart(6, "0")}`,
     },
   });
+
+  if(!finalData){
+    return new Response(
+      JSON.stringify({ data: "error", message: "Erreur d'envoi des données veuillez réessayer." })
+    );
+  }
   return new Response(
-    JSON.stringify({ data: "data.id", message: "La candidature est créée" })
+    JSON.stringify({ data: finalData, message: "La candidature est créée" })
   );
  
   /* 

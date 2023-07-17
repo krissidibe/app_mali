@@ -47,6 +47,7 @@ function CompetitionItem({ params, data }) {
   const [image, setImage] = useState(data.image);
   const [title, setTitle] = useState(data.title);
   const [ageMax, setAgeMax] = useState(data.ageMax);
+  const [letterNumber, setLetterNumber] = useState(data.letterNumber);
   const [ageMin, setAgeMin] = useState(data.ageMin);
   const showDialogClick = useRef(null)
   const [content, setContent] = useState(
@@ -95,7 +96,7 @@ function CompetitionItem({ params, data }) {
     formData.append("startDateAt", startDateAt);
     formData.append("endDateAt", endDateAt);
     formData.append("statut", statut.code);
-
+    formData.append("letterNumber", letterNumber);
 
     formData.append("orderOfMagistrates", orderOfMagistrates);
     formData.append("def", def);
@@ -261,7 +262,20 @@ function CompetitionItem({ params, data }) {
       </div>
 
       <div className="flex self-end flex-col w-[380px] mt-4 space-y-4 border-2 p-4">
-
+      <h1 className="flex items-center justify-between mb-4 font-bold text-md">
+       
+        
+       <InputComponent
+           key={3}
+           label={"Lettre de référence"}
+           value={letterNumber}
+           inputType="text"
+           handleChange={(e) => {
+             setLetterNumber(e.target.value);
+           }}
+         />
+       </h1>
+       
       <h1 className="flex items-center justify-between font-bold text-md">
         <p className="font-semibold text-md">Ordre des magistrats</p> <Switch checked={orderOfMagistrates}
                       onCheckedChange={(x) =>setOrderOfMagistrates(x => x=!x)}   />
