@@ -488,7 +488,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
                     <div className="flex flex-col space-y-1.5">
                       <Label htmlFor="name">
                         <div className="flex space-x-2">
-                          <p>Ordre des magistrats </p>{" "}
+                          <p>Ordre Judiciaire / Ordre Administratif </p>{" "}
                           <p className="text-red-500">*</p>
                         </div>
                       </Label>

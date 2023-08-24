@@ -308,7 +308,7 @@ const MyDocument = ({ data }) => (
           {InfoInput("Numero du diplôme", data?.diplomeNumber)}
           { data?.orderOfMagistrates !=""
                 && ( 
-                  InfoInput("Ordre des magistrats", data?.orderOfMagistrates == "0" ? "Ordre admnistratif" : "Ordre judiciaire")
+                  InfoInput("Ordre Judiciaire / Ordre Administratif", data?.orderOfMagistrates == "0" ? "Ordre admnistratif" : "Ordre judiciaire")
                   
                  )
                 }

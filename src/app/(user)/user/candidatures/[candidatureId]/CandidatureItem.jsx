@@ -575,7 +575,7 @@ if (
                      <div className="flex flex-col space-y-1.5">
                      <Label htmlFor="name">
                        <div className="flex space-x-2">
-                       <p>Ordre des magistrats </p> <p className="text-red-500">*</p>
+                       <p>Ordre Judiciaire / Ordre Administratif </p> <p className="text-red-500">*</p>
                        </div>
                         </Label>
                        <Select
@@ -601,7 +601,7 @@ if (
                           : "Ordre judiciaire"
                       }
                       key={53}
-                      label="Ordre des magistrats"
+                      label="Ordre Judiciaire / Ordre Administratif"
                     />
                     ))}
 

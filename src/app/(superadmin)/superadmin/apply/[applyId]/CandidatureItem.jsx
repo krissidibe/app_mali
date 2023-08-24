@@ -254,7 +254,7 @@ function CandidatureItem({ datas }) {
                 && (  <InputComponent
                   value={result.orderOfMagistrates == "0" ? "Ordre admnistratif" : "Ordre judiciaire"} 
                   key={12}
-                  label="Ordre des magistrats"
+                  label="Ordre Judiciaire / Ordre Administratif"
                 />)
                 }
               </div>
