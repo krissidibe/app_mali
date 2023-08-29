@@ -408,7 +408,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     return new Response(
       JSON.stringify({
         data: "error",
-        message: `Veuillez ajouter les pièces obligatoires (*) `,
+        message: `Veuillez ajouter les pièces obligatoires (*)`,
       })
     );
   }

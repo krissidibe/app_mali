@@ -219,9 +219,9 @@ function page() {
             <Label>Mot de passe oublier ?</Label>
           </CardFooter>
         </Card>
-        <div className="mt-4 text-black  md:hidden text-md">Comment utiliser ce site</div>
-<div className="mb-0 text-black  md:hidden text-md">Clique sur le lien pdf pour suivre les instructions</div>
-<a className="p-1 px-2 mt-2 text-white bg-black rounded-md cursor-pointer  md:hidden" target="blank" href="/images/tuto.pdf"> <p>Explication</p> </a>
+        <div className="mt-4 text-black md:hidden text-md">Comment utiliser ce site</div>
+<div className="mb-0 text-black md:hidden text-md">Clique sur le lien pdf pour suivre les instructions</div>
+<a className="p-1 px-2 mt-2 text-white bg-black rounded-md cursor-pointer md:hidden" target="blank" href="/images/tuto.pdf"> <p>Explication</p> </a>
         <p className="text-[12px] pb-8 text-gray-500 max-w-[420px] text-justify mt-10 mb-10">
           Cette plateforme est une propriété du Ministère de la Justice et des
           Droits de l'homme du Mali. Elle a pour but de faciliter aux candidats,
@@ -250,12 +250,9 @@ function page() {
 
         <div className="absolute flex-col flex-1 max-w-lg space-y-2 text-sm text-left text-white left-20 right-20 bottom-20 md:flex">
           <p className="text-lg font-bold border-b-2">PORTAIL CONCOURS</p>
-         {/*  <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-            dolore ullam totam itaque explicabo eveniet, obcaecati sequi
-            consectetur porro tempore error ab laborum dolor sint, libero, magni
-            distinctio! Et, totam!
-          </p> */}
+          <p>
+          CONTACTS : 0023 76 16 49 33 / 67 04 44 85
+          </p>
         </div>
         <a target="blank" href="/images/tuto.pdf">
         <Image

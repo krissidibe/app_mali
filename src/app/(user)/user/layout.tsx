@@ -29,6 +29,9 @@ export default async function AdminLayout({
   //const [showMenu, setshowMenu] = useState(false);
   return (
     <html lang="en">
+      <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      </head>
       <body className="flex flex-1 w-full h-screen">
         <ModalInfo title="Alert" body="kris" />
 
@@ -50,7 +53,7 @@ export default async function AdminLayout({
             <p>Un Peuple - Un But - Une Foi</p>
           </div>
             <MenuComponent />
-            <div className="flex items-center justify-center">
+            <div className="items-center justify-center hidden  md:flex">
               <p className="mr-4 text-sm">
            
                 {session?.user?.email}{" "}

@@ -93,6 +93,9 @@ const SideBarUser = ({ show = true, handleClick = () => {
           Icon={UserIcon}
         />
       </div>
+      <p className="mb-20 text-sm">
+          CONTACTS : 0023 76 16 49 33 / 67 04 44 85
+          </p>
       <NavItem
         key={5}
         name="Deconnexion"

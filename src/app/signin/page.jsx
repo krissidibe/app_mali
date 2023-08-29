@@ -338,10 +338,7 @@ export default function Signin() {
         <div className="absolute flex-col flex-1 max-w-lg space-y-2 text-sm text-left text-white left-20 right-20 bottom-20 md:flex">
           <p className="text-lg font-bold border-b-2">PORTAIL CONCOURS</p>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-            dolore ullam totam itaque explicabo eveniet, obcaecati sequi
-            consectetur porro tempore error ab laborum dolor sint, libero, magni
-            distinctio! Et, totam!
+          CONTACTS : 0023 76 16 49 33 / 67 04 44 85
           </p>
         </div>
         <Image

@@ -2,8 +2,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function RecentUser({ datas }: { datas: any[] }) {
   return (
-    <div className="space-y-8">
-      {datas.slice(0,5).map((item) => (
+    <div className="h-[400px] space-y-8 overflow-y-scroll">
+      {datas.map((item) => (
         <div className="flex items-center">
           <Avatar className="h-9 w-9">
             
