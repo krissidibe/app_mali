@@ -154,7 +154,7 @@ export default function DataUserCandidatureComponent({datas}) {
   <div className="md:hidden" >   <DataUserCandidatureComponent isMobileScreen={true} /></div> */
   return (
     <div className="w-screen md:w-full md:p-4 ">
-      <p>Retrouvez ci-dessous la liste  de vos candidatures. vous pouvez  consulter votre candidature en cliquant sur un enregistrement ou télécharger votre le récépissé</p>
+      <p>Retrouvez ci-dessous la liste  de vos candidatures. Vous pouvez  consulter votre candidature en cliquant sur un enregistrement ou télécharger le récépissé</p>
       <div className="hidden w-full md:max-w-full md:block">
         {" "}
         <DataTable

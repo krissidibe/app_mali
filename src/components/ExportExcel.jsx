@@ -127,7 +127,7 @@ function ExportExcel({datas} ) {
       label :"Femme",value:1,
     }
     ]
-    const orderOptions = [ "Ordre Judiciaire","Ordre Administratif"]
+    const orderOptions = [ "Ordre admnistratif","Ordre Judiciaire"]
 
     datas.map((item) => {
       sheet.addRow({

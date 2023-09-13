@@ -215,7 +215,7 @@ function CandidatureItem({ datas }) {
               </div>
 
               <CardTitle className="mt-4 mb-2">
-                Les informations a renseigné pour le concours
+                Les informations à renseigner pour le concours
               </CardTitle>
             {/*   <CardDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
@@ -226,7 +226,7 @@ function CandidatureItem({ datas }) {
                 <InputComponent
                   value={result.diplome}
                   key={7}
-                  label="Diplôme de nationalité"
+                  label="Diplôme"
                 />
                 <InputComponent value={result.study} key={8} label="Filiere" />
                 <InputComponent
@@ -357,7 +357,7 @@ function CandidatureItem({ datas }) {
         <Card className="flex-1 mb-10 ">
           <CardHeader>
             <CardTitle className="mb-2">
-              Information de la candidature
+            Traitement de la candidature
             </CardTitle>
           {/*   <CardDescription>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
@@ -367,7 +367,7 @@ function CandidatureItem({ datas }) {
           </CardHeader>
           <CardContent>
             <p className="font-semibold mb-4 mt-4 text-md text-[#50a1ef]">
-              N° ENREGISTREMENT : {data.numeroRef}{" "}
+            N° Enregistrement : {data.numeroRef}{" "}
             </p>
             <div className="flex justify-between my-4">
               <div>Etat de la candidature : </div>

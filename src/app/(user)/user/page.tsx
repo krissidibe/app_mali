@@ -74,20 +74,20 @@ async function Home() {
         <CardMiniComponent
           key={2}
           number={competitionCloseData?.length ?? ""}
-          label={"Concours fermées"}
+          label={"Concours fermés"}
           Icon={AcademicCapIcon}
         />
         <CardMiniComponent
           key={3}
           number={data.candidatures?.length ?? ""}
-          label={"Mes Candidatures"}
+          label={"Mes candidatures"}
           Icon={AcademicCapIcon}
         />
       </div>
 
       <div className="pb-2 border-b-2">
         
-        <p>Liste des candicatures</p>
+        <p>Liste des candidatures</p>
       </div>
 
    

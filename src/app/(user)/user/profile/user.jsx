@@ -282,11 +282,10 @@ const showDialogClick = useRef(null)
         >
           <Card>
             <CardHeader>
-              <CardTitle> Informations personels</CardTitle>
+              <CardTitle> Informations personnelles</CardTitle>
               <CardDescription>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                at tincidunt neque. Pellentesque vitae commodo justo. Integer
-                tempor Pellentesque vitae Integer tempor
+              Vous pouvez modifier vos informations en mettant à jours le formulaire, puis cliquez
+sur le bouton Modifier pour valider les modifications.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -330,7 +329,7 @@ const showDialogClick = useRef(null)
                     withIcon={true}
                     inputType="file"
                     key={4}
-                    label="Photo de profile"
+                    label="Photo de profil"
                   />
                 </div>
 
@@ -529,7 +528,7 @@ const showDialogClick = useRef(null)
                 />
                 <InputComponent
                   key={2}
-                  label="Mot de passe ancienne"
+                  label="Ancien mot de passe"
                   obscureInput={true}
                   Icon={LockClosedIcon}
                   withIcon={true}
@@ -553,7 +552,7 @@ const showDialogClick = useRef(null)
                 />
                 <InputComponent
                   key={2}
-                  label="Mettre encore nouveau mot de passe"
+                  label="Confirmer le nouveau mot de passe"
                   obscureInput={true}
                   Icon={LockClosedIcon}
                   withIcon={true}

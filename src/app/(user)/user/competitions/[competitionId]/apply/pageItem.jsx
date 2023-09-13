@@ -420,7 +420,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
           <Card>
             <CardHeader className="mb-4">
               <CardTitle>
-                Les informations a renseigné pour le concours
+                Les informations à renseigner pour le concours
               </CardTitle>
               <CardDescription>
                 Veuillez renseigner correctement le formulaire ci-dessous avec

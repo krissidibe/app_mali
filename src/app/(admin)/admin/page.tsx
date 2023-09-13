@@ -53,13 +53,13 @@ const Home = async () => {
       <div className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-4">
           <CardHeader>
-            <CardTitle>Overview</CardTitle>
+            <CardTitle>Aperçu</CardTitle>
           </CardHeader>
           <CardContent className="pl-2 space-y-3">
            <ItemInfoCompetiton nombre={competitionBrouillonData.length.toString()} label="Concours en mode brouillon" />
            <ItemInfoCompetiton nombre={competitionOpenData.length.toString()} label="Concours ouverts" />
-           <ItemInfoCompetiton nombre={competitionCloseData.length.toString()} label="Concours fermée" />
-           <ItemInfoCompetiton nombre={competitionSusData.length.toString()} label="Concours suspendu" />
+           <ItemInfoCompetiton nombre={competitionCloseData.length.toString()} label="Concours fermés" />
+           <ItemInfoCompetiton nombre={competitionSusData.length.toString()} label="Concours suspendus" />
  
           </CardContent>
         </Card>
