@@ -87,7 +87,7 @@ export default function DataUserAdminCandidatureComponentSupAdmin({ datas }) {
 
 const columns = [
   {
-    name: "N° ENREGISTREMENT",
+    name: "N° Enregistrement",
    selector: (row) => row.numeroRef,
     format: (row) => row.numeroRef,
    

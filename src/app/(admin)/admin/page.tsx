@@ -67,7 +67,7 @@ const Home = async () => {
           <CardHeader>
             <CardTitle>Liste des utilisateurs</CardTitle>
             <CardDescription>
-              Nombre d'utilisateur {data.length}
+              Nombre d’utilisateurs {data.length}
             </CardDescription>
           </CardHeader>
           <CardContent>

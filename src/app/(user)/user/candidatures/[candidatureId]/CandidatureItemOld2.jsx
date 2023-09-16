@@ -134,7 +134,7 @@ function CandidatureItem({ data }) {
             "Problème de connexion internet veuillez réessayer ultérieurement")
       );
       setIsLoading((x) => (x = true));
-    }, 10000);
+    }, 60000);
   };
 
   const updateApply = async (e) => {
@@ -143,7 +143,7 @@ function CandidatureItem({ data }) {
 
     launchTimer();
     setIsLoading(x => x = false)
-if(!checkEdit){
+if(!data.canEdit){
 return
 }
     
@@ -275,14 +275,13 @@ if (
       <BackComponent className="mt-2 mb-4" />
    <div className="flex">
    
-   
    <UserPdf data={data} className="p-4 text-white bg-green-500" />
- {(data.canEdit  || (data.statut == 0 && new Date(data.competition.endDateAt) > new Date(Date.now()))) &&   <div onClick={()=>{
+   <div onClick={()=>{
    setEditFile(x=> x =!x)
    setCheckEdit(data.canEdit ? true : editFile ? false : true)
-   }} className="p-4 px-6 text-white bg-blue-500 border-2 rounded-sm cursor-pointer"> {editFile == false ? "Modifier" :"Annuler"}  </div>}
+   }} className="p-4 px-6 text-white bg-blue-500 border-2 rounded-sm cursor-pointer"> {editFile == false ? "Modifier" :"Annuler"}  </div>
    </div>
-      {checkEdit == true && (
+      {data.canEdit == true || editFile == true && (
         <div className="p-4 border-[1px] border-green-500 flex justify-between  shadow-md rounded-md my-4">
           <div>Vous pouvez modifier les informations de la candidature</div>
           <RiAlertLine className="w-6 h-6 text-green-500" />
@@ -382,20 +381,20 @@ if (
                       handleChange={(e) =>
                         setDataUser({ ...dataUser, lastName: e.target.value })
                       }
-                      readonly={!checkEdit}
+                      readonly={!data.canEdit}
                       key={1}
                       label="Nom"
-                      required={`${checkEdit ? "*" : ""}`}
+                      required={`${data.canEdit ? "*" : ""}`}
                     />
                     <InputComponent
                       value={dataUser.firstName}
                       handleChange={(e) =>
                         setDataUser({ ...dataUser, firstName: e.target.value })
                       }
-                      readonly={!checkEdit}
+                      readonly={!data.canEdit}
                       key={2}
                       label="Prénom"
-                      required={`${checkEdit ? "*" : ""}`}
+                      required={`${data.canEdit ? "*" : ""}`}
                     />
                   </div>
                   <div className="grid gap-6 min-[1720px]:grid-cols-2">
@@ -406,18 +405,18 @@ if (
                       key={3}
                       label="Email"
                       inputType="email"
-                      required={`${checkEdit ? "*" : ""}`}
+                      required={`${data.canEdit ? "*" : ""}`}
                     />
                     <InputComponent
                       value={dataUser.number}
                       handleChange={(e) =>
                         setDataUser({ ...dataUser, number: e.target.value })
                       }
-                      readonly={!checkEdit}
+                      readonly={!data.canEdit}
                       withIcon={true}
                       key={4}
                       label="Numero de téléphone"
-                      required={`${checkEdit ? "*" : ""}`}
+                      required={`${data.canEdit ? "*" : ""}`}
                     />
                   </div>
 
@@ -428,11 +427,11 @@ if (
                       handleChange={(e) =>
                         setDataUser({ ...dataUser, birthDate: e.target.value })
                       }
-                      readonly={!checkEdit}
+                      readonly={!data.canEdit}
                       inputType="date"
                       key={5}
                       label="Date de naissance"
-                      required={`${checkEdit ? "*" : ""}`}
+                      required={`${data.canEdit ? "*" : ""}`}
                     />
                     <InputComponent
                       value={dataUser.placeBirthDate}
@@ -443,13 +442,13 @@ if (
                           placeBirthDate: e.target.value,
                         })
                       }
-                      readonly={!checkEdit}
+                      readonly={!data.canEdit}
                       key={6}
                       label="Lieu de naissance"
-                      required={`${checkEdit ? "*" : ""}`}
+                      required={`${data.canEdit ? "*" : ""}`}
                     />
 
-                    {checkEdit ? (
+                    {data.canEdit ? (
                       <div className="flex flex-col space-y-1.5">
                         <Label htmlFor="name">
                           <span>Sexe</span>{" "}
@@ -487,8 +486,8 @@ if (
                       handleChange={(e) =>
                         setDataUser({ ...dataUser, address: e.target.value })
                       }
-                      readonly={!checkEdit}
-                      required={`${checkEdit ? "*" : ""}`}
+                      readonly={!data.canEdit}
+                      required={`${data.canEdit ? "*" : ""}`}
                     />
                     <InputComponent
                       value={dataUser.nina}
@@ -497,7 +496,7 @@ if (
                       handleChange={(e) =>
                         setDataUser({ ...dataUser, nina: e.target.value })
                       }
-                      readonly={!checkEdit}
+                      readonly={!data.canEdit}
                     />
 
                     {/*   <div>
@@ -533,37 +532,37 @@ if (
                   handleChange={(e) =>
                     setDataUser({ ...dataUser, diplome: e.target.value })
                   }
-                  readonly={!checkEdit}
+                  readonly={!data.canEdit}
                   key={47}
                   label="Diplôme"
-                    required={`${checkEdit ? "*" : ""}`}
+                    required={`${data.canEdit ? "*" : ""}`}
                 />
                 <InputComponent
                     value={dataUser.study}
                   handleChange={(e) =>
                     setDataUser({ ...dataUser, study: e.target.value })
                   }
-                  readonly={!checkEdit}
+                  readonly={!data.canEdit}
                   key={48}
                   label="Filiere"
-                    required={`${checkEdit ? "*" : ""}`}
+                    required={`${data.canEdit ? "*" : ""}`}
                 />
                 <InputComponent
                     value={dataUser.speciality}
                   handleChange={(e) =>
                     setDataUser({ ...dataUser, speciality: e.target.value })
                   }
-                  readonly={!checkEdit}
+                  readonly={!data.canEdit}
                   key={49}
                   label="Spécialité"
-                    required={`${checkEdit ? "*" : ""}`}
+                    required={`${data.canEdit ? "*" : ""}`}
                 />
                 <InputComponent
                   value={dataUser.placeOfGraduation}
                   handleChange={(e) =>
                     setDataUser({ ...dataUser, placeOfGraduation: e.target.value })
                   }
-                  readonly={!checkEdit}
+                  readonly={!data.canEdit}
                   key={50}
                   label="Lieu d’optention du diplôme"
                 />
@@ -572,7 +571,7 @@ if (
                   handleChange={(e) =>
                     setDataUser({ ...dataUser, countryOfGraduation: e.target.value })
                   }
-                  readonly={!checkEdit}
+                  readonly={!data.canEdit}
                   key={51}
                   label="Pays d’optention du diplôme"
                 />
@@ -581,12 +580,12 @@ if (
                   handleChange={(e) =>
                     setDataUser({ ...dataUser, diplomeNumber: e.target.value })
                   }
-                  readonly={!checkEdit}
+                  readonly={!data.canEdit}
                   key={52}
                   label="Numero du diplôme"
                 />
  
-{data.competition.orderOfMagistrates == true   && (checkEdit ? (
+{data.competition.orderOfMagistrates == true   && (data.canEdit ? (
                      <div className="flex flex-col space-y-1.5">
                      <Label htmlFor="name">
                        <div className="flex space-x-2">
@@ -633,7 +632,7 @@ if (
                 tempor Pellentesque vitae Integer tempor
               </CardDescription> */}
               <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
-{checkEdit ? ( <InputComponent
+{data.canEdit ? ( <InputComponent
                     checkFileIcon={birthDateFile != ""}
                     handleChange={(e) => {
                       setBirthDateFile(e.target.files[0]);
@@ -653,7 +652,7 @@ if (
                 
 
 
-                { checkEdit ?   <InputComponent
+                { data.canEdit ?   <InputComponent
                     checkFileIcon={cassierFile != ""}
                     handleChange={(e) => {
                       setCassierFile(e.target.files[0]);
@@ -670,7 +669,7 @@ if (
                 )}
 
 
-                {checkEdit ? <InputComponent
+                {data.canEdit ? <InputComponent
                     checkFileIcon={certificatVie != ""}
                     handleChange={(e) => {
                       setCertificatVie(e.target.files[0]);
@@ -686,7 +685,7 @@ if (
                   "Un certificat de bonne vie et moeurs valide",
                   user.certificatVie
                 )}
-                {checkEdit ? 
+                {data.canEdit ? 
                   <InputComponent
                   checkFileIcon={certificate != ""}
                   handleChange={(e) => {
@@ -704,7 +703,7 @@ if (
                   user.certificate
                 )}
                 {
-                checkEdit ?   <InputComponent
+                data.canEdit ?   <InputComponent
                 checkFileIcon={diplomeFile != ""}
                 handleChange={(e) => {
                   setDiplomeFile(e.target.files[0]);
@@ -722,7 +721,7 @@ if (
                 )}
 
 
-                {checkEdit ?  <InputComponent
+                {data.canEdit ?  <InputComponent
                     checkFileIcon={certificatVisite != ""}
                     handleChange={(e) => {
                       setCertificatVisite(e.target.files[0]);
@@ -738,7 +737,7 @@ if (
                   "Délivré par une  autorité médicale agréée",
                   user.certificatVisite
                 )}
-                {checkEdit ? 
+                {data.canEdit ? 
                 <InputComponent
                 checkFileIcon={equivalenceFile != ""}
                 handleChange={(e) => {
@@ -755,7 +754,7 @@ if (
                   user.equivalenceFile
                 )}
 
-                {checkEdit ?  <InputComponent
+                {data.canEdit ?  <InputComponent
                     checkFileIcon={infoCardFile != ""}
                     handleChange={(e) => {
                       setInfoCardFile(e.target.files[0]);
@@ -770,7 +769,7 @@ if (
                   "",
                   user.ninaFile
                 )}
-                {checkEdit ?  <InputComponent
+                {data.canEdit ?  <InputComponent
                     checkFileIcon={ninaFile != ""}
                     handleChange={(e) => {
                       setNinaFile(e.target.files[0]);
@@ -785,7 +784,7 @@ if (
                   user.infoCardFile
                 )}
                 {
-                checkEdit ?
+                data.canEdit ?
                 <InputComponent
                 checkFileIcon={demandeFile != ""}
                 handleChange={(e) => {
@@ -854,7 +853,7 @@ if (
                 
               </div> */}
             </CardContent>
-           {checkEdit &&   <CardFooter className="flex justify-end">
+           {data.canEdit &&   <CardFooter className="flex justify-end">
 
 {isLoading ?               <ButtonComponent
                 key={8}

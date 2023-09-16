@@ -117,7 +117,7 @@ function CandidatureItem({ datas }) {
       />
 
       <p className="pb-2 mb-10 font-semibold border-b-2">
-        Les information sur la candidature
+        Les informations sur la candidature
       </p>
       <div className="flex flex-1 h-full gap-6">
         <div className="w-1/2">
