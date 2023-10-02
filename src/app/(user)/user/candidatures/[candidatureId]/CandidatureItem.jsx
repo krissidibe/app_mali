@@ -118,6 +118,29 @@ function CandidatureItem({ data }) {
   const [diplomeFile, setDiplomeFile] = useState("");
   const [equivalenceFile, setEquivalenceFile] = useState("");
 
+  const [dataFiles, setDataFiles] = useState(JSON.parse(JSON.parse(JSON.stringify(data.filesRequired))));
+
+
+  const handleChangeFileRequired = (item,e) => {
+    
+    
+    const nextShapes = dataFiles.map(shape => {
+      if (shape.id != item.id) {
+        // No change
+        return shape;
+      } else {
+        // Return a new circle 50px below
+        return {
+          ...shape,
+          value:   e.files[0],
+        };
+      }
+    });
+    // Re-render with the new array
+    setDataFiles(nextShapes);
+ 
+    
+  };
 
   const [editFile, setEditFile] = useState(false);
   const [checkEdit, setCheckEdit] = useState(false);
@@ -223,6 +246,16 @@ if (
     formData.append("demandeFile", demandeFile);
 
     
+    dataFiles.map((item =>
+
+      formData.append(item.id, item.value)
+      
+      
+      ))
+
+   
+      formData.append("dataFilesArray", JSON.stringify(dataFiles));
+
     const res = await fetch(`/api/user/candidature`, {
       body: formData,
       method: "PUT",
@@ -632,7 +665,34 @@ if (
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
               </CardDescription> */}
-              <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
+
+ 
+
+              {data.filesRequired != null && <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
+
+             {dataFiles.map(item=>(
+               checkEdit ? ( <InputComponent
+                checkFileIcon={birthDateFile != ""}
+                name = {item.name}
+                handleChange={(e) => {
+                  handleChangeFileRequired(item,e.target);
+                }}
+                key={21}
+                inputType="file"
+                required="*"
+                label={item.name}
+                
+              />) : fileFunctionCutom(
+               item.name,
+               
+               item.value
+              ) 
+             ))}
+              
+
+              </div>  }
+             
+            {data.filesRequired == null &&   <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
 {checkEdit ? ( <InputComponent
                     checkFileIcon={birthDateFile != ""}
                     handleChange={(e) => {
@@ -803,7 +863,7 @@ if (
                   "",
                   user.demandeFile
                 )}
-              </div>
+              </div>}
               {/* 
               <CardTitle className="mt-4 mb-10 text-green-500">
                 Les Diplômes
@@ -901,9 +961,34 @@ if (
 
 export default CandidatureItem;
 
+
+function fileFunctionCutom(label,   result) {
+  return (
+    <div className="">
+      <div className="flex flex-col">
+        <Label className="mb-2">{label}</Label>
+        {/*  { <span className="text-[13px] text-gray-400">{subLabel}</span>} */}
+      </div>
+      <div className="flex items-center space-x-4">
+        <div className="flex items-center flex-1 cursor-pointer justify-end p-4 h-[38px] border-[1px] rounded-sm">
+          <a
+            target="_blank"
+            href={`${process.env.BASE_URL}${result}`}
+            className="flex items-center justify-between flex-1 space-x-2"
+          >
+            <p className="text-sm">Télécharger </p>
+            <FaDownload className="h-12 mr-4" />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 function fileFunction(label, subLabel = "", result) {
   return (
-    <div className={result.length <= 15 ? "hidden" : ""}>
+    <div className={result?.length <= 15 ? "hidden" : ""}>
       <div className="flex flex-col">
         <Label className="mb-2">{label}</Label>
         {/*  { <span className="text-[13px] text-gray-400">{subLabel}</span>} */}

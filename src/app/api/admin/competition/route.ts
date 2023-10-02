@@ -126,14 +126,10 @@ master2 */
       ageMax: parseInt(formData.get("ageMax")?.toString() ?? "0"),
 
       orderOfMagistrates: formData.get("orderOfMagistrates") === "true",
+      
+      filesRequired : formData.get("filesRequired")?.toString()   , 
      
-     /* 
-      def: formData.get("def") === "true",
-     bac: formData.get("bac") === "true",
-      licence: formData.get("licence") === "true",
-      maitrise: formData.get("maitrise") === "true",
-      master1: formData.get("master1") === "true",
-      master2: formData.get("master2") === "true", */
+      
     },
   });
   return new Response(
@@ -177,6 +173,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       ageMax: parseInt(formData.get("ageMax")?.toString() ?? "0"),
 
       orderOfMagistrates: formData.get("orderOfMagistrates") === "true",
+      filesRequired : formData.get("filesRequired")?.toString()   , 
      /*  def: formData.get("def") === "true",
       bac: formData.get("bac") === "true",
       licence: formData.get("licence") === "true",

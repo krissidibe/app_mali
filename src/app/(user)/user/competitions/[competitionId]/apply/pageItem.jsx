@@ -50,7 +50,7 @@ import {
 import BackComponent from "@/components/BackComponent";
 import { useSession } from "next-auth/react";
 import dayjs from "dayjs";
-export default function ApplyItem(data, competitionId, fileAttach) {
+export default function ApplyItem(data, competitionId, fileAttach,filesRequired) {
   const { data: session, status } = useSession();
   const [lastName, setLastName] = useState(data.data.data.lastName);
   const [firstName, setFirstName] = useState(data.data.data.firstName);
@@ -108,6 +108,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
   const [titleModal, setTitleModal] = useState("");
   const [modalData, setModalData] = useState("");
   const dataAttach = JSON.parse(`${router.get("fileAttach")}`);
+ 
   const defRef = useRef(null);
   const [defFile, setDefFile] = useState("");
   const [bacFile, setBacFile] = useState("");
@@ -115,6 +116,34 @@ export default function ApplyItem(data, competitionId, fileAttach) {
   const [maitriseFile, setMaitriseFile] = useState("");
   const [master1File, setMaster1File] = useState("");
   const [master2File, setMaster2File] = useState("");
+
+
+  const [dataFiles, setDataFiles] = useState(JSON.parse(JSON.parse(JSON.stringify(data.data.filesRequired))));
+
+
+
+  const handleChangeFileRequired = (item,e) => {
+    
+    
+    const nextShapes = dataFiles.map(shape => {
+      if (shape.id != item.id) {
+        // No change
+        return shape;
+      } else {
+        // Return a new circle 50px below
+        return {
+          ...shape,
+          value:   e.files[0],
+        };
+      }
+    });
+    // Re-render with the new array
+    setDataFiles(nextShapes);
+ 
+    
+  };
+
+
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -148,6 +177,9 @@ export default function ApplyItem(data, competitionId, fileAttach) {
   const createApply = async (e) => {
     e.preventDefault();
 
+    
+  
+
     launchTimer();
 
     setIsLoading((x) => (x = false));
@@ -179,6 +211,15 @@ export default function ApplyItem(data, competitionId, fileAttach) {
 
     const formData = new FormData();
 
+    dataFiles.map((item =>
+
+      formData.append(item.id, item.value)
+      
+      
+      ))
+
+   
+      formData.append("dataFilesArray", JSON.stringify(dataFiles));
     formData.append("sexe", sexe);
     formData.append("nina", nina);
     formData.append("certificate", certificate);
@@ -203,6 +244,13 @@ export default function ApplyItem(data, competitionId, fileAttach) {
     formData.append("infoCardFile", infoCardFile);
     formData.append("demandeFile", demandeFile);
     formData.append("orderOfMagistratesType", orderOfMagistratesType);
+
+  
+
+
+   
+  //  formData.append("dataFiles",  new File([dataFiles[0].value], "filename",{type:"image/jpg"}));
+  //  formData.append("dataFiles", JSON.stringify(dataFiles));
 
     //Diplome
     /* formData.append("defFile", defFile);
@@ -282,6 +330,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
       />
 
       <div className="flex flex-col md:flex-row md:space-x-10">
+        
         <Card className="flex-1 mb-10  md:max-w-[500px]">
           <CardHeader>
             <CardTitle className="mb-2">Mes informations</CardTitle>
@@ -417,6 +466,8 @@ export default function ApplyItem(data, competitionId, fileAttach) {
           encType="multipart/form-data"
           className="flex-1 mb-10 "
         >
+
+     
           <Card>
             <CardHeader className="mb-4">
               <CardTitle>
@@ -522,8 +573,36 @@ export default function ApplyItem(data, competitionId, fileAttach) {
                     pour les fichiers est de 5 Mega octets.
                   </CardDescription>
                 </div>
+{/* 
+data.data.filesRequired
+*/}
+ 
+ 
+{JSON.stringify(dataFiles)}
 
-                <div className="grid gap-6 min-[1720px]:grid-cols-2">
+               {data.data.filesRequired.length !=0 &&  <div className="grid gap-6 min-[1720px]:grid-cols-2">
+                
+               <div className="grid gap-6 min-[1720px]:grid-cols-2">
+
+               {JSON.parse(JSON.parse(JSON.stringify(data.data.filesRequired))).map(item => ( 
+   
+   <InputComponent
+   checkFileIcon={item.type != "file"}
+   name = {item.name}
+   handleChange={(e) => {
+     handleChangeFileRequired(item,e.target);
+   }}
+   key={21}
+   inputType="file"
+   required="*"
+   label={item.name}
+  // subLabel="Une copie d'acte de naissance ou  jugement supplétif en tenant lieu"
+ />
+))}
+               
+                   </div>
+                </div>}
+               {data.data.filesRequired.length ==0 &&  <div className="grid gap-6 min-[1720px]:grid-cols-2">
                   <InputComponent
                     checkFileIcon={birthDateFile != ""}
                     handleChange={(e) => {
@@ -640,7 +719,7 @@ export default function ApplyItem(data, competitionId, fileAttach) {
                     label="Une demande manuscrite timbrée"
                     subLabel="Timbrée à 200 F"
                   />
-                </div>
+                </div>}
 
                 {/*     <div className="py-4 mt-4 mb-4 border-t-2 border-black ">
                 <CardTitle className="mb-2 text-green-500 ">

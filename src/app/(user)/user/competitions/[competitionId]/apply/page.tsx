@@ -45,12 +45,13 @@ async function Home({
   <div className="flex flex-col mt-2 mb-2 md:ml-10"> 
   <p className="font-bold underline">Intutilé du concours :  </p>
   <p>{file.data.title}  </p>
+ 
   </div>
 
   {
   
   new Date(file.data.endDateAt) > new Date(Date.now()) && 
-  file.data.statut == "1" ?  <ApplyItem data={{data:user,competitionId:params.competitionId,fileAttach:fileAttach}} />   : <div>
+  file.data.statut == "1" ?  <ApplyItem data={{data:user,competitionId:params.competitionId,fileAttach:fileAttach,filesRequired: file.data.filesRequired}} />   : <div>
     Non disponible
   </div>
 

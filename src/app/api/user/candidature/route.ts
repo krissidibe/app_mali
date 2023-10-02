@@ -49,22 +49,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  /*   const {
-    sexe,
-    nina,
-    certificate,
-    diplome,
-    diplomeNumber,
-    placeOfGraduation,
-    countryOfGraduation,
-    study,
-    speciality,
-    uid,
-    competitionId,
-    
-  } = await req.json();
-
- */
+ 
   const formData = await req.formData();
 
   const competition = await prisma.competition.findFirst({
@@ -112,37 +97,18 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 
   let certificateName = "";
-  let birthDateFileName = "";
-  let cassierFileName = "";
-  let certificatVieName = "";
-  let certificatVisiteName = "";
-  let diplomeFileName = "";
-  let equivalenceFileName = "";
-  let infoCardFileName = "";
-  let ninaFileName = "";
-  let demandeFileName = "";
+ 
 
-  const certificate = formData.get("certificate") as Blob | null;
-  const birthDateFile = formData.get("birthDateFile") as Blob | null;
-  const cassierFile = formData.get("cassierFile") as Blob | null;
-  const certificatVie = formData.get("certificatVie") as Blob | null;
-  const certificatVisite = formData.get("certificatVisite") as Blob | null;
-  const diplomeFile = formData.get("diplomeFile") as Blob | null;
-  const infoCardFile = formData.get("infoCardFile") as Blob | null;
-  const demandeFile = formData.get("demandeFile") as Blob | null;
-  const ninaFile = formData.get("ninaFile") as Blob | null;
-  const equivalenceFile = formData.get("equivalenceFile") as Blob | null;
+  const dataFilesArray = formData.get("dataFilesArray")!.toString();
+  let dataFilesArrayConvert:any[] =  JSON.parse(dataFilesArray)  
+  let dataFilesArrayUser:any[] =  [];
+ const val = await storeImage( formData.get("l")  as Blob | null)
 
-  if (
-    certificate?.toString() == "" ||
-    birthDateFile?.toString() == "" ||
-    cassierFile?.toString() == "" ||
-    certificatVie?.toString() == "" ||
-    certificatVisite?.toString() == "" ||
-    diplomeFile?.toString() == "" ||
-    infoCardFile?.toString() == "" ||
-    demandeFile?.toString() == ""
-  ) {
+
+ for await (const item of dataFilesArrayConvert) {
+  
+
+  if(item.value.length <=2){
     return new Response(
       JSON.stringify({
         data: "error",
@@ -150,95 +116,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
       })
     );
   }
+ 
+  dataFilesArrayUser.push({  type : item.type, name:item.name, id:item.id,value: await storeImage( formData.get(item.id)  as Blob | null)})
+}
 
-  try {
-    certificateName = await storeImage(certificate);
-    birthDateFileName = await storeImage(birthDateFile);
-    cassierFileName = await storeImage(cassierFile);
-    certificatVieName = await storeImage(certificatVie);
-    certificatVisiteName = await storeImage(certificatVisite);
-    diplomeFileName = await storeImage(diplomeFile);
-    equivalenceFileName = await storeImage(equivalenceFile);
-    ninaFileName = await storeImage(ninaFile);
-    infoCardFileName = await storeImage(infoCardFile);
-    demandeFileName = await storeImage(demandeFile);
-  } catch (error) {
-    return new Response(
-      JSON.stringify({
-        data: "error",
-        message: `Veuillez ajouter les pièces obligatoires (*)`,
-      })
-    );
-  }
-/* 
-  const defFile = formData.get("defFile") as Blob | null;
-  const bacFile = formData.get("bacFile") as Blob | null;
-  const licenceFile = formData.get("licenceFile") as Blob | null;
-  const maitriseFile = formData.get("maitriseFile") as Blob | null;
-  const master1File = formData.get("master1File") as Blob | null;
-  const master2File = formData.get("master2File") as Blob | null;
-
-  let defFileName = "";
-  let bacFileName = "";
-  let licenceFileName = "";
-  let maitriseFileName = "";
-  let master1FileName = "";
-  let master2FileName = "";
-
-  try {
-    defFileName = await storeImage(defFile);
-  } catch (error) {
-    defFileName = "non renseigné";
-  }
-
-  try {
-    bacFileName = await storeImage(bacFile);
-  } catch (error) {
-    bacFileName = "non renseigné";
-  }
-
-  try {
-    licenceFileName = await storeImage(licenceFile);
-  } catch (error) {
-    licenceFileName = "non renseigné";
-  }
-
-  try {
-    maitriseFileName = await storeImage(maitriseFile);
-  } catch (error) {
-    maitriseFileName = "non renseigné";
-  }
-
-  try {
-    master1FileName = await storeImage(master1File);
-  } catch (error) {
-    master1FileName = "non renseigné";
-  }
-
-  try {
-    master2FileName = await storeImage(master2File);
-  } catch (error) {
-    master2FileName = "non renseigné";
-  } */
+   
 
  
-  if (
-    certificateName == "File not" ||
-    birthDateFileName == "File not" ||
-    cassierFileName == "File not" ||
-    certificatVieName == "File not" ||
-    certificatVisiteName == "File not" ||
-    diplomeFileName == "File not" ||
-    infoCardFileName == "File not" ||
-    demandeFileName == "File not" 
-  ) {
-    return new Response(
-      JSON.stringify({
-        data: "error",
-        message: `Veuillez ajouter les pièces obligatoires (*)`,
-      })
-    );
-  }
 
   const data = await prisma.candidature.create({
     data: {
@@ -268,19 +152,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
       competitionId: formData.get("competitionId")?.toString() ?? "",
       //file
       certificate: certificateName,
-      birthDateFile: birthDateFileName,
-      cassierFile: cassierFileName,
-      certificatVie: certificatVieName,
-      certificatVisite: certificatVisiteName,
-      diplomeFile: diplomeFileName,
-      equivalenceFile: equivalenceFileName,
-      ninaFile: ninaFileName,
-      infoCardFile: infoCardFileName,
-      demandeFile: demandeFileName,
+     
       orderOfMagistrates: formData.get("orderOfMagistratesType")?.toString() ?? "",
+      filesRequired: JSON.stringify(dataFilesArrayUser)
      
     },
   });
+
+
+ 
 
   const dataFormat = new Date(Date.now())
     .getFullYear()
@@ -307,10 +187,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     JSON.stringify({ data: finalData, message: "La candidature est créée" })
   );
  
-  /* 
+
    
 
-   */
+   
 }
 
 
@@ -333,7 +213,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
   const formData = await req.formData();
 
  
-  
+
   const user = await prisma.user.findFirst({
     where: {
       email: formData.get("email")?.toString(),
@@ -344,67 +224,28 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       JSON.stringify({ data: "error", message: `Utilisateur non trouvé` })
     );
   }
+    
 
-/*   const candidatureCheck = await prisma.candidature.findFirst({
-    where: {
-      authorId: user?.id,
-      competitionId: formData.get("competitionId")?.toString(),
-    },
-  }); */
+  
 
-  let certificateName = "";
-  let birthDateFileName = "";
-  let cassierFileName = "";
-  let certificatVieName = "";
-  let certificatVisiteName = "";
-  let diplomeFileName = "";
-  let equivalenceFileName = "";
-  let infoCardFileName = "";
-  let ninaFileName = "";
-  let demandeFileName = "";
+
+  const dataFilesArray = formData.get("dataFilesArray")!.toString();
+
+ 
+  let dataFilesArrayConvert:any[] =  JSON.parse(dataFilesArray)  
+
+ 
+  let dataFilesArrayUser:any[] =  [];
  
 
-  const certificate = formData.get("certificate") as Blob | null;
-  const birthDateFile = formData.get("birthDateFile") as Blob | null;
-  const cassierFile = formData.get("cassierFile") as Blob | null;
-  const certificatVie = formData.get("certificatVie") as Blob | null;
-  const certificatVisite = formData.get("certificatVisite") as Blob | null;
-  const diplomeFile = formData.get("diplomeFile") as Blob | null;
-  const infoCardFile = formData.get("infoCardFile") as Blob | null;
-  const demandeFile = formData.get("demandeFile") as Blob | null;
-  const ninaFile = formData.get("ninaFile") as Blob | null;
-  const equivalenceFile = formData.get("equivalenceFile") as Blob | null; 
- 
-  if (
-    certificate?.toString() == "" ||
-    birthDateFile?.toString() == "" ||
-    cassierFile?.toString() == "" ||
-    certificatVie?.toString() == "" ||
-    certificatVisite?.toString() == "" ||
-    diplomeFile?.toString() == "" ||
-    infoCardFile?.toString() == "" ||
-    demandeFile?.toString() == ""
-  ) {
-    return new Response(
-      JSON.stringify({
-        data: "error",
-        message: `Veuillez ajouter les pièces obligatoires (*)`,
-      })
-    );
-  }
 
-  try {
-    certificateName = await storeImage(certificate);
-    birthDateFileName = await storeImage(birthDateFile);
-    cassierFileName = await storeImage(cassierFile);
-    certificatVieName = await storeImage(certificatVie);
-    certificatVisiteName = await storeImage(certificatVisite);
-    diplomeFileName = await storeImage(diplomeFile);
-    equivalenceFileName = await storeImage(equivalenceFile);
-    ninaFileName = await storeImage(ninaFile);
-    infoCardFileName = await storeImage(infoCardFile);
-    demandeFileName = await storeImage(demandeFile);
-  } catch (error) {
+
+
+
+ for await (const item of dataFilesArrayConvert) {
+  
+
+  if(item.value.length <=2){
     return new Response(
       JSON.stringify({
         data: "error",
@@ -413,25 +254,8 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     );
   }
  
- 
-  if (
-    certificateName == "File not" ||
-    birthDateFileName == "File not" ||
-    cassierFileName == "File not" ||
-    certificatVieName == "File not" ||
-    certificatVisiteName == "File not" ||
-    diplomeFileName == "File not" ||
-    infoCardFileName == "File not" ||
-    demandeFileName == "File not" 
-  ) {
-    return new Response(
-      JSON.stringify({
-        data: "error",
-        message: `Veuillez ajouter les pièces obligatoires (*)`,
-      })
-    );
-  }  
-
+  dataFilesArrayUser.push({  type : item.type, name:item.name, id:item.id,value: await storeImage( formData.get(item.id)  as Blob | null)})
+}
 
  
   const data = await prisma.candidature.update({
@@ -462,16 +286,8 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       orderOfMagistrates: formData.get("orderOfMagistrates")?.toString() ?? ""  ,
      
       //file
-      certificate: certificateName,
-      birthDateFile: birthDateFileName,
-      cassierFile: cassierFileName,
-      certificatVie: certificatVieName,
-      certificatVisite: certificatVisiteName,
-      diplomeFile: diplomeFileName,
-      equivalenceFile: equivalenceFileName,
-      ninaFile: ninaFileName,
-      infoCardFile: infoCardFileName,
-      demandeFile: demandeFileName,
+      filesRequired: JSON.stringify(dataFilesArrayUser),
+     
      
      //
      canEdit:false

@@ -15,7 +15,7 @@ import { AiFillPicture } from "react-icons/ai";
 import { Dropdown } from "primereact/dropdown";
 import { Calendar, CalendarChangeEvent } from "primereact/calendar";
 import { convertToHTML } from "draft-convert";
- 
+import { v4 as uuidv4 } from 'uuid';
 import { Switch } from "@/components/ui/switch";
 import { redirect, useRouter } from "next/navigation";
 import AlertModalResponse from "@/components/Modals/AlertModalResponse";
@@ -60,6 +60,8 @@ function CreateCompetition() {
   const [orderOfMagistrates, setOrderOfMagistrates] = useState(false);
   const [def, setDef] = useState(false);
   const [bac, setBac] = useState(false);
+  const [fileNameRequired, setFileNameRequired] = useState("");
+  const [filesRequired, setFilesRequired] = useState([]);
   const [licence, setLicence] = useState(false);
   const [maitrise, setMaitrise] = useState(false);
   const [master1, setMaster1] = useState(false);
@@ -84,6 +86,7 @@ function CreateCompetition() {
     formData.append("statut", statut.code);
 
     formData.append("orderOfMagistrates", orderOfMagistrates);
+    formData.append("filesRequired", JSON.stringify(filesRequired));
     formData.append("def", def);
     formData.append("bac", bac);
     formData.append("licence", licence);
@@ -282,6 +285,52 @@ function CreateCompetition() {
                       onCheckedChange={(x) =>setMaster2(x => x=!x)} />
         </div> */}
       </div>
+
+
+      <div className="flex self-end flex-col w-[580px] mt-4 space-y-2 border-2 p-4">
+      <div className="flex items-center justify-between mb-4 font-bold text-md">
+        
+        
+        <InputComponent
+            key={10}
+            label={"Nom des dossiers"}
+            value={fileNameRequired}
+            inputType="text"
+            handleChange={(e) => {
+              setFileNameRequired(x=> x= e.target.value);
+            }}
+          />
+          <div onClick={()=>{
+            setFilesRequired( prev => [...prev,{
+              id:uuidv4(),
+              value:"",
+              name:fileNameRequired,type:"file"}])
+            setFileNameRequired(x => x ="")
+          }} className="self-end p-2 mb-1 ml-2 text-xs text-white bg-green-500 rounded-sm">Ajouter</div>
+        </div>
+      
+   {filesRequired.map(item=>(
+   <div className="flex items-center justify-center p-2 border"> <p className="flex-1">{item.name}</p> <div className="flex"><div onClick={()=>{
+   
+    setFileNameRequired(x => x =item.name)
+  }} className="self-end p-2 ml-2 text-xs text-white bg-blue-500 rounded-sm">Modifier</div>
+  
+  <div onClick={()=>{
+   
+   setFileNameRequired(x => x ="")
+ }} className="self-end p-2 ml-2 text-xs text-white bg-red-500 rounded-sm">X</div>
+   </div>  </div>
+   ))}
+
+       
+    
+      </div>
+
+
+
+
+
+
       <p className="text-[14px] text-gray-500 mt-8">
         <EditorComponent value={content} handleChange={(v) => setContent(v)} />
       </p>
