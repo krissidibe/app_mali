@@ -267,7 +267,19 @@ function CandidatureItem({ datas }) {
                 at tincidunt neque. Pellentesque vitae commodo justo. Integer
                 tempor Pellentesque vitae Integer tempor
               </CardDescription> */}
-              <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
+              
+             {result.filesRequired != null && 
+             <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
+              {JSON.parse(result.filesRequired).map(item=>(
+                 fileFunctionCustom(
+                 
+                
+                  item.name,
+                  item.value
+                )
+              ))}
+              </div>}
+             {result.filesRequired == null &&  <div className="grid gap-6 mt-4 min-[1720px]:grid-cols-2">
               {fileFunction(
                   "La copie d'acte de naissance",
                   "ou  jugement supplétif en tenant lieu",
@@ -319,7 +331,7 @@ function CandidatureItem({ datas }) {
                   "",
                   result.demandeFile
                 )}
-              </div>
+              </div>}
 {/* 
               <CardTitle className="mt-4 mb-2 text-green-500">
                 Les Diplômes
@@ -421,6 +433,28 @@ function CandidatureItem({ datas }) {
 
 export default CandidatureItem;
 
+function fileFunctionCustom(label,  result) {
+  return (
+    <div key={label}   >
+      <div className="flex flex-col">
+        <Label className="mb-2">{label}</Label>
+        {/*  { <span className="text-[13px] text-gray-400">{subLabel}</span>} */}
+      </div>
+      <div className="flex items-center space-x-4">
+        <div className="flex items-center flex-1 cursor-pointer justify-end p-4 h-[38px] border-[1px] rounded-sm">
+          <a
+            target="_blank"
+            href={`${process.env.BASE_URL}${result}`}
+            className="flex items-center justify-between flex-1 space-x-2"
+          >
+            <p className="text-sm">Télécharger </p>
+            <FaDownload className="h-12 mr-4" />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
 function fileFunction(label, subLabel = "", result) {
   return (
     <div key={label} className={result.length <= 15 ? "hidden" :""} >

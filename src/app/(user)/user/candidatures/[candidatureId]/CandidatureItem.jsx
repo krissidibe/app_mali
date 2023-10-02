@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import { Label } from "@/components/ui/label";
 import UserPdf from "@/components/PDF/UserPdf";
+import UserPdfNew from "@/components/PDF/UserPdfNew";
 import { FaDownload } from "react-icons/fa";
 import { RiAlertLine, RiDeleteBin6Line } from "react-icons/ri";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -309,7 +310,9 @@ if (
    <div className="flex">
    
    
-   <UserPdf data={data} className="p-4 text-white bg-green-500" />
+  {data.filesRequired ==null && <UserPdf data={data} className="p-4 text-white bg-green-500" />}
+  {data.filesRequired !=null &&  <UserPdfNew data={data} className="p-4 text-white bg-green-500" />}
+  
  {(data.canEdit  || (data.statut == 0 && new Date(data.competition.endDateAt) > new Date(Date.now()))) &&   <div onClick={()=>{
    setEditFile(x=> x =!x)
    setCheckEdit(data.canEdit ? true : editFile ? false : true)

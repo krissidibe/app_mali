@@ -274,7 +274,9 @@ export default function ApplyItem(data, competitionId, fileAttach,filesRequired)
         uid: session?.user?.email,
         competitionId: data.data.competitionId,
       }), */
-    const res = await fetch(`/api/user/candidature`, {
+
+      const url = data.filesRequired != null ? "candidature" : "candidatureold"
+    const res = await fetch(`/api/user/${url}`, {
       body: formData,
       method: "POST",
     });

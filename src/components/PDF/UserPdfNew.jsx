@@ -337,38 +337,22 @@ const MyDocument = ({ data }) => (
             borderRadius:5,
             height:"240px",
             display:"flex",
-            justifyContent:'space-between'
+            
           }}
         >
+
+          { 
+
+JSON.parse(data?.filesRequired).map(item=>(
+
+  InfoInputFile(item?.name, item?.value)
+))
           
-          {InfoInputFile("La copie d'acte de naissance", data?.birthDateFile)}
-          {InfoInputFile("L'extrait du casier judiciaire", data?.cassierFile)}
-          {InfoInputFile(
-            "Le certificat de bonne vie et moeurs",
-            data?.certificatVie
-          )}
-          {InfoInputFile(
-            "Le certificat de nationalité malienne",
-            data?.certificate
-          )}
-          {InfoInputFile(
-            "Le certificat de visite et contre visite",
-            data?.certificatVisite
-          )}
-          {InfoInputFile(
-            "Le copie certifiée conforme du diplome requis",
-            data?.diplomeFile
-          )}
-          {InfoInputFile(
-            "L'équivalence du diplômes requis pour les diplômes étrangers",
-            data?.equivalenceFile
-          )}
-          {InfoInputFile("La copie de la carte nina ou la fiche individuelle", data?.ninaFile)}
-          {InfoInputFile(
-            "La copie de la pièce d’identité",
-            data?.infoCardFile
-          )}
-          {InfoInputFile("La demande manuscrite timbrée", data?.demandeFile)}
+          
+          }
+          
+          
+          
         </View>
 
        {/*  <View style={{}}>
@@ -437,7 +421,7 @@ function _buildExperienceItem(e) {
   );
 }
 
-function UserPdf({ data, className = "" }) {
+function UserPdfNew({ data, className = "" }) {
   const [isClient, setIsClient] = useState(false);
   const [textUrl, setTextUrl] = useState("");
 
@@ -466,10 +450,12 @@ function UserPdf({ data, className = "" }) {
           {/*  <MyDocument /> */}
           <button
             className={`border-2 rounded-sm ${className}`}
-            onClick={(e) => {
-              e.stopPropagation()
-              generatePdfDocument(data)
-            }}
+            onClick={(e) => 
+              {
+                e.stopPropagation()
+                generatePdfDocument(data)}
+              }
+              
           >
             Télécharger le récépissé
           </button>
@@ -478,4 +464,4 @@ function UserPdf({ data, className = "" }) {
     </div>
   );
 }
-export default UserPdf;
+export default UserPdfNew;

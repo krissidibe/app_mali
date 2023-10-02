@@ -61,6 +61,7 @@ function CreateCompetition() {
   const [def, setDef] = useState(false);
   const [bac, setBac] = useState(false);
   const [fileNameRequired, setFileNameRequired] = useState("");
+  const [curentFileItem, setCurentFileItem] = useState();
   const [filesRequired, setFilesRequired] = useState([]);
   const [licence, setLicence] = useState(false);
   const [maitrise, setMaitrise] = useState(false);
@@ -288,36 +289,78 @@ function CreateCompetition() {
 
 
       <div className="flex self-end flex-col w-[580px] mt-4 space-y-2 border-2 p-4">
-      <div className="flex items-center justify-between mb-4 font-bold text-md">
+      <div className="flex items-end justify-between mb-4 font-bold text-md">
         
         
         <InputComponent
             key={10}
-            label={"Nom des dossiers"}
+            label={"Les pièces à fournir"}
             value={fileNameRequired}
             inputType="text"
             handleChange={(e) => {
               setFileNameRequired(x=> x= e.target.value);
             }}
           />
-          <div onClick={()=>{
+
+<div className="flex flex-row items-end justify-end flex-1 mb-1">
+<div onClick={(e)=>{
+
+if(curentFileItem){
+  const nextShapes = filesRequired.map(shape => {
+    if (shape.id != curentFileItem.id) {
+      // No change
+      return shape;
+    } else {
+      // Return a new circle 50px below
+      return {
+        ...shape,
+        name:   fileNameRequired,
+      };
+    }
+  });
+  // Re-render with the new array
+  setFilesRequired(nextShapes);
+  setFileNameRequired(x => x ="")
+  setCurentFileItem(x => x =null)
+  return;
+}
+
+
+
             setFilesRequired( prev => [...prev,{
               id:uuidv4(),
               value:"",
               name:fileNameRequired,type:"file"}])
             setFileNameRequired(x => x ="")
-          }} className="self-end p-2 mb-1 ml-2 text-xs text-white bg-green-500 rounded-sm">Ajouter</div>
-        </div>
+          }} className="self-end p-2 ml-2 text-xs text-white bg-green-500 rounded-sm">{curentFileItem ? "Modifier" :"Ajouter"}  </div>
+   {curentFileItem &&       <div onClick={()=>{
+   
+   setFileNameRequired(x => x ="")
+   setCurentFileItem(x => x =null)
+ }} className="self-end p-2 ml-2 text-xs text-white bg-red-500 rounded-sm">X</div>}
+
+</div>
+
+
+       </div>
       
    {filesRequired.map(item=>(
    <div className="flex items-center justify-center p-2 border"> <p className="flex-1">{item.name}</p> <div className="flex"><div onClick={()=>{
    
     setFileNameRequired(x => x =item.name)
+    setCurentFileItem(x => x =item)
   }} className="self-end p-2 ml-2 text-xs text-white bg-blue-500 rounded-sm">Modifier</div>
   
   <div onClick={()=>{
-   
-   setFileNameRequired(x => x ="")
+
+setFilesRequired((current) =>
+current.filter((fruit) => fruit.id !== item.id)
+);
+
+setFileNameRequired(x => x ="")
+setCurentFileItem(x => x =null)
+
+ 
  }} className="self-end p-2 ml-2 text-xs text-white bg-red-500 rounded-sm">X</div>
    </div>  </div>
    ))}
